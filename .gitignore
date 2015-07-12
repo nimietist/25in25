@@ -1,0 +1,6 @@
+.env
+build
+bower_components
+node_modules
+npm_debug.log
+dump.rb
