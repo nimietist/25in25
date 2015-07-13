@@ -1,4 +1,5 @@
 import express from 'express';
+import expressSession from 'express-session';
 import dotenv from 'dotenv';
 import socket from './lib/socket';
 import connect from 'connect-assets';
@@ -7,6 +8,7 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import redisStore from './lib/redis';
 
 dotenv.load();
 
@@ -24,11 +26,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(connect({
-  paths: ['assets/css']
-  // servePath: 'http://localhost:3000'
+app.use(express.static(path.join(__dirname, '..', 'build')));
+app.use(expressSession({
+  store: redisStore,
+  key: 'redis.sid',
+  secret: process.env.SESSION_SECRET
 }));
 
 app.get('/', function(req, res){
@@ -44,7 +46,5 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
-app.listen(app.port, () => console.log(`Listening on port ${app.port}`) );
 
 export default app;
