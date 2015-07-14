@@ -30,7 +30,7 @@ function refreshBrowser(){
     browsersync.reload();
   }, 1000);
 }
-gulp.task('server', 'Run the development server', ['assets'], function(){
+gulp.task('server', 'Run the development server', ['lint', 'assets'], function(){
   nodemon({
     script: 'server.js',
     exec: './node_modules/.bin/babel-node',
@@ -95,7 +95,7 @@ gulp.task('assets:css', function() {
 
 gulp.task('assets', 'Compile static assets (js, css) for cdn', function(){
   gulp.watch('assets/css/**', ['assets:css']);
-  gulp.watch('./assets/js/main.js', ['assets:js']);
+  gulp.watch('./assets/js/*.js', ['assets:js']);
 });
 
 gulp.task('publish', 'Deploy compiled assets and upload app code', ['assets'], function(){

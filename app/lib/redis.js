@@ -3,7 +3,6 @@ import expressSession from 'express-session';
 import connect from 'connect-redis';
 
 let RedisStore = connect(expressSession);
-
 let config = url.parse(process.env.REDIS_URL);
 let auth = (config.auth || '').split(':');
 

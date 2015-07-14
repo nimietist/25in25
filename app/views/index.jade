@@ -1,12 +1,6 @@
 extends layout
 
-block head
-  script(id='template', type='text/ractive')
-    p Hello,
-      input(type="text", value='{{user.name}}')
-      | {{user}}!
-
 block content
   h1= title
   p Welcome to #{title}
-  #app
+  div(id='react-root')!= react

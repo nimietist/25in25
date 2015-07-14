@@ -1,16 +1,16 @@
-import express from 'express';
-import expressSession from 'express-session';
 import dotenv from 'dotenv';
+dotenv.load();
+
+import express from 'express';
+// import expressSession from 'express-session';
 import socket from './lib/socket';
-import connect from 'connect-assets';
 import path from 'path';
-import favicon from 'serve-favicon';
+// import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import redisStore from './lib/redis';
-
-dotenv.load();
+// import redisStore from './lib/redis';
+import routing from './config/routing';
 
 let app = express();
 
@@ -27,15 +27,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use(expressSession({
-  store: redisStore,
-  key: 'redis.sid',
-  secret: process.env.SESSION_SECRET
-}));
+// app.use(expressSession({
+//   store: redisStore,
+//   key: 'redis.sid',
+//   secret: process.env.SESSION_SECRET
+// }));
 
-app.get('/', function(req, res){
-  res.render('index', {title: '25in25'});
-});
+app.use(routing);
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
