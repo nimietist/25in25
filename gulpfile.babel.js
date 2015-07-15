@@ -11,11 +11,21 @@ import rename from 'gulp-rename';
 import awspublish from 'gulp-awspublish';
 import browsersync from 'browser-sync';
 import browserify from 'browserify';
+import debowerify from 'debowerify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import combiner from 'stream-combiner2';
 
 dotenv.load();
+
+const styles = [
+  'app/assets/css/**/*.less',
+  'app/assets/css/**/*.css'
+];
+
+const scripts = [
+
+];
 
 let gulp = help(gulp_);
 
@@ -25,24 +35,21 @@ gulp.task('default', ['help']);
 // Development
 gulp.task('develop', ['dev']);
 
-function refreshBrowser(){
-  setTimeout(function() {
-    browsersync.reload();
-  }, 1000);
-}
 gulp.task('server', 'Run the development server', ['lint', 'assets'], function(){
   nodemon({
     script: 'server.js',
     exec: './node_modules/.bin/babel-node',
-    watch: ['./app']
+    watch: [
+      '!./app/assets',
+      './app'
+    ]
   })
-  .on('start', refreshBrowser)
-  .on('restart', refreshBrowser);
+  .on('start', browsersync.reload)
+  .on('restart', browsersync.reload);
 });
 
 gulp.task('dev', 'Run browsersync server', ['server'], function(){
   browsersync.init({
-    files: ['./app/*'],
     proxy: `localhost:${process.env.PORT}`,
     port: 5000
   });
@@ -60,15 +67,14 @@ gulp.task('lint', 'Use eslint to check server and client js', function(){
 // Assets Compilation
 gulp.task('assets:js', function() {
   // Single entry point to browserify
-  browserify('./assets/js/main.js', {
+  browserify('app/assets/js/main.js', {
     insertGlobals: true,
     debug: !process.env.production
   })
     .transform(babelify)
+    .transform(debowerify)
     .bundle()
-    .on('error', function(err){
-      console.log(err.message);
-    })
+    .on('error', console.error)
     .pipe(source('main.js'))
     .pipe(gulp.dest('./build/js'))
     .pipe(browsersync.stream());
@@ -77,11 +83,7 @@ gulp.task('assets:js', function() {
 // LESS
 gulp.task('assets:css', function() {
   var combined = combiner.obj([
-    gulp.src([
-      'assets/css/vendor/**/*.css',
-      'assets/css/**/*.less',
-      'assets/css/**/*.css'
-    ])
+    gulp.src(styles)
       .pipe(sourcemaps.init())
       .pipe(less())
       .on('error', function(err){ console.log(err.message); })
@@ -94,11 +96,22 @@ gulp.task('assets:css', function() {
 });
 
 gulp.task('assets', 'Compile static assets (js, css) for cdn', function(){
-  gulp.watch('assets/css/**', ['assets:css']);
-  gulp.watch('./assets/js/*.js', ['assets:js']);
+  gulp.watch('app/assets/css/**', ['assets:css']);
+  gulp.watch('app/assets/js/*.js', ['assets:js']);
 });
 
-gulp.task('publish', 'Deploy compiled assets and upload app code', ['assets'], function(){
+
+// Deployment
+
+gulp.task('publish:js', 'Compile js assets for deployment', function(){
+
+});
+
+gulp.task('publish:css', 'Compile css assets for deployment', function(){
+
+});
+
+gulp.task('publish', 'Deploy compiled assets and upload app code', ['publish:js', 'publish:css'], function(){
   var publisher = awspublish.create({
     params: {
       Bucket: process.env.AWS_BUCKET
@@ -111,8 +124,11 @@ gulp.task('publish', 'Deploy compiled assets and upload app code', ['assets'], f
     'Cache-Control': 'max-age=315360000, no-transform, public'
   };
 
-  return gulp.src('./public/*.js')
-    .pipe(awspublish.gzip({ ext: '.gz' }))
+  return gulp.src('./dist/**')
+    .pipe(rename(function (p) {
+      p.dirname += '/assets';
+    }))
+    .pipe(awspublish.gzip())
     .pipe(publisher.publish(headers))
     .pipe(publisher.cache())
     .pipe(awspublish.reporter());

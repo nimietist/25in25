@@ -3,7 +3,7 @@ import React from 'react';
 import Router from 'react-router';
 import Location from 'react-router/lib/Location';
 import express from 'express';
-import routes from '../../assets/js/routes';
+import routes from '../assets/js/routes';
 
 let app = express.Router();
 
@@ -14,7 +14,7 @@ app.use((req, res, next) => {
   Router.run(routes, location, (error, initialState, transition) => {
     // TODO: data fetching per route
     var html = React.renderToString(<Router {...initialState}/>);
-    return res.render('index', {react: html});
+    return res.render('index', { react: html });
   });
 });
 

@@ -9,6 +9,7 @@ import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import assets from 'connect-assets';
 // import redisStore from './lib/redis';
 import routing from './config/routing';
 
@@ -26,7 +27,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '..', 'build')));
+// app.use(express.static(path.join(__dirname, '..', 'build')));
+app.use(assets({
+  paths: ['build/js', 'build/css'],
+  servePath: process.env.CDN_PATH || 'assets',
+  buildDir: 'dist'
+}));
 // app.use(expressSession({
 //   store: redisStore,
 //   key: 'redis.sid',

@@ -1,8 +1,9 @@
 .env
+.awspublish-*
+app/assets/bower
 build
 dist
 bower_components
 node_modules
 npm_debug.log
 dump.rdb
-assets/*/vendor

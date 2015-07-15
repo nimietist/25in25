@@ -12,7 +12,9 @@ var Hello = React.createClass({
     };
   },
   render: function() {
-    return <div id='h' onClick={this.printer}>hello {this.state.name} <Link to="/404">404</Link></div>;
+    return <div id='h' onClick={this.printer}>
+      hello {this.state.name} <Link to="/404">404</Link>
+    </div>;
   }
 });
 
