@@ -2,14 +2,13 @@ import dotenv from 'dotenv';
 dotenv.load();
 
 import express from 'express';
-// import expressSession from 'express-session';
 import socket from './lib/socket';
 import path from 'path';
-// import favicon from 'serve-favicon';
+import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import assets from 'connect-assets';
+// import expressSession from 'express-session';
 // import redisStore from './lib/redis';
 import routing from './config/routing';
 
@@ -21,18 +20,12 @@ app.port = process.env.PORT;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.join(__dirname, 'assets', 'img', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use(assets({
-  paths: ['build/js', 'build/css'],
-  servePath: process.env.CDN_PATH || 'assets',
-  buildDir: 'dist'
-}));
+app.use(express.static(path.join(__dirname, '..', 'build')));
 // app.use(expressSession({
 //   store: redisStore,
 //   key: 'redis.sid',
@@ -50,5 +43,9 @@ if (app.get('env') === 'development') {
     });
   });
 }
+
+app.serve = () => {
+  app.listen(app.port, () => console.log(`Listening on port ${app.port}`) );
+};
 
 export default app;

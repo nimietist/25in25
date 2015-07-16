@@ -12,6 +12,7 @@ import awspublish from 'gulp-awspublish';
 import browsersync from 'browser-sync';
 import browserify from 'browserify';
 import debowerify from 'debowerify';
+import exorcist from 'exorcist';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import combiner from 'stream-combiner2';
@@ -38,9 +39,8 @@ gulp.task('develop', ['dev']);
 gulp.task('server', 'Run the development server', ['lint', 'assets'], function(){
   nodemon({
     script: 'server.js',
-    exec: './node_modules/.bin/babel-node',
     watch: [
-      '!./app/assets',
+      '!./app/assets', // asset tasks are watching this
       './app'
     ]
   })
@@ -66,18 +66,17 @@ gulp.task('lint', 'Use eslint to check server and client js', function(){
 
 // Assets Compilation
 gulp.task('assets:js', function() {
-  // Single entry point to browserify
   browserify('app/assets/js/main.js', {
-    insertGlobals: true,
-    debug: !process.env.production
+    debug: true
   })
-    .transform(babelify)
-    .transform(debowerify)
-    .bundle()
-    .on('error', console.error)
-    .pipe(source('main.js'))
-    .pipe(gulp.dest('./build/js'))
-    .pipe(browsersync.stream());
+  .transform(babelify)
+  .transform(debowerify)
+  .bundle()
+  .on('error', console.error)
+  .pipe(exorcist('/build/js/main.js.map'))
+  .pipe(source('main.js'))
+  .pipe(gulp.dest('./build/js'))
+  .pipe(browsersync.stream());
 });
 
 // LESS
@@ -86,16 +85,16 @@ gulp.task('assets:css', function() {
     gulp.src(styles)
       .pipe(sourcemaps.init())
       .pipe(less())
-      .on('error', function(err){ console.log(err.message); })
-      .pipe(sourcemaps.write())
-      // .pipe(rename('main.css'))
+      .on('error', console.error)
+      .pipe(sourcemaps.write('./'))
+      .pipe(rename('main.css'))
       .pipe(gulp.dest('./build/css'))
       .pipe(browsersync.stream())
   ]);
   combined.on('error', console.error.bind(console));
 });
 
-gulp.task('assets', 'Compile static assets (js, css) for cdn', function(){
+gulp.task('assets', 'Compile static assets (js, css) for cdn', ['assets:js', 'assets:css'], function(){
   gulp.watch('app/assets/css/**', ['assets:css']);
   gulp.watch('app/assets/js/*.js', ['assets:js']);
 });

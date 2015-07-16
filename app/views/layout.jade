@@ -2,8 +2,8 @@ doctype html
 html
   head
     title= title
-    != css('main')
+    link(rel='stylesheet', href='css/main.css')
     block head
   body
     block content
-    != js('main')
+    script(src='js/main.js')
