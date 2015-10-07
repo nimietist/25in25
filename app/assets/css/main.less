@@ -1,8 +1,15 @@
-// @import './vendor/bootstrap/dist/css/bootstrap.css';
+.pictureRow {
+  .cell {
+    position: relative;
+    padding: 0;
+    img {
+      // .transition-duration(300ms);
+      max-width: 100%;
+      opacity: 0;
 
-body {
-  background: white;
-  p {
-
+      &.loaded {
+        opacity: 1;
+      }
+    }
   }
 }

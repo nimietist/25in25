@@ -1,7 +1,7 @@
-var url = require('url');
-var db = url.parse(process.env.DATABASE_URL);
-var auth = db.auth.split('@');
-var config = {};
+var url = require('url')
+var db = url.parse(process.env.DATABASE_URL)
+var auth = db.auth.split('@')
+var config = {}
 
 config[process.env.NODE_ENV] = {
   username: auth[0],
@@ -9,6 +9,6 @@ config[process.env.NODE_ENV] = {
   database: db.path.substring(1),
   host: db.hostname,
   dialect: 'postgres'
-};
+}
 
-module.exports = config;
+module.exports = config

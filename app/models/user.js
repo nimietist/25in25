@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 let UserSchema = new mongoose.Schema({
   email: {
@@ -12,8 +12,8 @@ let UserSchema = new mongoose.Schema({
   password: {
     type: String
   }
-});
+})
 
-var User = mongoose.model('User', UserSchema);
+var User = mongoose.model('User', UserSchema)
 
-export default User;
+export default User

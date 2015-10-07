@@ -1,57 +1,17 @@
-yeoman to start?
-
-inf
-  heroku start, aws next
-  s3
-  nginx-static
-  docker deployment
-
-db
-  postgres 9.3+
-  mongo?
-
-redis
-
-app
-  nodejs
-    express?
-    es6+babel
-    babel-eslint
-    gulp?
-      deployment
-        asset precompilation (babel, less)
-
-    models
-    mocha/chai
-
-    debug monitoring
-      newrelic
-
-  structure
-    app
-      controllers
-      api
-      config
-      models
-      public
-
+TODOS:
+react router initial data loading
+passport login and authentication
+deployment
+  asset precompilation
+debug monitoring
+  newrelic
 
 web client
   browserify
   bower?
-  es6+babel
-  shims
-
-  ractive? angular?
-
-  less/styl
-  precompile
   bootstrap
   material design
   single page app?
-
-  static assets?
-  mocha/chai
 
 docs
   changelog
@@ -59,10 +19,5 @@ docs
   readme
     req
     install
-    migration
+    migration!
     tasks
-    todo
-
-
-ios client
-  tbd

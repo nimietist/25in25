@@ -1,9 +1,7 @@
-import socketio from 'socket.io';
+import socketio from 'socket.io'
 
-export default function(app) {
-  let io = app.io = socketio(app.port);
+export default function (app) {
+  let io = app.io = socketio(app.port)
 
-  io.on('connection', function (socket) {
-
-  });
+  io.on('connection', function (socket) {})
 }

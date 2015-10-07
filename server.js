@@ -1,2 +1,2 @@
-require('babel/register');
-require('./app').serve();
+require('babel/register')
+require('./app').serve()

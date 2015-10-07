@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
-import chai from 'chai';
+import dotenv from 'dotenv'
+// import chai from 'chai'
 
-dotenv.load();
+dotenv.load()

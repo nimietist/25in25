@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.5",
-    "animate.css": "~3.3.0"
+    "animate.css": "~3.3.0",
+    "wowjs": "~1.1.2"
   }
 }
