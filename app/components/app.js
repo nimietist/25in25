@@ -17,7 +17,7 @@ const store = compose(
     createHistory
   }),
   devTools()
-)(createStore)(reducer)
+)(createStore)(reducer, window.INITIAL_STATE)
 
 export default class App extends React.Component {
   static propTypes = {

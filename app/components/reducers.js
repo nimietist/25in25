@@ -17,9 +17,13 @@ function users (state = {}, action) {
   }
 }
 
+function initial_state (state) {
+  return state || {}
+}
 const reducers = combineReducers({
   router: routerStateReducer,
-  users
+  users,
+  initial_state
 })
 
 export default reducers

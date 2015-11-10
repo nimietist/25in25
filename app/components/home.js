@@ -13,9 +13,9 @@ export default class Home extends React.Component {
 
   }
   handleClick = (e) => {
-    // console.error(this.props);
+    console.error(this.props)
     // this.props.sendUserAction()
-    return false
+    e.preventDefault()
   }
   render () {
     const { user } = this.props
@@ -25,7 +25,7 @@ export default class Home extends React.Component {
           <img src='http://img15.deviantart.net/f5da/i/2007/121/d/3/cousin_katamari_by_zetallis.jpg' />
           {user}
         </Link>
-        <a href='#' onClick={this.handleClick.bind(this)} >
+        <a href='#' onClick={this.handleClick} >
           <img src={require('../img/chris.jpg')} />
         </a>
       </div>

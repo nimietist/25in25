@@ -11,7 +11,6 @@ export function completeRequestUsers () {
 
 export function fetchUsers () {
   return dispatch => {
-    console.error('asdfasdf');
     dispatch(requestUsers())
     return new Promise((resolve, reject) => {
       setTimeout(function () {
