@@ -1,6 +1,5 @@
 .env
 .awspublish-*
-app/assets/bower
 build
 dist
 bower_components
