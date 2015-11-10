@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router'
+// import { pushState } from 'redux-router'
 import { connect } from 'react-redux'
 import Home from './home'
 import Hello from './hello'
@@ -14,6 +15,8 @@ class App extends React.Component {
   }
   handleClick = (e) => {
     this.props.dispatch(fetchUsers())
+    // this.props.dispatch(pushState({}, '/hello'))
+    return false
   }
   render () {
     return (
