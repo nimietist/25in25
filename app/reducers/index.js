@@ -17,12 +17,24 @@ function users (state = {}, action) {
   }
 }
 
-function initial_state (state) {
-  return state || {}
+function user (state = {}, action) {
+  switch (action.type) {
+    case 'COMPLETE_LOGIN':
+      return action.user
+    case 'COMPLETE_LOGOUT':
+      return {}
+    default:
+      return state
+  }
+}
+
+function initial_state (state = {}) {
+  return state
 }
 const reducers = combineReducers({
   router: routerStateReducer,
   users,
+  user,
   initial_state
 })
 

@@ -6,7 +6,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
-    './app/components/main.js'
+    './app/main.js'
   ],
   output: {
     path: '/',
@@ -16,7 +16,12 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
+      }
+    })
   ],
   module: {
     loaders: [{

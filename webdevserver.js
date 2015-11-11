@@ -6,10 +6,6 @@ var config = require('./webpack.dev.config')
 var app = express()
 var compiler = webpack(config)
 
-// app.get('/main.js', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'main.js'))
-// })
-
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true, // only display warnings and errors to console
   stats: {
@@ -20,7 +16,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler))
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 

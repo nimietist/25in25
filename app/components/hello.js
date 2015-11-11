@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-// var Hello = React.createClass({
 export default class Hello extends React.Component {
   constructor (props) {
     super(props)
     this.state = {count: 0}
   }
-
+  fetchData () {
+    this.props.actions.fetchUsers()
+  }
   printer = (e) => {
     this.setState({name: `john${this.state.count}`, count: this.state.count + 1})
   }
