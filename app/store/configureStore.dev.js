@@ -1,15 +1,20 @@
-import thunkMiddleware from 'redux-thunk'
 import { compose, createStore, applyMiddleware } from 'redux'
-import { reduxReactRouter } from 'redux-router'
-import { devTools } from 'redux-devtools'
-import { createHistory } from 'history'
+import thunkMiddleware from 'redux-thunk'
 import reducers from '../reducers'
 import routes from '../routes'
+import DevTools from '../containers/devtools'
+
+var {reduxReactRouter} = require('redux-router/server')
+var createHistory = require('history/lib/createMemoryHistory')
+if (typeof window !== 'undefined') {
+  reduxReactRouter = require('redux-router').reduxReactRouter
+  createHistory = require('history').createHistory
+}
 
 const finalCreateStore = compose(
   applyMiddleware(thunkMiddleware),
   reduxReactRouter({ routes, createHistory }),
-  devTools()
+  DevTools.instrument()
 )(createStore)
 
 export default function configureStore (initialState = {}) {

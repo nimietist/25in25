@@ -6,23 +6,22 @@ var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
 
 module.exports = {
   port: 3000,
-  devtool: 'eval-source-map',
+  context: path.resolve('.'),
+  devtool: 'source-map',
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
     './app/main.js'
   ],
   output: {
-    path: '/',
+    path: './static',
     filename: 'main.js',
-    publicPath: 'http://localhost:3000/static/'
+    publicPath: '/static/'
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
+        NODE_ENV: JSON.stringify('production')
       }
     }),
     isoToolsPlugin
@@ -32,20 +31,7 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel',
       query: {
-        stage: 0,
-        plugins: ['react-transform'],
-        extra: {
-          'react-transform': {
-            transforms: [{
-              transform: 'react-transform-hmr',
-              imports: ['react'],
-              locals: ['module']
-            }, {
-              transform: 'react-transform-catch-errors',
-              imports: ['react', 'redbox-react']
-            }]
-          }
-        }
+        stage: 0
       }
     }, {
       test: /\.less$/,

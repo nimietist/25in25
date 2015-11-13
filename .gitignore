@@ -6,3 +6,5 @@ bower_components
 node_modules
 npm_debug.log
 dump.rdb
+static
+webpack-assets.json

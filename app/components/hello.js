@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+// import { fetchUsers } from '../actions'
 
 export default class Hello extends React.Component {
+  static propTypes = {
+    actions: PropTypes.object
+  }
+  // static fetchData (dispatch) {
+  //   console.error('fetchdata', dispatch)
+  //   return dispatch(fetchUsers())
+  // }
   constructor (props) {
     super(props)
     this.state = {count: 0}
+    // this.constructor.fetchData()
   }
-  fetchData () {
-    this.props.actions.fetchUsers()
+  componentDidMount () {
   }
   printer = (e) => {
     this.setState({name: `john${this.state.count}`, count: this.state.count + 1})

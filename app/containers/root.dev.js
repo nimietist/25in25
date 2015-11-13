@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { ReduxRouter } from 'redux-router'
 import { Provider } from 'react-redux'
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react'
-import configureStore from '../store/configureStore.dev'
-
-const store = configureStore()
+import DevTools from './devtools'
+import routes from '../routes'
 
 export default class Root extends React.Component {
+  static propTypes = {
+    store: PropTypes.object
+  }
   render () {
+    const { store } = this.props
     return (
       <Provider store={store}>
         <div>
-          <ReduxRouter />
-          <DebugPanel top right bottom>
-            <DevTools store={store} monitor={LogMonitor} />
-          </DebugPanel>
+          <ReduxRouter routes={routes}/>
+          <DevTools />
         </div>
       </Provider>
     )

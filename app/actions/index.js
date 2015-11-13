@@ -12,12 +12,10 @@ export function completeRequestUsers () {
 export function fetchUsers () {
   return dispatch => {
     dispatch(requestUsers())
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        dispatch(completeRequestUsers())
-        resolve()
-      }, 1000)
-    })
+    setTimeout(function () {
+      dispatch(completeRequestUsers())
+      Promise.resolve()
+    }, 1000)
   }
 }
 
@@ -36,22 +34,18 @@ export function completeLogout () {
 
 export function logIn (user) {
   return dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        dispatch(completeLogin({name: 'dude'}))
-        resolve()
-      }, 1000)
-    })
+    setTimeout(function () {
+      dispatch(completeLogin({name: 'dude'}))
+      Promise.resolve()
+    }, 1000)
   }
 }
 
 export function logOut () {
   return dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        dispatch(completeLogout())
-        resolve()
-      }, 1000)
-    })
+    setTimeout(function () {
+      dispatch(completeLogout())
+      Promise.resolve()
+    }, 1000)
   }
 }

@@ -1,5 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.load()
+import envc from 'envc'
+envc()
 
 import express from 'express'
 import socket from './lib/socket'
@@ -9,21 +9,25 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import routing from './config/routing'
+import IsoTools from 'webpack-isomorphic-tools'
+import isoConfig from '../webpack-isomorphic-config'
 
 let app = express()
 
 socket(app)
 
 app.port = process.env.PORT
+app.locals.assets_host = process.env.ASSETS_HOST || ''
+
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
-
 app.use(favicon(path.join(__dirname, 'img', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
+app.use('/static', express.static('static'))
 app.use(routing)
 
 if (app.get('env') === 'development') {
@@ -35,6 +39,12 @@ if (app.get('env') === 'development') {
     })
   })
 }
+
+global.webpackIsoTools = new IsoTools(isoConfig)
+  .development(process.env.NODE_ENV === 'development')
+  .server(require('path').resolve('.'), e => {
+    console.log('WebpackIso initialized')
+  })
 
 app.serve = () => {
   app.listen(app.port, () => console.log(`Listening on port ${app.port}`))
