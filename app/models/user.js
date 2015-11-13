@@ -1,20 +1,30 @@
+import { pick } from 'lodash'
+import bcrypt from 'bcrypt'
 import { Model } from './database'
 
 const User = Model.extend({
   tableName: 'users',
-  email: {
-    type: String,
-    index: true
+  initialize: function () {
+    this.on('creating', this.initPassword, this)
   },
-  username: {
-    type: String,
-    index: true
+  whitelist: [
+    'username', 'email', 'created_at', 'uuid'
+  ],
+  info () {
+    return pick(this.toJSON(), this.whitelist)
   },
-  password: {
-    type: String
+  initPassword (model, attrs, options) {
+    model.savePassword(model.get('password'))
+  },
+  savePassword (password = '') {
+    this.set('salt', bcrypt.genSaltSync(10))
+    this.set('password', this.createPassword(password))
+  },
+  createPassword (password = '') {
+    return bcrypt.hashSync(password, this.get('salt'))
   },
   verifyPassword (password) {
-    return this.attributes.password === password
+    return this.get('password') === this.createPassword(password)
   }
 })
 

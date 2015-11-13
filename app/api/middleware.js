@@ -10,9 +10,8 @@ passport.deserializeUser(function (user, done) {
   done(null, user)
 })
 
-export const auth = passport.use(new LocalStrategy(
+passport.use(new LocalStrategy(
   function (username, password, done) {
-    console.error('auth', username, password)
     User.where({ username: username }).fetch().then(function (user) {
       if (!user) { return done(null, false) }
       if (!user.verifyPassword(password)) { return done(null, false) }
@@ -20,3 +19,11 @@ export const auth = passport.use(new LocalStrategy(
     })
   }
 ))
+
+export const auth = passport.authenticate('local', {
+  failureRedirect: '/login'
+})
+
+export const apiAuth = passport.authenticate('local', {
+  session: false
+})

@@ -1,10 +1,15 @@
-// TODO: add passport
 import { Router } from 'express'
+import { apiAuth } from '../middleware'
 
-let session = Router()
+const session = Router()
 
-session.get('/', (req, res) => {
-  res.send([])
+session.post('/login', apiAuth, (req, res) => {
+  res.send({success: true})
+})
+
+session.get('/logout', function (req, res) {
+  req.logout()
+  res.redirect('/')
 })
 
 export default session

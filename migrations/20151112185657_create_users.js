@@ -7,6 +7,8 @@ exports.up = function (knex, Promise) {
     t.string('username').unique()
     t.string('password')
     t.string('email').unique()
+    t.string('salt')
+    t.string('hash')
     t.index('username')
   })
 }

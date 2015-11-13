@@ -4,6 +4,6 @@ import session from './session'
 
 const router = new Router()
 router.use('/users', users)
-router.use('/session', session)
+router.use('/', session)
 
 export default router
