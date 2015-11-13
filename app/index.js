@@ -8,6 +8,7 @@ import favicon from 'serve-favicon'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
+import passport from 'passport'
 import routing from './config/routing'
 import IsoTools from 'webpack-isomorphic-tools'
 import isoConfig from '../webpack-isomorphic-config'
@@ -26,6 +27,9 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(require('express-session')({ secret: 'keyboard cat' }))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/static', express.static('static'))
 app.use(routing)

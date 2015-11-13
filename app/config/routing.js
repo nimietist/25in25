@@ -11,7 +11,7 @@ import Root from '../containers/root'
 let app = express.Router()
 
 // API routing
-app.use('api', apiRoutes)
+app.use('/api', apiRoutes)
 
 // Default React Rendering
 app.use((req, res, next) => {

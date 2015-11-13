@@ -1,10 +1,11 @@
-// TODO: add passport
+import passport from 'passport'
+require('../middleware')
 import { Router } from 'express'
 
-let users = Router()
+const users = new Router()
 
-users.get('/', (req, res) => {
-  res.send([])
+users.post('/', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+  res.send(req.user)
 })
 
 users.get('/:id', (req, res) => {

@@ -1,6 +1,7 @@
-import mongoose from 'mongoose'
+import { Model } from './database'
 
-let UserSchema = new mongoose.Schema({
+const User = Model.extend({
+  tableName: 'users',
   email: {
     type: String,
     index: true
@@ -11,9 +12,10 @@ let UserSchema = new mongoose.Schema({
   },
   password: {
     type: String
+  },
+  verifyPassword (password) {
+    return this.attributes.password === password
   }
 })
-
-var User = mongoose.model('User', UserSchema)
 
 export default User
