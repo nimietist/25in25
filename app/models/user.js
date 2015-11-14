@@ -4,6 +4,7 @@ import { Model } from './database'
 
 const User = Model.extend({
   tableName: 'users',
+  hasTimestamps: true,
   initialize: function () {
     this.on('creating', this.initPassword, this)
   },

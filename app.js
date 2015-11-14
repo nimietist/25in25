@@ -12,8 +12,9 @@ import passport from 'passport'
 import routing from 'app/config/routing'
 import IsoTools from 'webpack-isomorphic-tools'
 import isoConfig from 'webpack-isomorphic-config'
+import session from 'express-session'
 
-let app = express()
+const app = express()
 
 socket(app)
 
@@ -27,7 +28,10 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(require('express-session')({ secret: 'keyboard cat' }))
+app.use(session({
+  secret: 'keyboard cat'
+}))
+
 app.use(passport.initialize())
 app.use(passport.session())
 

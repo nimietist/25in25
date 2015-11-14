@@ -14,7 +14,7 @@ export default class Root extends React.Component {
       <Provider store={store}>
         <div>
           <ReduxRouter routes={routes}/>
-          <DevTools />
+          {__DEVTOOLS__ && <DevTools />}
         </div>
       </Provider>
     )

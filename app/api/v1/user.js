@@ -1,12 +1,11 @@
 // import _ from 'lodash'
 import { Router } from 'express'
-import { apiAuth } from '../middleware'
 import { User } from 'app/models'
 
 const users = new Router()
 
 users.post('/', (req, res) => {
-  User.where({username: 'john'}).fetch().then(function (user) {
+  User.where({username: req.body.username}).fetch().then(function (user) {
     if (user) {
       return res.send(401, 'Already exists')
     }
@@ -19,8 +18,8 @@ users.post('/', (req, res) => {
   })
 })
 
-users.get('/:id', apiAuth, (req, res) => {
-  res.send(req.params.id)
+users.get('/', (req, res) => {
+  res.send(req.user)
 })
 
 export default users

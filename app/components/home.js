@@ -7,8 +7,6 @@ export default class Home extends React.Component {
     user: PropTypes.object
   }
   handleClick = (e) => {
-    const { actions } = this.props
-    actions.fetchUsers()
     e.preventDefault()
   }
   render () {

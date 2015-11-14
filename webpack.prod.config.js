@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var IsoToolsPlugin = require('webpack-isomorphic-tools/plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var isoConfig = require('./webpack-isomorphic-config')
 var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
 
@@ -24,6 +25,9 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
+    new ExtractTextPlugin('main.css', {
+      allChunks: true
+    }),
     isoToolsPlugin
   ],
   module: {
@@ -35,7 +39,15 @@ module.exports = {
       }
     }, {
       test: /\.less$/,
-      loader: 'style!css!less'
+      loader: ExtractTextPlugin.extract(
+        'css' +
+        '!less?outputStyle=expanded' +
+          '&includePaths[]=' +
+          encodeURIComponent(path.resolve(__dirname, './app/css'))
+      )
+    }, {
+      test: /\.css$/,
+      loader: ExtractTextPlugin.extract('css')
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url?limit=100000'

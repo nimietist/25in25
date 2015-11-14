@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
+import ReactMixin from 'react-mixin'
 import { Link } from 'react-router'
 import { Button, Input, Nav, NavBrand, Navbar } from 'react-bootstrap'
+import LinkedStateMixin from 'react-addons-linked-state-mixin'
 
 export default class NavBar extends React.Component {
   static propTypes = {
@@ -12,43 +14,58 @@ export default class NavBar extends React.Component {
     this.state = {}
   }
   logIn = (e) => {
-    // alert('TODO: sign in...')
-    const { actions } = this.props
-    // this.props.logIn()
     e.preventDefault()
-    actions.logIn()
+    const { actions } = this.props
+    if (!this.state.username) {
+      actions.notify({
+        type: 'warning',
+        message: 'Username required'
+      })
+      return
+    }
+    if (!this.state.password) {
+      actions.notify({
+        type: 'warning',
+        message: 'Password required'
+      })
+      return
+    }
+    actions.logIn({
+      username: this.state.username,
+      password: this.state.password
+    })
   }
   logOut = (e) => {
     const { actions } = this.props
     actions.logOut()
   }
-  loggedIn () {
+  userInfo () {
     return (
       <div>
         <a href='#' onClick={this.logOut} >
-          <Button>Hi, {this.props.user.name}</Button>
+          <Button>Hi, {this.props.user.username}</Button>
         </a>
       </div>
     )
   }
-  loggedOut () {
+  loginForm () {
     return (
       <form className='form' onSubmit={this.logIn}>
-        <Input type='text' ref='input' placeholder='Username'/>
-        <Input type='password' ref='input' placeholder='Password'/>
+        <Input type='text' name='username' placeholder='Username' valueLink={this.linkState('username')}/>
+        <Input type='password' name='password' placeholder='Password' valueLink={this.linkState('password')}/>
         <Button type='submit'>Sign In</Button>
       </form>
     )
   }
   signInSection () {
     return (
-      this.props.user.name ? this.loggedIn() : this.loggedOut()
+      this.props.user.username ? this.userInfo() : this.loginForm()
     )
   }
   render () {
     return (
       <Navbar navbar-fixed-top>
-        <NavBrand><a href='#'>25in25</a></NavBrand>
+        <NavBrand><Link to='/' href='#' >25in25</Link></NavBrand>
         <Nav>
           <li><Link to='/home'>Home</Link></li>
           <li><Link to='/hello'>Hello</Link></li>
@@ -59,3 +76,5 @@ export default class NavBar extends React.Component {
     )
   }
 }
+
+ReactMixin(NavBar.prototype, LinkedStateMixin)

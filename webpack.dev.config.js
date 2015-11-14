@@ -21,6 +21,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
+      __CLIENT__: true,
+      __SERVER__: false,
+      __DEVTOOLS__: false,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }
@@ -48,7 +51,7 @@ module.exports = {
         }
       }
     }, {
-      test: /\.less$/,
+      test: /\.(css|less|scss)$/,
       loader: 'style!css!less'
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,

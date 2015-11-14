@@ -1,23 +1,4 @@
-export function requestUsers () {
-  return {
-    type: 'REQUEST_USERS',
-    test: 123
-  }
-}
-
-export function completeRequestUsers () {
-  return { type: 'COMPLETE_USERS', test: 456 }
-}
-
-export function fetchUsers () {
-  return dispatch => {
-    dispatch(requestUsers())
-    setTimeout(function () {
-      dispatch(completeRequestUsers())
-      Promise.resolve()
-    }, 1000)
-  }
-}
+import getit from 'app/lib/fetch'
 
 export function completeLogin (user) {
   return {
@@ -32,20 +13,58 @@ export function completeLogout () {
   }
 }
 
-export function logIn (user) {
+export function logIn (form) {
   return dispatch => {
-    setTimeout(function () {
-      dispatch(completeLogin({name: 'dude'}))
+    return getit('/api/v1/login', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(form)
+    }).then(function (user) {
+      dispatch(completeLogin(user))
       Promise.resolve()
-    }, 1000)
+    }).catch(function (_err) {
+      dispatch(notify({
+        type: 'danger',
+        message: 'Invalid credentials'
+      }))
+      Promise.reject()
+    })
   }
 }
 
 export function logOut () {
   return dispatch => {
-    setTimeout(function () {
+    return getit('/api/v1/logout').then(function () {
       dispatch(completeLogout())
       Promise.resolve()
     }, 1000)
+  }
+}
+
+export function notify (alert) {
+  return {
+    type: 'NOTIFICATION',
+    alert: alert
+  }
+}
+
+export function clearNotifications () {
+  return {
+    type: 'CLEAR_NOTIFICATIONS'
+  }
+}
+
+export function getThings () {
+  return dispatch => {
+    return getit('/api/v1/things').then(things => {
+      dispatch({
+        type: 'SOMETHING',
+        data: things
+      })
+      return things
+    })
   }
 }
