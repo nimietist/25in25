@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ReactMixin from 'react-mixin'
 import { Link } from 'react-router'
-import { Button, Input, Nav, NavBrand, Navbar } from 'react-bootstrap'
+import { Button, Input, Nav, NavBrand, Navbar, NavDropdown, DropdownButton, MenuItem} from 'react-bootstrap'
 import LinkedStateMixin from 'react-addons-linked-state-mixin'
 
 export default class NavBar extends React.Component {
@@ -41,18 +41,20 @@ export default class NavBar extends React.Component {
   }
   userInfo () {
     return (
-      <div>
-        <a href='#' onClick={this.logOut} >
-          <Button>Hi, {this.props.user.username}</Button>
-        </a>
-      </div>
+      <Nav navbar right>
+        <NavDropdown title={<i className='fa fa-bars' />} noCaret='true'>
+          <MenuItem eventKey='1'><Link to='/me'>Account</Link></MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey='4' onClick={this.logOut}>Sign Out</MenuItem>
+        </NavDropdown>
+      </Nav>
     )
   }
   loginForm () {
     return (
-      <form className='form' onSubmit={this.logIn}>
-        <Input type='text' name='username' placeholder='Username' valueLink={this.linkState('username')}/>
-        <Input type='password' name='password' placeholder='Password' valueLink={this.linkState('password')}/>
+      <form className='navbar-form navbar-right' onSubmit={this.logIn}>
+        <Input className='form-control' type='text' name='username' placeholder='Username' valueLink={this.linkState('username')}/>
+        <Input className='form-control' type='password' name='password' placeholder='Password' valueLink={this.linkState('password')}/>
         <Button type='submit'>Sign In</Button>
       </form>
     )
@@ -67,9 +69,8 @@ export default class NavBar extends React.Component {
       <Navbar navbar-fixed-top>
         <NavBrand><Link to='/' href='#' >25in25</Link></NavBrand>
         <Nav>
-          <li><Link to='/home'>Home</Link></li>
-          <li><Link to='/hello'>Hello</Link></li>
-          <li><Link to='/404'>404</Link></li>
+          <li><Link to='/browse'>Browse</Link></li>
+          <li><Link to='/about'>About</Link></li>
         </Nav>
         {this.signInSection()}
       </Navbar>

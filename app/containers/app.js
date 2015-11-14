@@ -38,9 +38,6 @@ export default class App extends React.Component {
       resolve('fetch:app')
     })
   }
-  handleClick = (e) => {
-    return false
-  }
   handleAlertDismiss = (e) => {
     const { actions } = this.props
     actions.clearNotifications()
@@ -62,8 +59,9 @@ export default class App extends React.Component {
       <div>
         {this.renderAlerts()}
         <NavBar {...this.props}/>
-        <div className='app'>{this.renderChildren()}</div>
-        <a href='#' onClick={this.handleClick}>click</a>
+        <div className='app'>
+          {this.renderChildren()}
+        </div>
         <Footer/>
       </div>
     )

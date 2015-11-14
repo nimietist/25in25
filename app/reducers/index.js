@@ -5,6 +5,8 @@ function user (state = {}, action) {
   switch (action.type) {
     case 'COMPLETE_LOGIN':
       return action.user
+    case 'GET_USER_COMPLETE':
+      return action.user
     case 'COMPLETE_LOGOUT':
       return {}
     default:

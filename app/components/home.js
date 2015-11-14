@@ -12,7 +12,7 @@ export default class Home extends React.Component {
   render () {
     return (
       <div>
-        <Link to='/404'>
+        <Link to='/about'>
           <img src='http://img15.deviantart.net/f5da/i/2007/121/d/3/cousin_katamari_by_zetallis.jpg' />
         </Link>
         <a href='#' onClick={this.handleClick} >

@@ -1,6 +1,8 @@
+import uuid from 'uuid'
 import { pick } from 'lodash'
 import bcrypt from 'bcrypt'
 import { Model } from './database'
+import Artwork from './artwork'
 
 const User = Model.extend({
   tableName: 'users',
@@ -15,6 +17,7 @@ const User = Model.extend({
     return pick(this.toJSON(), this.whitelist)
   },
   initPassword (model, attrs, options) {
+    model.set('uuid', uuid.v4())
     model.savePassword(model.get('password'))
   },
   savePassword (password = '') {
@@ -26,6 +29,16 @@ const User = Model.extend({
   },
   verifyPassword (password) {
     return this.get('password') === this.createPassword(password)
+  },
+
+  follows: function () {
+    return this.belongsToMany(User, 'followers', 'user_id', 'follower_id')
+  },
+  followers: function () {
+    return this.belongsToMany(User, 'followers', 'follower_id', 'user_id')
+  },
+  artworks: function () {
+    return this.hasMany(Artwork)
   }
 })
 

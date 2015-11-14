@@ -1,2 +1,5 @@
 exports.db = require('./database')
 exports.User = require('./user')
+exports.Artwork = require('./artwork')
+exports.Comment = require('./comment')
+exports.Follower = require('./follower')

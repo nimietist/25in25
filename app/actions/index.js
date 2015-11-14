@@ -44,6 +44,22 @@ export function logOut () {
   }
 }
 
+export function completeGetUser (user) {
+  return {
+    type: 'GET_USER_COMPLETE',
+    user
+  }
+}
+
+export function getCurrentUser () {
+  return dispatch => {
+    return getit('/api/v1/users/current').then(function (user) {
+      dispatch(completeGetUser(user))
+      return user
+    })
+  }
+}
+
 export function notify (alert) {
   return {
     type: 'NOTIFICATION',

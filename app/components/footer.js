@@ -5,7 +5,9 @@ export default class Footer extends React.Component {
   render () {
     return (
       <div className='footer'>
-        Footer Here
+        <a href='#'>TOS</a> |
+        <a href='#'> Privacy Policy</a> |
+        © 2015 //getacluu. All Rights Reserved
       </div>
     )
   }
