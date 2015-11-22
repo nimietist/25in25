@@ -8,10 +8,11 @@ router.get('/', (req, res) => {
   if (req.user) {
     // show preferenced artwork
   }
-  const { limit = 50, offset = 0 } = req.body
+  const { limit = 50, offset = 0 } = req.query
   Artwork.collection().query({
-    limit, offset
+    username: req.params.username, limit, offset
   }).fetch().then(artworks => {
+    if (!artworks) { return res.send(401, 'Not found') }
     res.send(artworks.map(a => a.info()))
   })
 })
@@ -51,9 +52,5 @@ function getUniqueSlug (slug, count) {
     }
   })
 }
-
-router.get('/', (req, res) => {
-  res.send(req.user)
-})
 
 export default router

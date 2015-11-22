@@ -9,6 +9,8 @@ function user (state = {}, action) {
       return action.user
     case 'COMPLETE_LOGOUT':
       return {}
+    case 'COMPLETE_SIGNUP':
+      return action.user
     default:
       return state
   }
@@ -35,11 +37,33 @@ function things (state = {}, action) {
   }
 }
 
+function signup (state = {}, action) {
+  switch (action.type) {
+    case 'COMPLETE_SIGNUP':
+      return { success: true }
+    default:
+      return state
+  }
+}
+
+function forgotSent (state = false, action) {
+  switch (action.type) {
+    case 'FORGOT_SENT':
+      return true
+    case 'RESET_FORGOT_SENT':
+      return false
+    default:
+      return state
+  }
+}
+
 const reducers = combineReducers({
   router,
   alerts,
   user,
-  things
+  signup,
+  things,
+  forgotSent
 })
 
 export default reducers

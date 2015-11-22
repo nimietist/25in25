@@ -60,6 +60,35 @@ export function getCurrentUser () {
   }
 }
 
+export function signUp (form) {
+  return dispatch => {
+    return getit('/api/v1/users', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(form)
+    }).then(function (user) {
+      dispatch(completeSignup(user))
+      Promise.resolve()
+    }).catch(function (_err) {
+      dispatch(notify({
+        type: 'danger',
+        message: 'Invalid fields'
+      }))
+      Promise.reject()
+    })
+  }
+}
+
+export function completeSignup (user) {
+  return {
+    type: 'COMPLETE_SIGNUP',
+    user
+  }
+}
+
 export function notify (alert) {
   return {
     type: 'NOTIFICATION',
@@ -82,5 +111,28 @@ export function getThings () {
       })
       return things
     })
+  }
+}
+
+export function sendForgotPassword (email) {
+  return dispatch => {
+    return getit('/api/v1/forgot', {
+      method: 'post',
+      data: {email}
+    }).then(data => {
+      dispatch({
+        type: 'FORGOT_SENT'
+      })
+      // TODO: pushState?
+    })
+    .catch((er) => {
+
+    })
+  }
+}
+
+export function resetForgotSent () {
+  return {
+    type: 'RESET_FORGOT_SENT'
   }
 }

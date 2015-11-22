@@ -11,14 +11,16 @@ const User = Model.extend({
     this.on('creating', this.initPassword, this)
   },
   whitelist: [
-    'username', 'email', 'created_at', 'uuid'
+    'id', 'username', 'email', 'created_at', 'uuid'
   ],
   info () {
     return pick(this.toJSON(), this.whitelist)
   },
   initPassword (model, attrs, options) {
     model.set('uuid', uuid.v4())
-    model.savePassword(model.get('password'))
+    if (model.get('password')) {
+      model.savePassword(model.get('password'))
+    }
   },
   savePassword (password = '') {
     this.set('salt', bcrypt.genSaltSync(10))

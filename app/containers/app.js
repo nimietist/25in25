@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import NavBar from '../components/navbar'
 import Footer from '../components/footer'
 import FlashAlert from '../components/flashalert'
+import RouteCSSTransitionGroup from './route-css-transition-group'
 
 import * as actions from '../actions'
 
@@ -13,7 +14,8 @@ function mapStateToProps (state) {
     q: state.router.location.query.q,
     user: state.user,
     alerts: state.alerts,
-    things: state.things
+    things: state.things,
+    forgotSent: state.forgotSent
   }
 }
 
@@ -49,19 +51,23 @@ export default class App extends React.Component {
     })
   }
   renderChildren () {
-    const children = this.props.children
-    return children && React.cloneElement(children, {
-      user: this.props.user
-    })
+    const {children, ...props} = this.props
+    return children && React.cloneElement(children, props)
   }
   render () {
     return (
       <div>
         {this.renderAlerts()}
         <NavBar {...this.props}/>
-        <div className='app'>
+        <RouteCSSTransitionGroup
+          className='app'
+          component='div'
+          transitionName='example'
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}
+          >
           {this.renderChildren()}
-        </div>
+        </RouteCSSTransitionGroup>
         <Footer/>
       </div>
     )

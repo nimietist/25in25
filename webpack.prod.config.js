@@ -25,7 +25,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new ExtractTextPlugin('main.css', {
+    new ExtractTextPlugin('./app/main.css', {
       allChunks: true
     }),
     isoToolsPlugin
@@ -47,7 +47,7 @@ module.exports = {
       )
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('css')
+      loader: ExtractTextPlugin.extract('css-loader')
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url?limit=100000'

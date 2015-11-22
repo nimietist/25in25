@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => (
+export default (props) => (
   <div className='about container'>
     <h2>Our Story</h2>
     <p>
@@ -22,5 +22,6 @@ export default () => (
     <h4>
       Now go create something! If you ever have any questions or concerns, please feel free to email us at help@25in25.org.
     </h4>
+    {props.children}
   </div>
 )

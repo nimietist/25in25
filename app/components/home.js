@@ -11,7 +11,7 @@ export default class Home extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className='home'>
         <Link to='/about'>
           <img src='http://img15.deviantart.net/f5da/i/2007/121/d/3/cousin_katamari_by_zetallis.jpg' />
         </Link>

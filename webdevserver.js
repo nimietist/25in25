@@ -19,16 +19,24 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler))
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'))
-})
-
 app.post('/api/v1/login', function (req, res) {
   if (req.body.username) {
     res.send({username: req.body.username})
   } else {
     res.status(401).send('Unauthorized')
   }
+})
+
+app.get('/api/v1/logout', function (req, res) {
+  res.send({success: true})
+})
+
+app.post('/api/v1/user', function (req, res) {
+  res.send(req.body)
+})
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'))
 })
 
 app.listen(3000, 'localhost', function (err) {

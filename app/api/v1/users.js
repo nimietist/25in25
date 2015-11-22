@@ -4,6 +4,12 @@ import usersArtworks from './users/artworks'
 
 const users = new Router()
 
+users.get('/exists/:username', (req, res) => {
+  new User({username: req.params.username}).fetch().then(user => {
+    res.send({exists: !!user})
+  })
+})
+
 users.use('/:username', usersArtworks)
 
 users.get('/:username', (req, res) => {

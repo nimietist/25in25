@@ -12,7 +12,7 @@ export default class Root extends React.Component {
     const { store } = this.props
     return (
       <Provider store={store}>
-        <div>
+        <div className='tall'>
           <ReduxRouter routes={routes}/>
           {__DEVTOOLS__ && <DevTools />}
         </div>
