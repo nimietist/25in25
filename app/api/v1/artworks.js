@@ -9,9 +9,12 @@ router.get('/', (req, res) => {
     // show preferenced artwork
   }
   const { limit = 50, offset = 0 } = req.query
-  Artwork.collection().query({
-    username: req.params.username, limit, offset
-  }).fetch().then(artworks => {
+  const query = { limit, offset }
+
+  if (req.params.username) {
+    query.username = req.params.username
+  }
+  Artwork.collection().query(query).fetch().then(artworks => {
     if (!artworks) { return res.send(401, 'Not found') }
     res.send(artworks.map(a => a.info()))
   })

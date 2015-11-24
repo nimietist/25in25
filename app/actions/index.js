@@ -149,3 +149,17 @@ export function updatePassword (password) {
     })
   }
 }
+
+export function getArtworks (params) {
+  return dispatch => {
+    return getit('/api/v1/artworks', {
+      method: 'get',
+      data: params || {}
+    }).then(artworks => {
+      dispatch({
+        type: 'COMPLETE_GET_ARTWORKS',
+        artworks
+      })
+    })
+  }
+}

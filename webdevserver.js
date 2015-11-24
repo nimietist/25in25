@@ -31,6 +31,14 @@ app.get('/api/v1/logout', function (req, res) {
   res.send({success: true})
 })
 
+app.get('/api/v1/artworks', function (req, res) {
+  const works = []
+  for (var i = 0; i < 50; i++) {
+    works.push({ title: `title${i}`, username: 'username' })
+  }
+  res.send(works)
+})
+
 app.post('/api/v1/user', function (req, res) {
   res.send(req.body)
 })

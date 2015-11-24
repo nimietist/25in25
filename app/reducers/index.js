@@ -17,6 +17,16 @@ function user (state = {}, action) {
   }
 }
 
+function artworks (state = [], action) {
+  switch (action.type) {
+    case 'COMPLETE_GET_ARTWORKS':
+      return action.artworks
+      // return [{title: 'title', username: 'someone else'}]
+    default:
+      return state
+  }
+}
+
 function alerts (state = [], action) {
   switch (action.type) {
     case 'NOTIFICATION':
@@ -60,6 +70,7 @@ function forgotSent (state = false, action) {
 
 const reducers = combineReducers({
   alerts,
+  artworks,
   forgotSent,
   form,
   router,

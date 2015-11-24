@@ -63,6 +63,9 @@ export default class Signup extends React.Component {
           </div>
           </div>
         </div>
+        <div>
+          By joining 25in25, I acknowledge that I have read and agreed to the <a href='#'>TOS</a> + <a href='#'>Privacy Policy</a>
+        </div>
       </div>
     )
   }
