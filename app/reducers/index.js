@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerStateReducer as router } from 'redux-router'
+import { reducer as form } from 'redux-form'
 
 function user (state = {}, action) {
   switch (action.type) {
@@ -58,12 +59,13 @@ function forgotSent (state = false, action) {
 }
 
 const reducers = combineReducers({
-  router,
   alerts,
-  user,
+  forgotSent,
+  form,
+  router,
   signup,
   things,
-  forgotSent
+  user
 })
 
 export default reducers

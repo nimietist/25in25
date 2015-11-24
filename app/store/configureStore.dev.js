@@ -1,6 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux'
-import { persistState } from 'redux-devtools'
-import createLogger from 'redux-logger'
+// import { persistState } from 'redux-devtools'
+// import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import reducers from '../reducers'
 import routes from '../routes'
@@ -20,14 +20,10 @@ const middleware = [
 ]
 
 if (__DEVTOOLS__) {
-  const loggerMiddleware = createLogger({
-    predicate: (getState, action) => process.env.NODE_ENV === 'development'
-  })
-  middleware.push(loggerMiddleware)
   middleware.push(DevTools.instrument())
-}
-if (__CLIENT__ && __DEVTOOLS__) {
-  middleware.push(persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)))
+  // if (__CLIENT__) {
+  //   middleware.push(persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)))
+  // }
 }
 const finalCreateStore = compose(...middleware)(createStore)
 

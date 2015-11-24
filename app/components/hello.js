@@ -5,10 +5,6 @@ export default class Hello extends React.Component {
   static propTypes = {
     children: PropTypes.object
   }
-  constructor (props) {
-    super(props)
-    this.state = {count: 0}
-  }
   render () {
     return (
       <div>

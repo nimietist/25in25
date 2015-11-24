@@ -21,4 +21,9 @@ session.post('/forgot', function (req, res) {
   res.send({success: true})
 })
 
+session.post('/reset-password', function (req, res) {
+  // TODO: verify passwords, save to user queried by unique id
+  res.send({success: true})
+})
+
 export default session

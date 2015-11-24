@@ -1,9 +1,10 @@
 import React from 'react'
+import {Button} from 'react-bootstrap'
 
 export default (props) => (
   <div className='column'>
-    <a href='/auth/facebook' className='btn btn-facebook'>Sign up with Facebook</a>
-    <a href='/auth/twitter' className='btn btn-twitter'>Sign up with Twitter</a>
-    <a href='/auth/google' className='btn btn-google'>Sign up with Google</a>
+    <Button href='/auth/facebook' className='btn btn-facebook'>Sign up with Facebook</Button>
+    <Button href='/auth/twitter' className='btn btn-twitter'>Sign up with Twitter</Button>
+    <Button href='/auth/google' className='btn btn-google'>Sign up with Google</Button>
   </div>
 )

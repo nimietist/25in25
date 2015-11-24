@@ -12,12 +12,8 @@ export default class Thing extends React.Component {
   static fetchData (dispatch, getState) {
     return dispatch(getThings())
   }
-  constructor (props) {
-    super(props)
-    this.state = {count: 0}
-    if (!Object.keys(this.props.things).length) {
-      this.props.dispatch(getThings())
-    }
+  componentDidMount (props) {
+    this.props.dispatch(getThings())
   }
   render () {
     return <div>THING HERE!: {JSON.stringify(this.props.things)} {this.props.params.id}</div>

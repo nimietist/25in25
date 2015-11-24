@@ -1,20 +1,34 @@
 import React, { PropTypes } from 'react'
-import ReactMixin from 'react-mixin'
-import LinkedStateMixin from 'react-addons-linked-state-mixin'
 import { Link } from 'react-router'
-// import * as bootstrap from 'react-bootstrap'
+import { validateEmail } from 'app/lib/utils'
+import { reduxForm } from 'redux-form'
+import {Input, Button} from 'react-bootstrap'
 
+const fields = ['username', 'email', 'password']
+
+const validate = values => {
+  const errors = {}
+  if (!values.username) {
+    errors.username = 'Required'
+  }
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!validateEmail(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+  if (!values.password) {
+    errors.age = 'Required'
+  } else if (values.password.length < 3) {
+    errors.password = 'Password must be at least 3 characters long'
+  }
+  return errors
+}
+
+@reduxForm({form: 'signup', fields, validate})
 export default class Signup extends React.Component {
   static propTypes = {
-    actions: PropTypes.object
-  }
-  constructor (props) {
-    super(props)
-    this.state = {
-      username: '',
-      email: '',
-      password: ''
-    }
+    actions: PropTypes.object,
+    fields: PropTypes.object
   }
   signUp = (e) => {
     // TODO: validate fields
@@ -27,6 +41,7 @@ export default class Signup extends React.Component {
     return false
   }
   render () {
+    const {fields: {username, email, password}} = this.props
     return (
       <div className='container'>
         <h2 className='row'>Start creating today! Sign up below.</h2>
@@ -37,10 +52,10 @@ export default class Signup extends React.Component {
             <a href='/auth/google' className='btn btn-google'>Sign up with Google</a>
           <div className='column'>
             <form ref='signupForm' onSubmit={this.signUp}>
-              <input type='text' name='username' valueLink={this.linkState('username')} placeholder='Username'/>
-              <input type='email' name='email' valueLink={this.linkState('email')} placeholder='Email'/>
-              <input type='password' name='password' valueLink={this.linkState('password')} placeholder='Password'/>
-              <button type='submit'>Sign up!</button>
+              <Input type='text' name='username' {...username} placeholder='Username'/>
+              <Input type='email' name='email' {...email} placeholder='Email'/>
+              <Input type='password' name='password' {...password} placeholder='Password'/>
+              <Button type='submit'>Sign up!</Button>
             </form>
             <div>
               Already have an account? <Link to='/login'>Log in</Link>.
@@ -52,5 +67,3 @@ export default class Signup extends React.Component {
     )
   }
 }
-
-ReactMixin(Signup.prototype, LinkedStateMixin)

@@ -1,39 +1,36 @@
 import React, { PropTypes } from 'react'
-import {reduxForm} from 'redux-form'
-import {Input, Button} from 'react-bootstrap'
+import { reduxForm } from 'redux-form'
 
-const fields = ['email']
+const fields = ['username', 'email', 'password', 'passwordConfirm']
+
 const validate = values => {
   const errors = {}
   return errors
 }
-@reduxForm({form: 'forgot', fields, validate})
+
+@reduxForm({form: 'reset', fields, validate})
 export default class Forgot extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
-    fields: PropTypes.object,
     forgotSent: PropTypes.bool
-  }
-  constructor (props) {
-    super(props)
   }
   componentWillUnmount (nextProps) {
     this.props.actions.resetForgotSent()
   }
-  sendEmail = (e) => {
+  updatePassword = (e) => {
     e.preventDefault()
-    this.props.actions.sendForgotPassword(this.props.fields.email)
+    this.props.actions.updatePassword(this.state.email)
   }
   renderForm () {
-    const {fields: {email}} = this.props
     return (
       <div>
         <p>
           No sweat. Let us know the email address you registered with and we’ll send you a link to reset your password.
         </p>
-        <form onSubmit={this.sendEmail}>
-          <Input className='form-control' type='email' name='email' placeholder='Email' {...email}/>
-          <Button type='submit'>Send</Button>
+        <form onSubmit={this.updatePassword}>
+          <input type='password' name='password' placeholder='New Password' valueLink={this.linkState('password')}/>
+          <input type='password' name='password-confirm' placeholder='Confirm Password' valueLink={this.linkState('passwordConfirm')}/>
+          <button type='submit'>Send</button>
         </form>
       </div>
     )
@@ -48,7 +45,7 @@ export default class Forgot extends React.Component {
   render () {
     return (
       <div>
-        <h2>Forgot your password?</h2>
+        <h2>Reset Password</h2>
         {this.props.forgotSent ? this.completeMessage() : this.renderForm()}
       </div>
     )

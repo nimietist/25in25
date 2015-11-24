@@ -136,3 +136,16 @@ export function resetForgotSent () {
     type: 'RESET_FORGOT_SENT'
   }
 }
+
+export function updatePassword (password) {
+  return dispatch => {
+    return getit('/api/v1/reset-password', {
+      method: 'post',
+      data: {password}
+    }).then(data => {
+      dispatch({
+        type: 'FORGOT_SENT'
+      })
+    })
+  }
+}

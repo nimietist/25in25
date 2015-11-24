@@ -8,6 +8,7 @@ import Modal from './containers/modal'
 import Signup from './components/signup'
 import Login from './components/login'
 import Forgot from './components/forgot'
+import Reset from './components/reset'
 // import NotFound from './components/not-found'
 
 // TODO: Add Unauthorized wrapper
@@ -26,6 +27,7 @@ export default (
     <Route path='/signup' component={Signup} />
     <Route path='/login' component={Login} />
     <Route path='/forgot' component={Forgot} />
+    <Route path='/reset' component={Reset} />
     <Route path='*' component={Home} />
   </Route>
 )
