@@ -27,12 +27,11 @@ export default class Login extends React.Component {
     fields: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired
   }
-  logIn = (e) => {
-    // TODO: validate fields
-    e.preventDefault()
+  logIn = () => {
+    const {fields: {username, password}} = this.props
     this.props.actions.logIn({
-      username: this.state.username,
-      password: this.state.password
+      username: username.value,
+      password: password.value
     })
     return false
   }
@@ -44,7 +43,7 @@ export default class Login extends React.Component {
         <div className='row'>
           <SocialButtons />
           <div className='column'>
-            <form ref='loginForm' onSubmit={this.logIn}>
+            <form ref='loginForm' onSubmit={this.props.handleSubmit(this.logIn)}>
               <Input type='text' {...username} placeholder='Username'/>
               <Input type='password' {...password} placeholder='Password'/>
               <Button type='submit'>Log In</Button>

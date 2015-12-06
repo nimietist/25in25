@@ -18,8 +18,8 @@ export default class NavBar extends React.Component {
   userInfo () {
     return (
       <Nav navbar right>
-        <NavDropdown title={this.avatar()} noCaret={true}>
-          <MenuItem eventKey='1'><Link to='/me'>Account</Link></MenuItem>
+        <NavDropdown title={this.avatar()} noCaret={1}>
+          <MenuItem eventKey='1'><Link to='/account'>Account</Link></MenuItem>
           <MenuItem divider />
           <MenuItem eventKey='4' onClick={this.logOut}>Sign Out</MenuItem>
         </NavDropdown>
@@ -47,7 +47,6 @@ export default class NavBar extends React.Component {
         <Nav>
           <li><Link to='/browse'>Browse</Link></li>
           <li><Link to='/about'>About</Link></li>
-          <li><Link to='/modal'>Modal</Link></li>
         </Nav>
         {this.signInSection()}
       </Navbar>

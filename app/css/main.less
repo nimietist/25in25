@@ -18,16 +18,49 @@ body, html {
   height: 100%;
 }
 
-.about, .home {
-  padding: 10px;
-  background: @gray;
-}
-
 .footer {
   background-color: @gray;
   text-align: right;
   padding: 20px;
   height: 60px;
+}
+
+// 5x5 grid system
+
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
 }
 
 // Route css transition group
@@ -37,13 +70,13 @@ body, html {
   transition-duration: .3s;
   transition-property: transform, opacity;
   transition-timing-function: ease-out;
-  transform: translate3d(20%,0,0);
+  // transform: translate3d(20%,0,0);
   opacity: 0;
   z-index: 10;
 }
 
 .example-enter.example-enter-active {
-  transform: translate3d(0,0,0);
+  // transform: translate3d(0,0,0);
   opacity: 1;
 }
 
@@ -52,13 +85,30 @@ body, html {
   transition-duration: .3s;
   transition-property: transform, opacity;
   transition-timing-function: ease-out;
-  transform: translate3d(0,0,0);
+  // transform: translate3d(0,0,0);
   opacity: 0;
 }
 
 .example-leave.example-leave-active {
-  transform: translate3d(-15%,0,0);
+  // transform: translate3d(-15%,0,0);
   opacity: 0.3;
+}
+
+//artworks
+
+.artwork {
+  .info {
+    background-color: #89acdd;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align:center;
+  }
+  .dummy {
+    margin-top: 100%;
+  }
 }
 
 img.avatar {

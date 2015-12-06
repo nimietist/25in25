@@ -13,10 +13,11 @@ const validate = values => {
 }
 
 @connect(state => ({ user: state.user }))
-@reduxForm({form: 'account', fields, validate})
+@reduxForm({form: 'account', fields, validate}, state => ({initialValues: state.user.email}))
 export default class Account extends React.Component {
   static propTypes = {
     fields: PropTypes.object,
+    handleSubmit: PropTypes.func.isRequired,
     dispatch: PropTypes.func,
     params: PropTypes.object, // from react-router route
     user: PropTypes.object
@@ -27,18 +28,38 @@ export default class Account extends React.Component {
   componentDidMount () {
     this.props.dispatch(actions.getCurrentUser())
   }
+  onDeactivateClicked () {
+    // TODO: open modal confirmation
+  }
+  deactivateAccount () {
+    this.props.dispatch(actions.deactivateAccount())
+  }
+  savePreferences () {
+    this.props.dispatch(actions.updateUser())
+  }
+  renderProfileImageUpload () {
+    // TODO: add image upload feature
+    return null
+  }
   render () {
-    const {fields: {email}} = this.props
+    const {fields: {email, passwordOld, passwordNew, passwordConfirm}} = this.props
     return (
       <div>
         <h2>Account Settings</h2>
         Hello {get(this, 'props.user.username')}
         <div className='col-md-4'>
-          <form>
+          <form onSubmit={this.props.handleSubmit(this.savePreferences)}>
             <Input label='Change Email' type='email' {...email} placeholder='Email' />
-            <Button type='submit'>Update Settings</Button>
+            <Input label='Change Password' type='password' {...passwordOld} placeholder='Old Password' />
+            <Input type='password' {...passwordNew} placeholder='New Password' />
+            <Input type='password' {...passwordConfirm} placeholder='Confirm Password' />
+            <Input label='Email Notifications' />
+            <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox'/>
+            {this.renderProfileImageUpload}
+            <Button type='submit'>Save</Button>
           </form>
         </div>
+        <a href='#' onClick={this.onDeactivateClicked}>I want to deactivate my account</a>
       </div>
     )
   }

@@ -44,6 +44,10 @@ export default class RouteCSSTransitionGroup extends React.Component {
   }
 
   componentDidUpdate () {
+    this.breakPrevious()
+  }
+
+  breakPrevious () {
     if (this.state.previousPathname) {
       this.setState({ previousPathname: null })
     }

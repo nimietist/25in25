@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { Jumbotron } from 'react-bootstrap'
 import ArtGrid from './art-grid'
 import * as actions from '../actions'
 
@@ -25,6 +26,12 @@ export default class Home extends React.Component {
   render () {
     return (
       <div className='home'>
+        <Jumbotron>
+          Lorem Ipsum
+          <div>
+            Countdown here
+          </div>
+        </Jumbotron>
         <ArtGrid artworks={this.props.artworks} />
         <Link to='/about'>
           <img src='http://img15.deviantart.net/f5da/i/2007/121/d/3/cousin_katamari_by_zetallis.jpg' />

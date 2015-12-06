@@ -15,7 +15,6 @@ export default class extends React.Component {
     // this.props.history.goBack()
   }
   render () {
-    console.error(this.props.history);
     return (
       <Modal
         isOpen={this.state.open}
