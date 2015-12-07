@@ -7,11 +7,30 @@ function user (state = {}, action) {
     case 'COMPLETE_LOGIN':
       return action.user
     case 'GET_USER_COMPLETE':
-      return action.user
+      if (action.me) {
+        return action.user
+      } else {
+        return state
+      }
+      break
     case 'COMPLETE_LOGOUT':
       return {}
     case 'COMPLETE_SIGNUP':
       return action.user
+    default:
+      return state
+  }
+}
+
+function currentUser (state = {}, action) {
+  switch (action.type) {
+    case 'GET_USER_COMPLETE':
+      if (!action.me) {
+        return action.user
+      } else {
+        return state
+      }
+      break
     default:
       return state
   }
@@ -71,6 +90,7 @@ function forgotSent (state = false, action) {
 const reducers = combineReducers({
   alerts,
   artworks,
+  currentUser,
   forgotSent,
   form,
   router,

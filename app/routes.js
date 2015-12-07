@@ -9,6 +9,7 @@ import Login from './components/login'
 import Forgot from './components/forgot'
 import Reset from './components/reset'
 import UserPage from './components/user-page'
+import Upload from './components/upload'
 // import NotFound from './components/not-found'
 
 // TODO: Add Unauthorized wrapper
@@ -22,7 +23,8 @@ export default (
     <Route path='/login' component={Login} />
     <Route path='/forgot' component={Forgot} />
     <Route path='/reset' component={Reset} />
-    <Route path='*' component={Home} />
     <Route path='/user/:username' component={UserPage} />
+    <Route path='/upload' component={Upload} />
+    <Route path='*' component={Home} />
   </Route>
 )

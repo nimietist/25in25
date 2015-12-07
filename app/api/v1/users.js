@@ -37,6 +37,28 @@ users.post('/', (req, res) => {
   })
 })
 
+users.put('/:id', (req, res) => {
+  if (req.user.id !== Number(req.params.id)) {
+    return res.status(401).send('401 Forbidden')
+  }
+  User.where({ id: req.params.id }).fetch().then(function (user) {
+    if (!user) {
+      return res.status(404).send('No such user')
+    }
+
+    if (req.body.passwordNew && req.body.password) {
+      if (user.verifyPassword(req.body.password)) {
+        user.savePassword(req.body.passwordNew)
+      }
+    }
+    user.save({
+      email: req.body.email
+    }).then(user => {
+      res.status(200).send(user.info())
+    })
+  })
+})
+
 users.get('/', (req, res) => {
   res.send(req.user)
 })

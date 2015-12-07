@@ -28,15 +28,15 @@ const validate = values => {
 export default class Signup extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
+    handleSubmit: PropTypes.func,
     fields: PropTypes.object
   }
   signUp = (e) => {
-    // TODO: validate fields
-    e.preventDefault()
+    const {fields: {username, email, password}} = this.props
     this.props.actions.signUp({
-      email: this.state.email,
-      username: this.state.username,
-      password: this.state.password
+      email: email.value,
+      username: username.value,
+      password: password.value
     })
     return false
   }
@@ -51,10 +51,10 @@ export default class Signup extends React.Component {
             <a href='/auth/twitter' className='btn btn-twitter'>Sign up with Twitter</a>
             <a href='/auth/google' className='btn btn-google'>Sign up with Google</a>
           <div className='column'>
-            <form ref='signupForm' onSubmit={this.signUp}>
-              <Input type='text' name='username' {...username} placeholder='Username'/>
-              <Input type='email' name='email' {...email} placeholder='Email'/>
-              <Input type='password' name='password' {...password} placeholder='Password'/>
+            <form ref='signupForm' onSubmit={this.props.handleSubmit(this.signUp)}>
+              <Input type='text' {...username} placeholder='Username'/>
+              <Input type='email' {...email} placeholder='Email'/>
+              <Input type='password' {...password} placeholder='Password'/>
               <Button type='submit'>Sign up!</Button>
             </form>
             <div>

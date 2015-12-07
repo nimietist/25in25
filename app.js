@@ -13,6 +13,9 @@ import routing from 'app/config/routing'
 import IsoTools from 'webpack-isomorphic-tools'
 import isoConfig from 'webpack-isomorphic-config'
 import session from 'express-session'
+import connectRedis from 'connect-redis'
+
+const RedisStore = connectRedis(session)
 
 const app = express()
 
@@ -29,6 +32,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(session({
+  store: new RedisStore({url: process.env.REDIS_URL}),
   secret: 'keyboard cat'
 }))
 

@@ -1,19 +1,27 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import * as actions from '../actions'
 import { get } from 'lodash'
 import {Input, Button} from 'react-bootstrap'
 
-const fields = ['username', 'email', 'password', 'passwordConfirm']
+const fields = ['username', 'email', 'passwordOld', 'passwordNew', 'passwordConfirm']
 
 const validate = values => {
   const errors = {}
+  if (values.passwordNew !== values.passwordConfirm) {
+    errors.passwordConfirm = 'Passwords do not match'
+  }
   return errors
 }
 
-@connect(state => ({ user: state.user }))
-@reduxForm({form: 'account', fields, validate}, state => ({initialValues: state.user.email}))
+// @connect(state => ({ user: state.user }))
+@reduxForm({form: 'account', fields, validate}, state => {
+  return {
+    initialValues: state.user,
+    user: state.user
+  }
+})
 export default class Account extends React.Component {
   static propTypes = {
     fields: PropTypes.object,
@@ -34,8 +42,12 @@ export default class Account extends React.Component {
   deactivateAccount () {
     this.props.dispatch(actions.deactivateAccount())
   }
-  savePreferences () {
-    this.props.dispatch(actions.updateUser())
+  savePreferences = () => {
+    this.props.dispatch(actions.updateUser(this.props.user.id, {
+      email: this.props.fields.email.value,
+      password: this.props.fields.passwordOld.value,
+      passwordNew: this.props.fields.passwordNew.value
+    }))
   }
   renderProfileImageUpload () {
     // TODO: add image upload feature

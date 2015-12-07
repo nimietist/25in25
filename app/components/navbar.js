@@ -13,12 +13,12 @@ export default class NavBar extends React.Component {
   }
   avatar = () => {
     let image_url = this.props.user.image_url
-    return image_url ? <img className='avatar avatar-small' src={image_url} /> : <i className='fa fa-bars' />
+    return image_url ? <img className='avatar avatar-sm' src={image_url} /> : <i className='fa fa-bars' />
   }
   userInfo () {
     return (
       <Nav navbar right>
-        <NavDropdown title={this.avatar()} noCaret={1}>
+        <NavDropdown title={this.avatar()} noCaret={true} id='navbar'>
           <MenuItem eventKey='1'><Link to='/account'>Account</Link></MenuItem>
           <MenuItem divider />
           <MenuItem eventKey='4' onClick={this.logOut}>Sign Out</MenuItem>

@@ -5,6 +5,9 @@ const fields = ['username', 'email', 'password', 'passwordConfirm']
 
 const validate = values => {
   const errors = {}
+  if (values.password !== values.passwordConfirm) {
+    errors.password = 'Passwords do not match'
+  }
   return errors
 }
 
@@ -12,24 +15,27 @@ const validate = values => {
 export default class Forgot extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
     forgotSent: PropTypes.bool
   }
   componentWillUnmount (nextProps) {
     this.props.actions.resetForgotSent()
   }
   updatePassword = (e) => {
-    e.preventDefault()
-    this.props.actions.updatePassword(this.state.email)
+    const {fields: {password}} = this.props
+    this.props.actions.updatePassword(password)
   }
   renderForm () {
+    const {fields: {password, passwordConfirm}} = this.props
     return (
       <div>
         <p>
           No sweat. Let us know the email address you registered with and we’ll send you a link to reset your password.
         </p>
-        <form onSubmit={this.updatePassword}>
-          <input type='password' name='password' placeholder='New Password' valueLink={this.linkState('password')}/>
-          <input type='password' name='password-confirm' placeholder='Confirm Password' valueLink={this.linkState('passwordConfirm')}/>
+        <form onSubmit={this.props.handleSubmit(this.updatePassword)}>
+          <input type='password' {...password} placeholder='New Password' />
+          <input type='password' {...passwordConfirm} placeholder='Confirm Password' />
           <button type='submit'>Send</button>
         </form>
       </div>

@@ -12,6 +12,7 @@ export default class Forgot extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
     fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
     forgotSent: PropTypes.bool
   }
   constructor (props) {
@@ -21,7 +22,6 @@ export default class Forgot extends React.Component {
     this.props.actions.resetForgotSent()
   }
   sendEmail = (e) => {
-    e.preventDefault()
     this.props.actions.sendForgotPassword(this.props.fields.email)
   }
   renderForm () {
@@ -31,7 +31,7 @@ export default class Forgot extends React.Component {
         <p>
           No sweat. Let us know the email address you registered with and we’ll send you a link to reset your password.
         </p>
-        <form onSubmit={this.sendEmail}>
+        <form onSubmit={this.props.handleSubmit(this.sendEmail)}>
           <Input className='form-control' type='email' name='email' placeholder='Email' {...email}/>
           <Button type='submit'>Send</Button>
         </form>

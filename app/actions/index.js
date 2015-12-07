@@ -44,9 +44,10 @@ export function logOut () {
   }
 }
 
-export function completeGetUser (user) {
+export function completeGetUser (user, me = false) {
   return {
     type: 'GET_USER_COMPLETE',
+    me,
     user
   }
 }
@@ -54,6 +55,31 @@ export function completeGetUser (user) {
 export function getCurrentUser () {
   return dispatch => {
     return getit('/api/v1/users/current').then(function (user) {
+      dispatch(completeGetUser(user, true))
+      return user
+    })
+  }
+}
+
+export function getUser (username) {
+  return dispatch => {
+    return getit(`/api/v1/users/${username}`).then(function (user) {
+      dispatch(completeGetUser(user))
+      return user
+    })
+  }
+}
+
+export function updateUser (id, body) {
+  return dispatch => {
+    return getit(`/api/v1/users/${id}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'put',
+      body: JSON.stringify(body)
+    }).then(function (user) {
       dispatch(completeGetUser(user))
       return user
     })
@@ -152,7 +178,7 @@ export function updatePassword (password) {
 
 export function getArtworks (params) {
   return dispatch => {
-    return getit('/api/v1/artworks', {
+    return getit(`/api/v1/artworks`, {
       method: 'get',
       data: params || {}
     }).then(artworks => {
