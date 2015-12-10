@@ -4,6 +4,7 @@ import { Nav, NavBrand, Navbar, NavDropdown, MenuItem } from 'react-bootstrap'
 
 export default class NavBar extends React.Component {
   static propTypes = {
+    location: PropTypes.object,
     actions: PropTypes.object,
     user: PropTypes.object
   }
@@ -31,7 +32,7 @@ export default class NavBar extends React.Component {
       <div className='navbar-form navbar-right'>
         Not a member? <Link to='/signup'>Sign up</Link> today!
         &nbsp;
-        <Link to='/login' className='btn btn-primary'>Log In</Link>
+        <Link to='/login' className='btn btn-primary' state={{modal: true, returnTo: this.props.location.pathname}}>Log In</Link>
       </div>
     )
   }
@@ -45,8 +46,8 @@ export default class NavBar extends React.Component {
       <Navbar navbar-fixed-top>
         <NavBrand><Link to='/' href='#' >25in25</Link></NavBrand>
         <Nav>
-          <li><Link to='/browse'>Browse</Link></li>
-          <li><Link to='/about'>About</Link></li>
+          <li><Link activeClassName='active' to='/browse'>Browse</Link></li>
+          <li><Link activeClassName='active' to='/about'>About</Link></li>
         </Nav>
         {this.signInSection()}
       </Navbar>

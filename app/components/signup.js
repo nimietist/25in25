@@ -58,7 +58,7 @@ export default class Signup extends React.Component {
               <Button type='submit'>Sign up!</Button>
             </form>
             <div>
-              Already have an account? <Link to='/login'>Log in</Link>.
+              Already have an account? <Link to='/login' state={{modal: true}}>Log in</Link>.
             </div>
           </div>
           </div>

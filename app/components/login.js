@@ -52,7 +52,7 @@ export default class Login extends React.Component {
               <Link to='/forgot'>I forgot my password.</Link>
             </div>
             <div>
-              Don't have an account? <Link to='/signup'>Sign up</Link>.
+              Don't have an account? <Link to='/signup' state={{modal: true}}>Sign up</Link>.
             </div>
           </div>
         </div>
