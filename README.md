@@ -11,9 +11,8 @@
 
 ## Development
 
-    npm start
-
-    DEBUG=* gulp dev
+    node server (api)
+    node webdevserver (webpack server)
 
 ## Test
 

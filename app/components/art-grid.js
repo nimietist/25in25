@@ -11,7 +11,7 @@ class ArtGrid extends React.Component {
         {
           this.props.artworks.map(artwork => (
             <ArtSquare
-              key={artwork.title}
+              key={artwork.id}
               artwork={artwork}
               />
           )
