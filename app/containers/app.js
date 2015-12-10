@@ -22,7 +22,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch),
-    pushState
+    pushState: bindActionCreators(pushState, dispatch)
   }
 }
 
@@ -33,6 +33,7 @@ export default class App extends React.Component {
     children: PropTypes.node,
     actions: PropTypes.object,
     alerts: PropTypes.array,
+    pushState: PropTypes.func,
     user: PropTypes.object
   }
   static fetchData (dispatch) {
@@ -69,6 +70,7 @@ export default class App extends React.Component {
           transitionName='example'
           transitionEnterTimeout={200}
           transitionLeaveTimeout={1}
+          pushState={this.props.pushState}
           >
           {this.renderChildren()}
         </RouteCSSTransitionGroup>

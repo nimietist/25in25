@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Jumbotron } from 'react-bootstrap'
 
 export default class Count extends React.Component {

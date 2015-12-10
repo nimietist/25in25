@@ -1,23 +1,15 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-// import StaticContainer from 'react-static-container'
-import Modal from 'react-modal'
+import { Modal } from 'react-bootstrap'
 
 export default class RouteCSSTransitionGroup extends React.Component {
   static contextTypes = {
-    location: React.PropTypes.object
+    location: PropTypes.object
   }
 
   static propTypes = {
-    children: React.PropTypes.object
-  }
-
-  constructor (props, context) {
-    super(props, context)
-
-    this.state = {
-      previousPathname: null
-    }
+    children: PropTypes.object,
+    pushState: PropTypes.func
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
@@ -29,6 +21,10 @@ export default class RouteCSSTransitionGroup extends React.Component {
         }
       }
     }
+  }
+
+  close = () => {
+    this.props.pushState(null, this.previousPathname)
   }
 
   render () {
@@ -48,8 +44,11 @@ export default class RouteCSSTransitionGroup extends React.Component {
             {isModal ? this.previousChildren : children}
           </div>
         </ReactCSSTransitionGroup>
-        {isModal && (
-          <Modal style={{content: {bottom: '500px'}}} isOpen={true} returnTo={location.state.returnTo}>
+        {(
+          <Modal
+            show={!!isModal}
+            onHide={this.close}
+          >
             {children}
           </Modal>
         )}

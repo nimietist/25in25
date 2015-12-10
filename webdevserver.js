@@ -34,7 +34,7 @@ app.get('/api/v1/logout', function (req, res) {
 app.get('/api/v1/artworks', function (req, res) {
   const works = []
   for (var i = 0; i < 50; i++) {
-    works.push({ title: `title${i}`, username: 'username' })
+    works.push({ id: i, title: `title${i}`, username: 'username' })
   }
   res.send(works)
 })

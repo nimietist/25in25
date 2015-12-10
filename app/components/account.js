@@ -59,7 +59,7 @@ export default class Account extends React.Component {
       <div>
         <h2>Account Settings</h2>
         Hello {get(this, 'props.user.username')}
-        <div className='col-md-4'>
+        <div>
           <form onSubmit={this.props.handleSubmit(this.savePreferences)}>
             <Input label='Change Email' type='email' {...email} placeholder='Email' />
             <Input label='Change Password' type='password' {...passwordOld} placeholder='Old Password' />
