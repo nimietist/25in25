@@ -25,6 +25,7 @@ export default class Login extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
     fields: PropTypes.object,
+    modal: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired
   }
   logIn = () => {
@@ -38,7 +39,8 @@ export default class Login extends React.Component {
   render () {
     const {fields: {username, password}} = this.props
     return (
-      <div className='container'>
+      <div>
+        {this.props.modal ? 'Im modal' : ''}
         <h2 className='row'>Start creating today! Sign up below.</h2>
         <div className='row'>
           <SocialButtons />
@@ -49,7 +51,7 @@ export default class Login extends React.Component {
               <Button type='submit'>Log In</Button>
             </form>
             <div>
-              <Link to='/forgot'>I forgot my password.</Link>
+              <Link to='/forgot' state={{modal: true}}>I forgot my password.</Link>
             </div>
             <div>
               Don't have an account? <Link to='/signup' state={{modal: true}}>Sign up</Link>.

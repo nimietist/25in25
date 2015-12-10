@@ -53,11 +53,7 @@ export default class App extends React.Component {
   }
   renderChildren () {
     const {children, ...props} = this.props
-    return (
-      <div className='container'>
-        {children && React.cloneElement(children, props)}
-      </div>
-    )
+    return children && React.cloneElement(children, props)
   }
   render () {
     return (

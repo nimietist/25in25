@@ -32,7 +32,7 @@ export default class NavBar extends React.Component {
   signInBar () {
     return (
       <div className='navbar-form navbar-right'>
-        Not a member? <Link to='/signup'>Sign up</Link> today!
+        Not a member? <Link to='/signup' state={{modal: true}}>Sign up</Link> today!
         &nbsp;
         <Link to='/login' className='btn btn-primary' state={{modal: true, returnTo: this.props.location.pathname}}>Log In</Link>
       </div>

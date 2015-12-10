@@ -36,11 +36,10 @@ export default class RouteCSSTransitionGroup extends React.Component {
       location.state.modal &&
       this.previousChildren
     )
-
     return (
       <div>
         <ReactCSSTransitionGroup {...props}>
-          <div className='routeWrapper' key={isModal ? this.previousPathname : location.pathname}>
+          <div className='container' key={isModal ? this.previousPathname : location.pathname}>
             {isModal ? this.previousChildren : children}
           </div>
         </ReactCSSTransitionGroup>
@@ -49,7 +48,9 @@ export default class RouteCSSTransitionGroup extends React.Component {
             show={!!isModal}
             onHide={this.close}
           >
-            {children}
+            <Modal.Body>
+              {React.cloneElement(children, {modal: true})}
+            </Modal.Body>
           </Modal>
         )}
       </div>
