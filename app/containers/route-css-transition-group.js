@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Modal } from 'react-bootstrap'
+import StaticContainer from 'react-static-container'
 
 export default class RouteCSSTransitionGroup extends React.Component {
   static contextTypes = {
@@ -10,6 +11,12 @@ export default class RouteCSSTransitionGroup extends React.Component {
   static propTypes = {
     children: PropTypes.object,
     pushState: PropTypes.func
+  }
+
+  constructor (props, context) {
+    super(props, context)
+
+    this.shouldUpdate = true
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
@@ -24,7 +31,11 @@ export default class RouteCSSTransitionGroup extends React.Component {
   }
 
   close = () => {
+    this.shouldUpdate = false
     this.props.pushState(null, this.previousPathname)
+    setTimeout(() => {
+      this.shouldUpdate = true
+    }, 1)
   }
 
   render () {
@@ -36,11 +47,14 @@ export default class RouteCSSTransitionGroup extends React.Component {
       location.state.modal &&
       this.previousChildren
     )
+
     return (
       <div>
         <ReactCSSTransitionGroup {...props}>
-          <div className='container' key={isModal ? this.previousPathname : location.pathname}>
-            {isModal ? this.previousChildren : children}
+          <div className='routeWrapper' key={isModal ? this.previousPathname : location.pathname}>
+            <div className='container'>
+              {isModal ? this.previousChildren : children}
+            </div>
           </div>
         </ReactCSSTransitionGroup>
         {(
@@ -49,7 +63,13 @@ export default class RouteCSSTransitionGroup extends React.Component {
             onHide={this.close}
           >
             <Modal.Body>
-              {React.cloneElement(children, {modal: true})}
+              <div className='row modal-wrapper'>
+                <StaticContainer
+                  shouldUpdate={this.shouldUpdate && !!isModal}
+                >
+                  {React.cloneElement(children, {modal: true})}
+                </StaticContainer>
+              </div>
             </Modal.Body>
           </Modal>
         )}

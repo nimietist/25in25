@@ -189,3 +189,16 @@ export function getArtworks (params) {
     })
   }
 }
+
+export function getArtwork (slug) {
+  return dispatch => {
+    return getit(`/api/v1/artwork/${slug}`, {
+      method: 'get'
+    }).then(artwork => {
+      dispatch({
+        type: 'COMPLETE_GET_ARTWORK',
+        artwork
+      })
+    })
+  }
+}

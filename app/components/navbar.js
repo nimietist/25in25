@@ -14,7 +14,8 @@ export default class NavBar extends React.Component {
   }
   avatar = () => {
     let image_url = this.props.user.image_url
-    return image_url ? <img className='avatar avatar-sm' src={image_url} /> : <i className='fa fa-bars' />
+    return image_url ? <img className='avatar avatar-sm' src={image_url} />
+      : <i className='fa fa-bars' />
   }
 
   handleSelect = () => {}
@@ -32,9 +33,19 @@ export default class NavBar extends React.Component {
   signInBar () {
     return (
       <div className='navbar-form navbar-right'>
-        Not a member? <Link to='/signup' state={{modal: true}}>Sign up</Link> today!
+        Not a member? <Link to='/signup' state={{modal: true}}>
+          Sign up
+        </Link> today!
         &nbsp;
-        <Link to='/login' className='btn btn-primary' state={{modal: true, returnTo: this.props.location.pathname}}>Log In</Link>
+        <Link to='/login'
+          className='btn btn-primary'
+          state={{
+            modal: true,
+            returnTo: this.props.location.pathname
+          }}
+        >
+          Log In
+        </Link>
       </div>
     )
   }
@@ -50,6 +61,12 @@ export default class NavBar extends React.Component {
         <Nav>
           <li><Link activeClassName='active' to='/browse'>Browse</Link></li>
           <li><Link activeClassName='active' to='/about'>About</Link></li>
+          {
+            this.props.user &&
+            <li>
+              <Link activeClassName='active' to='/dashboard'>Dashboard</Link>
+            </li>
+          }
         </Nav>
         {this.signInSection()}
       </Navbar>

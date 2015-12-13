@@ -18,7 +18,7 @@ const validate = (values) => {
 @reduxForm({form: 'uploadr', fields, validate})
 export default class Upload extends React.Component {
   static propTypes = {
-    fields: PropTypes.array,
+    fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     actions: PropTypes.object,
     user: PropTypes.object
@@ -54,7 +54,7 @@ export default class Upload extends React.Component {
             <Input label='Title (optional)' type='text' {...title} />
             <Input label='Description (optional)' type='textarea' {...description} />
           </div>
-        <Button block={1} type='submit'>Upload!</Button>
+        <Button block={true} type='submit'>Upload!</Button>
         </form>
       </div>
     )

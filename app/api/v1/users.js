@@ -52,7 +52,8 @@ users.put('/:id', (req, res) => {
       }
     }
     user.save({
-      email: req.body.email
+      email: req.body.email,
+      email_setting: req.body.email_setting
     }).then(user => {
       res.status(200).send(user.info())
     })

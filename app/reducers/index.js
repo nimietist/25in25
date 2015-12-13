@@ -46,6 +46,15 @@ function artworks (state = [], action) {
   }
 }
 
+function artwork (state = {}, action) {
+  switch (action.type) {
+    case 'COMPLETE_GET_ARTWORK':
+      return action.artwork
+    default:
+      return state
+  }
+}
+
 function alerts (state = [], action) {
   switch (action.type) {
     case 'NOTIFICATION':
@@ -89,6 +98,7 @@ function forgotSent (state = false, action) {
 
 const reducers = combineReducers({
   alerts,
+  artwork,
   artworks,
   currentUser,
   forgotSent,

@@ -97,14 +97,40 @@ body, html {
 //artworks
 
 .artwork {
+  .large {
+    position: relative;
+    width: 100%;
+  }
   .info {
-    background-color: #89acdd;
+    // background-color: #89acdd;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    text-align:center;
+    overflow: hidden;
+    .thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 0;
+    }
+    .meta {
+      background: #E9405A;
+      color: white;
+      position: absolute;
+      width: 100%;
+      padding: 5px 10px;
+      z-index: 1;
+      bottom: 0;
+      .title {
+        font-style: italic;
+      }
+      .username {
+        font-weight: bold;
+      }
+    }
   }
   .dummy {
     margin-top: 100%;
@@ -132,4 +158,9 @@ img.avatar {
     max-width: 100%;
     max-height: 100%;
   }
+}
+
+.modal-wrapper {
+  margin: 0;
+  padding: 15px;
 }

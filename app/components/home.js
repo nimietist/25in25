@@ -14,6 +14,7 @@ export default class Home extends React.Component {
   static propTypes = {
     artworks: PropTypes.array,
     actions: PropTypes.object,
+    children: PropTypes.object,
     user: PropTypes.object
   }
   componentDidMount () {
@@ -23,6 +24,7 @@ export default class Home extends React.Component {
     return (
       <div className='home'>
         <Countdown />
+        {this.props.children && React.cloneElement(this.props.children, this.props)}
         <ArtGrid artworks={this.props.artworks} />
       </div>
     )
