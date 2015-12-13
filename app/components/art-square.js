@@ -15,9 +15,9 @@ class ArtSquare extends React.Component {
             state={{modal: true}}
             params={{artwork: this.props.artwork}}
           >
-            <img className='thumb' src={image_url} />
+            <img className='thumb wow animated fadeIn' src={image_url} />
           </Link>
-          <div className='meta'>
+          <div className={'meta ' + this.props.artwork.color}>
             <div className='title'>{title}</div>
             <div className='username'>
               <Link to={`/user/${username}`}>

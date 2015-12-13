@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   const { limit = 50, page = 1 } = req.query
   const query = {
     limit: Number(limit),
-    offset: (Number(page) - 1 * limit)
+    offset: (Number(page) - 1) * limit
   }
 
   if (req.params.username) {

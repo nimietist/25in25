@@ -203,3 +203,17 @@ export function getArtwork (slug) {
     })
   }
 }
+
+export function deactivateAccount (csrf) {
+  return dispatch => {
+    return getit(`/api/v1/users/deactivate`, {
+      method: 'delete',
+      data: {csrf}
+    }).then(success => {
+      dispatch({
+        type: 'COMPLETE_DEACTIVATE_ACCOUNT'
+      })
+    })
+    .catch(console.log)
+  }
+}

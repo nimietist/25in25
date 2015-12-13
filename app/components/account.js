@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
 import * as actions from '../actions'
 import { get } from 'lodash'
-import {Input, Button} from 'react-bootstrap'
+import {Input, Button, Modal} from 'react-bootstrap'
 
 const fields = ['username', 'email', 'passwordOld', 'passwordNew', 'passwordConfirm']
 
@@ -15,7 +15,6 @@ const validate = values => {
   return errors
 }
 
-// @connect(state => ({ user: state.user }))
 @reduxForm({form: 'account', fields, validate}, state => {
   return {
     initialValues: state.user,
@@ -33,14 +32,24 @@ export default class Account extends React.Component {
   static fetchData (dispatch, getState) {
     // return dispatch(actions.getCurrentUser())
   }
+  constructor (props) {
+    super(props)
+    this.state = { isModalOpen: false }
+  }
   componentDidMount () {
     this.props.dispatch(actions.getCurrentUser())
   }
-  onDeactivateClicked () {
+  onDeactivateClicked = (e) => {
     // TODO: open modal confirmation
+    e.preventDefault()
+    this.setState({isModalOpen: true})
   }
-  deactivateAccount () {
+  closeModal = () => {
+    this.setState({isModalOpen: false})
+  }
+  deactivateAccount = () => {
     this.props.dispatch(actions.deactivateAccount())
+    this.closeModal()
   }
   savePreferences = () => {
     this.props.dispatch(actions.updateUser(this.props.user.id, {
@@ -53,10 +62,32 @@ export default class Account extends React.Component {
     // TODO: add image upload feature
     return null
   }
+  renderDeactivateModal () {
+    return (
+      <Modal
+        onHide={this.closeModal}
+        show={this.state.isModalOpen}
+      >
+        <Modal.Body>
+          <h2>Deactive account</h2>
+          <p>
+            Deactivating your account removes your profile information and any content associated with it. We’re sad to see you go, but you can always reactivate your account by logging back in.
+          </p>
+          <p>
+            Are you sure you want to deactivate your account?
+          </p>
+          <div>
+            <Button onClick={this.closeModal}>Cancel</Button>
+            <Button onClick={this.deactivateAccount}>Yes</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
+    )
+  }
   render () {
     const {fields: {email, passwordOld, passwordNew, passwordConfirm}} = this.props
     return (
-      <div>
+      <div className='account'>
         <h2>Account Settings</h2>
         Hello {get(this, 'props.user.username')}
         <div>
@@ -72,6 +103,7 @@ export default class Account extends React.Component {
           </form>
         </div>
         <a href='#' onClick={this.onDeactivateClicked}>I want to deactivate my account</a>
+        {this.renderDeactivateModal()}
       </div>
     )
   }

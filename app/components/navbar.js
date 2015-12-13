@@ -23,7 +23,7 @@ export default class NavBar extends React.Component {
     return (
       <Nav navbar right onSelect={this.handleSelect}>
         <NavDropdown title={this.avatar()} noCaret={true} id='navbar'>
-          <li onClick='' eventKey='1'><Link to='/account'>Account</Link></li>
+          <li onClick='' eventKey='1'><Link to='/account' state={{modal:true}}>Account</Link></li>
           <MenuItem divider />
           <MenuItem eventKey='4' onClick={this.logOut}>Sign Out</MenuItem>
         </NavDropdown>

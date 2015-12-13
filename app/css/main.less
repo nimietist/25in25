@@ -120,8 +120,16 @@ body, html {
       width: 100%;
       z-index: 0;
     }
-    .meta {
+    .red {
       background: #E9405A;
+    }
+    .yellow {
+      background: #FABA2D;
+    }
+    .blue {
+      background: #3EC3D5;
+    }
+    .meta {
       color: white;
       position: absolute;
       width: 100%;
@@ -167,4 +175,15 @@ img.avatar {
 .modal-wrapper {
   margin: 0;
   padding: 15px;
+}
+
+// Account
+
+.account {
+  .modal-container {
+    position: relative;
+  }
+  .modal-container .modal, .modal-container .modal-backdrop {
+    position: absolute;
+  }
 }
