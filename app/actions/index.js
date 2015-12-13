@@ -177,14 +177,15 @@ export function updatePassword (password) {
 }
 
 export function getArtworks (params) {
+  let query = Object.keys(params).map((key, value) => `${key}=${params[key]}`).join('&')
   return dispatch => {
-    return getit(`/api/v1/artworks`, {
-      method: 'get',
-      data: params || {}
+    return getit(`/api/v1/artworks?${query}`, {
+      method: 'get'
     }).then(artworks => {
       dispatch({
         type: 'COMPLETE_GET_ARTWORKS',
-        artworks
+        artworks,
+        hasMore: artworks.length > 0
       })
     })
   }

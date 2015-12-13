@@ -8,8 +8,11 @@ router.get('/', (req, res) => {
   if (req.user) {
     // show preferenced artwork
   }
-  const { limit = 50, offset = 0 } = req.query
-  const query = { limit, offset }
+  const { limit = 50, page = 1 } = req.query
+  const query = {
+    limit: Number(limit),
+    offset: (Number(page) - 1 * limit)
+  }
 
   if (req.params.username) {
     query.username = req.params.username

@@ -57,7 +57,7 @@ export default class App extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className='tall'>
         {this.renderAlerts()}
         <NavBar {...this.props}/>
         <RouteCSSTransitionGroup

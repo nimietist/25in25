@@ -5,7 +5,8 @@ import { get } from 'lodash'
 import * as actions from '../actions'
 
 @connect(state => ({
-  artworks: state.artworks,
+  artworks: state.artworks.artworks,
+  hasMore: state.artworks.hasMore,
   currentUser: state.currentUser
 }))
 export default class UserPage extends React.Component {

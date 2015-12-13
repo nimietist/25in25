@@ -36,10 +36,13 @@ function currentUser (state = {}, action) {
   }
 }
 
-function artworks (state = [], action) {
+function artworks (state = {artworks: [], hasMore: true}, action) {
   switch (action.type) {
     case 'COMPLETE_GET_ARTWORKS':
-      return action.artworks
+      return {
+        artworks: state.artworks.concat(action.artworks),
+        hasMore: action.hasMore
+      }
       // return [{title: 'title', username: 'someone else'}]
     default:
       return state

@@ -41,7 +41,8 @@ app.get('/api/v1/logout', function (req, res) {
 
 app.get('/api/v1/artworks', function (req, res) {
   const works = []
-  for (var i = 0; i < 50; i++) {
+  var count = req.query.page === '1' ? 50 : req.query.page === '2' ? 25 : 0
+  for (var i = 0; i < count; i++) {
     works.push({
       id: i,
       title: `title${i}`,

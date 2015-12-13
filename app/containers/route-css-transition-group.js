@@ -49,7 +49,7 @@ export default class RouteCSSTransitionGroup extends React.Component {
     )
 
     return (
-      <div>
+      <div className='content'>
         <ReactCSSTransitionGroup {...props}>
           <div className='routeWrapper' key={isModal ? this.previousPathname : location.pathname}>
             <div className='container'>
