@@ -6,7 +6,7 @@ var isoConfig = require('./webpack-isomorphic-config')
 var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
 
 module.exports = {
-  port: 3000,
+  port: process.env.PORT || 3000,
   context: path.resolve('.'),
   devtool: 'source-map',
   entry: [
@@ -21,6 +21,9 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
+      __CLIENT__: true,
+      __SERVER__: false,
+      __DEVTOOLS__: true,
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
@@ -47,7 +50,7 @@ module.exports = {
       )
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('css-loader')
+      loader: ExtractTextPlugin.extract('css-loader!less-loader')
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url?limit=100000'

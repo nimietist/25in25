@@ -4,17 +4,18 @@ var IsoToolsPlugin = require('webpack-isomorphic-tools/plugin')
 var isoConfig = require('./webpack-isomorphic-config')
 var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
 
+var PORT = process.env.PORT || 3000
 module.exports = {
-  port: 3000,
+  port: PORT,
   devtool: 'eval-source-map',
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+    `webpack-hot-middleware/client?path=http://localhost:${PORT}/__webpack_hmr`,
     './app/main.js'
   ],
   output: {
     path: '/',
     filename: 'main.js',
-    publicPath: 'http://localhost:3000/static/'
+    publicPath: `http://localhost:${PORT}/static/`
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
