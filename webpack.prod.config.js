@@ -28,7 +28,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new ExtractTextPlugin('./app/main.css', {
+    new ExtractTextPlugin('./main.css', {
       allChunks: true
     }),
     isoToolsPlugin
@@ -43,10 +43,8 @@ module.exports = {
     }, {
       test: /\.less$/,
       loader: ExtractTextPlugin.extract(
-        'css' +
-        '!less?outputStyle=expanded' +
-          '&includePaths[]=' +
-          encodeURIComponent(path.resolve(__dirname, './app/css'))
+        'css?sourceMap!' +
+        'less?sourceMap'
       )
     }, {
       test: /\.css$/,
