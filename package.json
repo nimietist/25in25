@@ -9,7 +9,7 @@
     "lint": "standard | snazzy",
     "migrate": "knex migrate:latest",
     "prestart": "npm run build",
-    "start": "node server",
+    "start": "node webdevserver",
     "test": "NODE_ENV=test mocha -r test/mocha.js --compilers js:babel/register --recursive"
   },
   "author": "John Nguyen",

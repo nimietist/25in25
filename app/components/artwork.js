@@ -1,75 +1,130 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { reduxForm } from 'redux-form'
 import * as actions from '../actions'
+import { pushState } from 'redux-router'
 
-import ReactSwipe from 'react-swipe'
-import { Button } from 'react-bootstrap'
+import { Button, Input } from 'react-bootstrap'
 import { HotKeys } from 'react-hotkeys'
 import { findIndex } from 'lodash'
 
-@connect(state => ({
+const fields = ['title', 'description', 'image']
+const validate = values => {
+  const errors = {}
+  return errors
+}
+
+@reduxForm({form: 'artwork', fields, validate}, state => ({
   artworks: state.artworks.artworks,
-  currentArtwork: state.artwork
-}), dispatch => ({actions: bindActionCreators(actions, dispatch)}))
+  currentArtwork: state.artwork,
+  router: state.router
+}), dispatch => ({
+  actions: bindActionCreators(actions, dispatch),
+  pushState: bindActionCreators(pushState, dispatch)
+}))
 export default class Artwork extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
     artwork: PropTypes.object,
-    currentArtwork: PropTypes.object,
     artworks: PropTypes.array,
+    currentArtwork: PropTypes.object,
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
     modal: PropTypes.bool,
-    params: PropTypes.object
+    params: PropTypes.object,
+    pushState: PropTypes.func,
+    submitting: PropTypes.bool
   }
   static fetchData () {
 
   }
   constructor (props, context) {
     super(props, context)
-    if (!this.props.modal) {
-      this.props.actions.getArtwork(this.props.params.artworkSlug)
+    this.props.actions.getArtwork(this.props.params.artworkSlug)
+    this.state = {
+      editing: false
     }
   }
-  componentDidMount () {
-    this.refs.next && this.refs.next.focus()
+  componentWillReceiveProps (nextProps) {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      this.props.actions.getArtwork(nextProps.params.artworkSlug)
+    }
   }
+  // TODO: focus next button
   prev = () => {
-    this.refs.swiper.swipe.prev()
+    this.props.pushState({modal: true}, this.refs.prev.props.to)
   }
   next = () => {
-    this.refs.swiper.swipe.next()
+    this.props.pushState({modal: true}, this.refs.next.props.to)
   }
   handlers = {
     'left': this.prev,
     'right': this.next
   }
+  toggleEditing = () => {
+    this.setState({editing: !this.state.editing})
+  }
+  updateArtwork () {
+    // TODO: updateartwork action
+  }
 
   renderSwiper () {
-    let start = findIndex(this.props.artworks, artwork => artwork.id === this.props.currentArtwork.id)
+    let {artworks, params, currentArtwork} = this.props
+    let swipeIndex = findIndex(artworks, artwork => artwork.slug === params.artworkSlug)
+    let artwork = artworks[swipeIndex] || currentArtwork
+    if (!artwork) { return null }
+
+    let prev = artworks[(swipeIndex + artworks.length - 1) % artworks.length]
+    let next = artworks[(swipeIndex + 1) % artworks.length]
     return (
-      <HotKeys ref='keys' handlers={this.handlers}>
-        <ReactSwipe ref='swiper' startSlide={start}>
-          {this.props.artworks.map((artwork, i) => (
-            <Artwork
-              key={`artwork-swipe-${i}`}
-              artwork={artwork}
-              modal={false}
-              params={this.props.params}
-            />
-          ))}
-        </ReactSwipe>
-        <Button onClick={this.prev}>Prev</Button>
-        <Button ref='next' onClick={this.next}>Next</Button>
+      <HotKeys handlers={this.handlers}>
+        <div ref='swiper'>
+          {this.renderContainer()}
+
+          <Link ref='prev' to={`/artwork/${prev.slug}`} state={{modal: true}}>Prev</Link>
+          <Link ref='next' to={`/artwork/${next.slug}`} state={{modal: true}}>Next</Link>
+        </div>
       </HotKeys>
     )
   }
-  render () {
-    if (this.props.modal) {
-      return this.renderSwiper()
-    }
+  renderView () {
     const artwork = this.props.artwork || this.props.currentArtwork
-    const {title, username, image_url, description, color} = artwork
+    const {title, username, description} = artwork
+    return (
+      <div>
+        <span className='title'>{title}</span> by <span className='username'>
+          <Link to={`/user/${username}/`}>
+            {username}
+          </Link>
+        </span>:
+        <div className='description'>
+          {description}
+        </div>
+        <Button bsStyle='link' onClick={this.toggleEditing}>
+          <i className='fa fa-ellipsis-v' />
+        </Button>
+      </div>
+    )
+  }
+  renderForm () {
+    const artwork = this.props.artwork || this.props.currentArtwork
+    const {fields: {title, description}} = this.props
+    return (
+      <form onSubmit={this.props.handleSubmit(this.updateArtwork)}>
+        <Input type='text' className='title' {...title} value={artwork.title}/> by <span className='username'>{artwork.username}
+        </span>:
+        <Input type='textarea' className='description' {...description} value={artwork.description}/>
+        <Button block type='submit' bsStyle='primary'>Update</Button>
+        <Button className='share-button' bsStyle='link' onClick={this.toggleEditing}>
+          <i className='fa fa-close' />
+        </Button>
+      </form>
+    )
+  }
+  renderContainer () {
+    const artwork = this.props.artwork || this.props.currentArtwork
+    const {image_url, color} = artwork
     return (
       <div className='artwork col-xs-12'>
         <div>
@@ -77,17 +132,16 @@ export default class Artwork extends React.Component {
         </div>
         <div className='info'>
           <div className={'meta ' + color}>
-            <span className='title'>{title}</span> by <span className='username'>
-              <Link to={`/user/${username}/`}>
-                {username}
-              </Link>
-            </span>:
-            <div className='description'>
-              {description}
-            </div>
+            {this.state.editing ? this.renderForm() : this.renderView()}
           </div>
         </div>
       </div>
     )
+  }
+  render () {
+    if (this.props.modal) {
+      return this.renderSwiper()
+    }
+    return this.renderContainer()
   }
 }

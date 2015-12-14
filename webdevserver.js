@@ -64,14 +64,15 @@ app.get('/api/v1/artworks', function (req, res) {
 })
 
 app.get('/api/v1/artwork/:slug', function (req, res) {
+  var id = parseInt(req.params.slug.replace('some-special-slug', ''), 10) || 1
   res.send({
-    id: 1,
-    title: `title$1`,
+    id: id,
+    title: `title${id}`,
     username: 'username',
     cloudinary_image_url: 'gqutbssg0ck5zcuqrym7',
     // image_url: 'http://res.cloudinary.com/twentyfive/image/upload/v1449806840/gqutbssg0ck5zcuqrym7.jpg',
     // image_url: '/img/chris.jpg',
-    image_url: 'http://lorempixel.com/400/400?q=' + 1,
+    image_url: `http://lorempixel.com/400/400?q=${id}`,
     color: colorz(parseInt(Math.random() * 3, 10)),
     slug: req.params.slug,
     description: lorem({count: 1, units: 'paragraphs'})
