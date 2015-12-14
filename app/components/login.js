@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import SocialButtons from './social-buttons'
 import { reduxForm } from 'redux-form'
 import {Input, Button} from 'react-bootstrap'
+import { pushState } from 'redux-router'
 
 const fields = ['username', 'password']
 
@@ -24,10 +25,12 @@ const validate = values => {
 export default class Login extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
+    dispatch: PropTypes.func,
     fields: PropTypes.object,
     modal: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired
+    submitting: PropTypes.bool.isRequired,
+    user: PropTypes.object
   }
   logIn = () => {
     const {fields: {username, password}} = this.props
@@ -35,6 +38,11 @@ export default class Login extends React.Component {
       username: username.value,
       password: password.value
     })
+  }
+  componentWillReceiveProps (nextProps) {
+    if (this.props.user.id !== nextProps.user.id) {
+      this.props.dispatch(pushState(null, '/'))
+    }
   }
   render () {
     const {fields: {username, password}, submitting} = this.props

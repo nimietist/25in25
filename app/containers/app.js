@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { pushState } from 'redux-router'
 import { connect } from 'react-redux'
+import { HotKeys } from 'react-hotkeys'
 import NavBar from '../components/navbar'
 import Footer from '../components/footer'
 import FlashAlert from '../components/flashalert'
@@ -41,6 +42,10 @@ export default class App extends React.Component {
       resolve('fetch:app')
     })
   }
+  map = {
+    'left': ['left'],
+    'right': ['right']
+  }
   handleAlertDismiss = (e) => {
     const { actions } = this.props
     actions.clearNotifications()
@@ -57,7 +62,7 @@ export default class App extends React.Component {
   }
   render () {
     return (
-      <div className='tall'>
+      <HotKeys keyMap={this.map} className='tall'>
         {this.renderAlerts()}
         <NavBar {...this.props}/>
         <RouteCSSTransitionGroup
@@ -71,7 +76,7 @@ export default class App extends React.Component {
           {this.renderChildren()}
         </RouteCSSTransitionGroup>
         <Footer/>
-      </div>
+      </HotKeys>
     )
   }
 }
