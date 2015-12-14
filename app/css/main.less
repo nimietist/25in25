@@ -163,8 +163,12 @@ img.avatar {
 
 .dropzone {
   border: none;
+  border-radius: 50%;
   width: 150px;
   height: 150px;
+  background: lighten(gray, 40%);;
+  overflow: hidden;
+  margin: 0 auto;
 
   img.upload-preview {
     max-width: 100%;
@@ -175,6 +179,24 @@ img.avatar {
 .modal-wrapper {
   margin: 0;
   padding: 15px;
+}
+
+// Buttons
+.social {
+  .btn {
+    width: 100%;
+    color: white;
+    margin-bottom: 10px
+  }
+  .btn-facebook {
+    background: #3A5998;
+  }
+  .btn-twitter {
+    background: #55ACEE;
+  }
+  .btn-google {
+    background: #DD4B39;
+  }
 }
 
 // Account

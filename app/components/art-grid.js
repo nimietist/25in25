@@ -19,7 +19,7 @@ class ArtGrid extends React.Component {
     dispatch: PropTypes.func
   }
   componentDidMount () {
-    // this.props.dispatch(actions.getArtworks(this.props.context || {}))
+    this.props.dispatch(actions.getArtworks(this.props.context || {}))
   }
   loadMore = (page) => {
     let context = {...(this.props.context || {}), page}

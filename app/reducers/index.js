@@ -43,7 +43,11 @@ function artworks (state = {artworks: [], hasMore: true}, action) {
         artworks: state.artworks.concat(action.artworks),
         hasMore: action.hasMore
       }
-      // return [{title: 'title', username: 'someone else'}]
+    case 'COMPLETE_UPLOAD_ARTWORK':
+      return {
+        artworks: [action.artwork, ...state.artworks],
+        hasMore: state.hasMore
+      }
     default:
       return state
   }

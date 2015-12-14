@@ -26,29 +26,28 @@ export default class Login extends React.Component {
     actions: PropTypes.object,
     fields: PropTypes.object,
     modal: PropTypes.bool,
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired
   }
   logIn = () => {
     const {fields: {username, password}} = this.props
-    this.props.actions.logIn({
+    return this.props.actions.logIn({
       username: username.value,
       password: password.value
     })
-    return false
   }
   render () {
-    const {fields: {username, password}} = this.props
+    const {fields: {username, password}, submitting} = this.props
     return (
       <div>
-        {this.props.modal ? 'Im modal' : ''}
         <h2 className='row'>Start creating today! Sign up below.</h2>
         <div className='row'>
           <SocialButtons />
-          <div className='column'>
+          <div className='col-sm-7'>
             <form ref='loginForm' onSubmit={this.props.handleSubmit(this.logIn)}>
               <Input type='text' {...username} placeholder='Username'/>
               <Input type='password' {...password} placeholder='Password'/>
-              <Button type='submit'>Log In</Button>
+              <Button bsStyle='primary' block disabled={submitting} type='submit'>Log In</Button>
             </form>
             <div>
               <Link to='/forgot' state={{modal: true}}>I forgot my password.</Link>

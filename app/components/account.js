@@ -4,8 +4,9 @@ import { reduxForm } from 'redux-form'
 import * as actions from '../actions'
 import { get } from 'lodash'
 import {Input, Button, Modal} from 'react-bootstrap'
+import ImageUploader from './image-uploader'
 
-const fields = ['username', 'email', 'passwordOld', 'passwordNew', 'passwordConfirm']
+const fields = ['username', 'email', 'passwordOld', 'passwordNew', 'passwordConfirm', 'image']
 
 const validate = values => {
   const errors = {}
@@ -27,20 +28,22 @@ export default class Account extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     dispatch: PropTypes.func,
     params: PropTypes.object, // from react-router route
-    user: PropTypes.object
+    user: PropTypes.object,
+    submitting: PropTypes.bool.isRequired
   }
   static fetchData (dispatch, getState) {
-    // return dispatch(actions.getCurrentUser())
+    return dispatch(actions.getCurrentUser())
   }
   constructor (props) {
     super(props)
-    this.state = { isModalOpen: false }
+    this.state = {
+      isModalOpen: false
+    }
   }
   componentDidMount () {
     this.props.dispatch(actions.getCurrentUser())
   }
   onDeactivateClicked = (e) => {
-    // TODO: open modal confirmation
     e.preventDefault()
     this.setState({isModalOpen: true})
   }
@@ -52,10 +55,13 @@ export default class Account extends React.Component {
     this.closeModal()
   }
   savePreferences = () => {
-    this.props.dispatch(actions.updateUser(this.props.user.id, {
-      email: this.props.fields.email.value,
-      password: this.props.fields.passwordOld.value,
-      passwordNew: this.props.fields.passwordNew.value
+    const {fields: {email, image, passwordOld, passwordNew}} = this.props
+
+    return this.props.dispatch(actions.updateUser(this.props.user.id, {
+      email: email.value,
+      image: image.value,
+      password: passwordOld.value,
+      passwordNew: passwordNew.value
     }))
   }
   renderProfileImageUpload () {
@@ -85,21 +91,29 @@ export default class Account extends React.Component {
     )
   }
   render () {
-    const {fields: {email, passwordOld, passwordNew, passwordConfirm}} = this.props
+    const {fields: {email, passwordOld, passwordNew, passwordConfirm, image}, submitting} = this.props
     return (
       <div className='account'>
         <h2>Account Settings</h2>
         Hello {get(this, 'props.user.username')}
         <div>
           <form onSubmit={this.props.handleSubmit(this.savePreferences)}>
-            <Input label='Change Email' type='email' {...email} placeholder='Email' />
-            <Input label='Change Password' type='password' {...passwordOld} placeholder='Old Password' />
-            <Input type='password' {...passwordNew} placeholder='New Password' />
-            <Input type='password' {...passwordConfirm} placeholder='Confirm Password' />
+            <div className='row'>
+              <div className='col-sm-8'>
+                <Input label='Change Email' type='email' {...email} placeholder='Email' />
+                <Input label='Change Password' type='password' {...passwordOld} placeholder='Old Password' />
+                <Input type='password' {...passwordNew} placeholder='New Password' />
+                <Input type='password' {...passwordConfirm} placeholder='Confirm Password' />
+              </div>
+              <div className='col-sm-4'>
+                <Input label='Change Profile Pic' />
+                <ImageUploader field={image}/>
+              </div>
+            </div>
             <Input label='Email Notifications' />
             <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox'/>
             {this.renderProfileImageUpload}
-            <Button type='submit'>Save</Button>
+            <Button bsStyle='primary' block disabled={submitting} type='submit'>Save</Button>
           </form>
         </div>
         <a href='#' onClick={this.onDeactivateClicked}>I want to deactivate my account</a>

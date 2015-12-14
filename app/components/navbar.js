@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { Nav, NavBrand, Navbar, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown, NavItem, MenuItem } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 export default class NavBar extends React.Component {
   static propTypes = {
@@ -8,6 +9,7 @@ export default class NavBar extends React.Component {
     actions: PropTypes.object,
     user: PropTypes.object
   }
+  state = {expanded: false}
   logOut = (e) => {
     const { actions } = this.props
     actions.logOut()
@@ -18,12 +20,26 @@ export default class NavBar extends React.Component {
       : <i className='fa fa-bars' />
   }
 
-  handleSelect = () => {}
+  handleSelect = (e) => {
+    this.setState({ expanded: false })
+  }
+  onToggle = (expanded) => {
+    this.setState({ expanded })
+  }
   userInfo () {
     return (
-      <Nav navbar right onSelect={this.handleSelect}>
-        <NavDropdown title={this.avatar()} noCaret={true} id='navbar'>
-          <li onClick='' eventKey='1'><Link to='/account' state={{modal:true}}>Account</Link></li>
+      <Nav navbar pullRight onSelect={this.handleSelect}>
+        <LinkContainer to='/account'>
+          <MenuItem className='visible-xs' eventKey='1'>Account</MenuItem>
+        </LinkContainer>
+        <MenuItem className='visible-xs' eventKey='4' onClick={this.logOut}>Sign Out</MenuItem>
+        <NavDropdown
+          className='hidden-xs'
+          title={this.avatar()}
+          noCaret={true}
+          id='navbar'
+        >
+          <LinkContainer to='/account'><MenuItem eventKey='1'>Account</MenuItem></LinkContainer>
           <MenuItem divider />
           <MenuItem eventKey='4' onClick={this.logOut}>Sign Out</MenuItem>
         </NavDropdown>
@@ -56,19 +72,26 @@ export default class NavBar extends React.Component {
   }
   render () {
     return (
-      <Navbar navbar-fixed-top>
-        <NavBrand><Link to='/' href='#' >25in25</Link></NavBrand>
-        <Nav>
-          <li><Link activeClassName='active' to='/browse'>Browse</Link></li>
-          <li><Link activeClassName='active' to='/about'>About</Link></li>
-          {
-            this.props.user &&
-            <li>
-              <Link activeClassName='active' to='/dashboard'>Dashboard</Link>
-            </li>
-          }
-        </Nav>
-        {this.signInSection()}
+      <Navbar navbar-fixed-top expanded={this.state.expanded} onToggle={this.onToggle}>
+        <Navbar.Header>
+          <Navbar.Brand><Link to='/'>25in25</Link></Navbar.Brand>
+          <Navbar.Toggle>
+            {this.avatar()}
+          </Navbar.Toggle>
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav onSelect={this.handleSelect}>
+            <LinkContainer activeClassName='active' to='/browse'><NavItem>Browse</NavItem></LinkContainer>
+            <LinkContainer activeClassName='active' to='/about'><NavItem>About</NavItem></LinkContainer>
+            {
+              this.props.user &&
+              <LinkContainer activeClassName='active' to='/dashboard'>
+                <NavItem>Dashboard</NavItem>
+              </LinkContainer>
+            }
+          </Nav>
+          {this.signInSection()}
+        </Navbar.Collapse>
       </Navbar>
     )
   }

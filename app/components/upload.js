@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 // import { Link } from 'react-router'
 import { Input, Button } from 'react-bootstrap'
 import { reduxForm } from 'redux-form'
-import Dropzone from 'react-dropzone'
+import ImageUploader from './image-uploader'
+import { uploadArtwork } from '../actions'
 
 const fields = ['title', 'description', 'image']
 
@@ -19,42 +20,34 @@ const validate = (values) => {
 export default class Upload extends React.Component {
   static propTypes = {
     fields: PropTypes.object,
+    dispatch: PropTypes.func,
     handleSubmit: PropTypes.func,
-    actions: PropTypes.object,
-    user: PropTypes.object
+    user: PropTypes.object,
+    submitting: PropTypes.bool.isRequired
   }
-  state = {
-    files: []
-  }
-  componentDidMount () {
-    // TODO: load ?
-  }
-  onDrop = (files) => {
-    this.setState({files})
-  }
-  uploadForm () {
+  uploadForm = () => {
     // TODO: Upload title, desc, and image
+    const {fields: {image, title, description}} = this.props
+    return this.props.dispatch(uploadArtwork({
+      image: image.value,
+      title: title.value,
+      description: description.value
+    }))
   }
   render () {
-    const {fields: {title, description}} = this.props
+    const {fields: {title, description, image}, submitting} = this.props
 
     return (
       <div className='upload col-md-offset-2 col-md-8 col-xs-12'>
         <form onSubmit={this.props.handleSubmit(this.uploadForm)}>
-          <div className='col-sm-5'>
-            <Dropzone className='dropzone' onDrop={this.onDrop}>
-              <div>{
-                this.state.files.map((file) =>
-                  <img className='upload-preview' key={file.name} src={file.preview} />
-                )
-              }</div>
-            </Dropzone>
+          <div className='col-sm-4'>
+            <ImageUploader field={image} />
           </div>
-          <div className='col-sm-7'>
+          <div className='col-sm-8'>
             <Input label='Title (optional)' type='text' {...title} />
             <Input label='Description (optional)' type='textarea' {...description} />
           </div>
-        <Button block={true} type='submit'>Upload!</Button>
+        <Button bsStyle='primary' block disabled={submitting} block={true} type='submit'>Upload!</Button>
         </form>
       </div>
     )

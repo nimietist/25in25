@@ -22,7 +22,7 @@ class Artwork extends React.Component {
     return (
       <div className='artwork'>
         <div className='col-xs-12'>
-          <img className='large wow animated fadeIn' src={image_url} />
+          <img className='large' src={image_url} />
         </div>
         <div className='info'>
           <div className={'meta ' + this.props.artwork.color}>

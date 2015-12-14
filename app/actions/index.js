@@ -204,6 +204,33 @@ export function getArtwork (slug) {
   }
 }
 
+export function uploadArtwork (params) {
+  // return dispatch => {
+  //   return getit(`/api/v1/artwork`, {
+  //     method: 'post',
+  //     data: params
+  //   }).then(artwork => {
+  //     dispatch({
+  //       type: 'COMPLETE_UPLOAD_ARTWORK',
+  //       artwork
+  //     })
+  //   })
+  // }
+  return dispatch => {
+    dispatch({
+      type: 'COMPLETE_UPLOAD_ARTWORK',
+      artwork: {
+        id: 1234556,
+        title: params.title,
+        description: params.description,
+        username: 'username',
+        slug: 'asdfasdfupload',
+        image_url: '/img/chris.jpg'
+      }
+    })
+  }
+}
+
 export function deactivateAccount (csrf) {
   return dispatch => {
     return getit(`/api/v1/users/deactivate`, {

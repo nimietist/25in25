@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { validateEmail } from 'app/lib/utils'
 import { reduxForm } from 'redux-form'
 import {Input, Button} from 'react-bootstrap'
+import SocialButtons from './social-buttons'
 
 const fields = ['username', 'email', 'password']
 
@@ -28,39 +29,35 @@ const validate = values => {
 export default class Signup extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
+    fields: PropTypes.object,
     handleSubmit: PropTypes.func,
-    fields: PropTypes.object
+    submitting: PropTypes.bool.isRequired
   }
   signUp = (e) => {
     const {fields: {username, email, password}} = this.props
-    this.props.actions.signUp({
+    return this.props.actions.signUp({
       email: email.value,
       username: username.value,
       password: password.value
     })
-    return false
   }
   render () {
-    const {fields: {username, email, password}} = this.props
+    const {fields: {username, email, password}, submitting} = this.props
     return (
       <div>
         <h2 className='row'>Start creating today! Sign up below.</h2>
         <div className='row'>
-          <div className='column'>
-            <a href='/auth/facebook' className='btn btn-facebook'>Sign up with Facebook</a>
-            <a href='/auth/twitter' className='btn btn-twitter'>Sign up with Twitter</a>
-            <a href='/auth/google' className='btn btn-google'>Sign up with Google</a>
-          <div className='column'>
+          <SocialButtons />
+          <div className='col-sm-7'>
             <form ref='signupForm' onSubmit={this.props.handleSubmit(this.signUp)}>
               <Input type='text' {...username} placeholder='Username'/>
               <Input type='email' {...email} placeholder='Email'/>
               <Input type='password' {...password} placeholder='Password'/>
-              <Button type='submit'>Sign up!</Button>
+              <Button bsStyle='primary' block disabled={submitting} type='submit'>Sign up!</Button>
             </form>
             <div>
               Already have an account? <Link to='/login' state={{modal: true}}>Log in</Link>.
             </div>
-          </div>
           </div>
         </div>
         <div>

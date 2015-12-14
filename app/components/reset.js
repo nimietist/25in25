@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
+import { Button, Input } from 'react-bootstrap'
 
 const fields = ['username', 'email', 'password', 'passwordConfirm']
 
@@ -17,26 +18,26 @@ export default class Forgot extends React.Component {
     actions: PropTypes.object,
     fields: PropTypes.object,
     handleSubmit: PropTypes.func,
+    submitting: PropTypes.bool.isRequired,
     forgotSent: PropTypes.bool
   }
   componentWillUnmount (nextProps) {
     this.props.actions.resetForgotSent()
   }
   updatePassword = (e) => {
-    const {fields: {password}} = this.props
-    this.props.actions.updatePassword(password)
+    return this.props.actions.updatePassword(this.props.fields.password)
   }
   renderForm () {
-    const {fields: {password, passwordConfirm}} = this.props
+    const {fields: {password, passwordConfirm}, submitting} = this.props
     return (
       <div>
         <p>
           No sweat. Let us know the email address you registered with and we’ll send you a link to reset your password.
         </p>
         <form onSubmit={this.props.handleSubmit(this.updatePassword)}>
-          <input type='password' {...password} placeholder='New Password' />
-          <input type='password' {...passwordConfirm} placeholder='Confirm Password' />
-          <button type='submit'>Send</button>
+          <Input type='password' {...password} placeholder='New Password' />
+          <Input type='password' {...passwordConfirm} placeholder='Confirm Password' />
+          <Button bsStyle='primary' block disabled={submitting} type='submit'>Send</Button>
         </form>
       </div>
     )
@@ -50,7 +51,7 @@ export default class Forgot extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className='col-sm-8 col-sm-offset-2'>
         <h2>Reset Password</h2>
         {this.props.forgotSent ? this.completeMessage() : this.renderForm()}
       </div>
