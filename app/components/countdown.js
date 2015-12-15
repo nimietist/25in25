@@ -31,7 +31,7 @@ export default class Count extends React.Component {
       'seconds': seconds
     }
   }
-  updateTimeLeft () {
+  updateTimeLeft = () => {
     let timeLeft = this.getTimeRemaining(this.props.eventDate || '2016-01-05 00:00:00')
     this.setState({ timeLeft })
   }
