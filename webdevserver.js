@@ -9,7 +9,7 @@ var app = express()
 
 app.use(bodyParser.json())
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   var config = require('./webpack.dev.config')
   var compiler = webpack(config)
   app.use(require('webpack-dev-middleware')(compiler, {
@@ -104,6 +104,10 @@ app.get('/api/v1/users/:id', function (req, res) {
 
 app.post('/api/v1/users', function (req, res) {
   res.send(req.body)
+})
+
+app.post('/api/v1/forgot', function (req, res) {
+  res.send({ success: true })
 })
 
 app.get('*', function (req, res) {

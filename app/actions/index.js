@@ -149,7 +149,6 @@ export function sendForgotPassword (email) {
       dispatch({
         type: 'FORGOT_SENT'
       })
-      // TODO: pushState?
     })
     .catch((er) => {
 
