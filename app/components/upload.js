@@ -35,9 +35,6 @@ export default class Upload extends React.Component {
       description: description.value
     }))
   }
-  maxDescriptionCheck = () => {
-    return this.props.description.value.length > MAX_DESCRIPTION_LENGTH
-  }
   render () {
     const {fields: {title, description, image}, submitting} = this.props
 
@@ -49,7 +46,7 @@ export default class Upload extends React.Component {
           </div>
           <div className='col-sm-8'>
             <Input label='Title (optional)' type='text' {...title} />
-            <Input onKeyDown={this.maxDescriptionCheck} label='Description (optional)' type='textarea' maxlength={MAX_DESCRIPTION_LENGTH} {...description} />
+            <Input label='Description (optional)' type='textarea' maxLength={MAX_DESCRIPTION_LENGTH} {...description} />
           </div>
           <div>{MAX_DESCRIPTION_LENGTH - (description.value || '').length}</div>
         <Button bsStyle='primary' block disabled={submitting} block={true} type='submit'>Upload!</Button>
