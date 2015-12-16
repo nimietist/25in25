@@ -51,6 +51,9 @@ function colorz (i) {
 app.get('/api/v1/artworks', function (req, res) {
   const works = []
   var count = req.query.page === '1' ? 50 : req.query.page === '2' ? 25 : 0
+  if (req.query.username) {
+    count = req.query.page === '1' || !req.query.page ? 5 : 0
+  }
   for (var i = 0; i < count; i++) {
     works.push({
       id: i,
@@ -62,6 +65,7 @@ app.get('/api/v1/artworks', function (req, res) {
       image_url: 'http://lorempixel.com/400/400?q=' + i,
       color: colorz(i),
       slug: `some-special-slug${i}`,
+      created_at: '2015-12-01T00:00:00',
       description: lorem({count: 1, units: 'paragraphs'})
     })
   }
@@ -80,6 +84,7 @@ app.get('/api/v1/artwork/:slug', function (req, res) {
     image_url: `http://lorempixel.com/400/400?q=${id}`,
     color: colorz(parseInt(Math.random() * 3, 10)),
     slug: req.params.slug,
+    created_at: '2015-12-01T00:00:00',
     description: lorem({count: 1, units: 'paragraphs'})
   })
 })

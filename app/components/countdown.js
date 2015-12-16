@@ -19,10 +19,10 @@ export default class Count extends React.Component {
   }
   getTimeRemaining (endtime) {
     var t = Date.parse(endtime) - Date.now()
-    var seconds = Math.floor( (t/1000) % 60 )
-    var minutes = Math.floor( (t/1000/60) % 60 )
-    var hours = Math.floor( (t/(1000*60*60)) % 24 )
-    var days = Math.floor( t/(1000*60*60*24) )
+    var seconds = Math.floor( (t / 1000) % 60 )
+    var minutes = Math.floor( (t / 1000 / 60) % 60 )
+    var hours = Math.floor( (t / (1000*60*60)) % 24 )
+    var days = Math.floor( t / (1000*60*60*24) )
     return {
       'total': t,
       'days': days,
@@ -32,7 +32,7 @@ export default class Count extends React.Component {
     }
   }
   updateTimeLeft = () => {
-    let timeLeft = this.getTimeRemaining(this.props.eventDate || '2016-01-05 00:00:00')
+    let timeLeft = this.getTimeRemaining(this.props.eventDate || '2016-01-05T00:00:00')
     this.setState({ timeLeft })
   }
   render () {

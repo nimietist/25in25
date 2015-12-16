@@ -5,7 +5,6 @@ import { get } from 'lodash'
 import * as actions from '../actions'
 
 @connect(state => ({
-  artworks: state.artworks.artworks,
   hasMore: state.artworks.hasMore,
   currentUser: state.currentUser
 }))
@@ -17,11 +16,7 @@ export default class UserPage extends React.Component {
     params: PropTypes.object
   }
   componentDidMount () {
-    // TODO: load user and artworks from this.props.params.username
     this.props.dispatch(actions.getUser(this.props.params.username))
-    this.props.dispatch(actions.getArtworks({
-      username: this.props.params.username
-    }))
   }
   renderProfileImage () {
     // TODO: component image profile
@@ -38,7 +33,7 @@ export default class UserPage extends React.Component {
         <h2 className='text-center'>
           {get(this, 'props.currentUser.username')}'s Portfolio
         </h2>
-        <ArtGrid artworks={this.props.artworks || []} />
+        <ArtGrid group={true} context={{username: this.props.params.username}} />
       </div>
     )
   }
