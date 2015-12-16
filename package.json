@@ -8,7 +8,7 @@
     "build": "NODE_ENV=production webpack --config webpack.prod.config --progress --colors",
     "lint": "standard | snazzy",
     "migrate": "knex migrate:latest",
-    "prestart": "npm run build",
+    "prestart": "npm run migrate && npm run build",
     "start": "node entry",
     "test": "NODE_ENV=test mocha -r test/mocha.js --compilers js:babel/register --recursive"
   },
