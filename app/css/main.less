@@ -6,12 +6,21 @@ body, html {
   padding: 0;
   min-height: 100%;
 }
+.container-fluid {
+  max-width: 1920px;
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+}
 .tall {
   min-height: 100%;
   height: 100%;
 }
 .content {
   min-height: 100%;
+}
+.container .row {
+  margin: 0;
 }
 .app {
   position: relative;
@@ -42,29 +51,29 @@ body, html {
 }
 
 .col-xs-5ths {
-    width: 20%;
-    float: left;
+  width: 20%;
+  float: left;
 }
 
 @media (min-width: 768px) {
-    .col-sm-5ths {
-        width: 20%;
-        float: left;
-    }
+  .col-sm-5ths {
+    width: 20%;
+    float: left;
+  }
 }
 
 @media (min-width: 992px) {
-    .col-md-5ths {
-        width: 20%;
-        float: left;
-    }
+  .col-md-5ths {
+    width: 20%;
+    float: left;
+  }
 }
 
 @media (min-width: 1200px) {
-    .col-lg-5ths {
-        width: 20%;
-        float: left;
-    }
+  .col-lg-5ths {
+    width: 20%;
+    float: left;
+  }
 }
 
 // Route css transition group
@@ -101,24 +110,41 @@ body, html {
 //artworks
 
 .artwork {
+  &[class*="col-sm"] {
+    padding: 0;
+  }
   .large {
     position: relative;
     width: 100%;
   }
-  .info {
-    // background-color: #89acdd;
+  .art-nav-container {
     position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
     right: 0;
-    overflow: hidden;
-    .thumb {
+    left: 0;
+    bottom: 0;
+    .art-nav {
       position: absolute;
       top: 0;
-      left: 0;
+      height: 100%;
+      display: block;
+      width: 20%;
+      &:hover {
+        background-color: black;
+        opacity: 0.3;
+      }
+    }
+    .art-nav-left {
+      left: 0
+    }
+    .art-nav-right {
+      right: 0
+    }
+  }
+  .info {
+    position: relative;
+    .thumb {
       width: 100%;
-      z-index: 0;
     }
     .red {
       background: #E9405A;
@@ -130,12 +156,9 @@ body, html {
       background: #3EC3D5;
     }
     .meta {
+      position: relative;
       color: white;
-      position: absolute;
-      width: 100%;
-      padding: 5px 10px;
-      z-index: 1;
-      bottom: 0;
+      padding: 2px 5px;
       .title {
         font-style: italic;
       }
@@ -148,9 +171,6 @@ body, html {
         top: 10px;
       }
     }
-  }
-  .dummy {
-    margin-top: 100%;
   }
 }
 
@@ -182,10 +202,16 @@ img.avatar {
 }
 
 .modal-content {
+  border: none;
   border-radius: 0;
+  .modal-padding {
+    padding: 15px;
+  }
+  .modal-body {
+    padding: 0;
+  }
   .modal-wrapper {
     margin: 0;
-    padding: 15px;
   }
 }
 

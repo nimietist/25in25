@@ -81,9 +81,6 @@ export default class Artwork extends React.Component {
       <HotKeys handlers={this.handlers}>
         <div ref='swiper'>
           {this.renderContainer()}
-
-          <Link ref='prev' to={`/artwork/${prev.slug}`} state={{modal: true}}>Prev</Link>
-          <Link ref='next' to={`/artwork/${next.slug}`} state={{modal: true}}>Next</Link>
         </div>
       </HotKeys>
     )
@@ -122,13 +119,30 @@ export default class Artwork extends React.Component {
       </form>
     )
   }
+  renderNav () {
+    if (!this.props.modal) return null
+    let {artworks, params, currentArtwork} = this.props
+    let swipeIndex = findIndex(artworks, artwork => artwork.slug === params.artworkSlug)
+    let artwork = artworks[swipeIndex] || currentArtwork
+    if (!artwork) { return null }
+
+    let prev = artworks[(swipeIndex + artworks.length - 1) % artworks.length]
+    let next = artworks[(swipeIndex + 1) % artworks.length]
+    return (
+      <div className='art-nav-container'>
+        <Link className='art-nav art-nav-left' ref='prev' to={`/artwork/${prev.slug}`} state={{modal: true}}></Link>
+        <Link className='art-nav art-nav-right' ref='next' to={`/artwork/${next.slug}`} state={{modal: true}}></Link>
+      </div>
+    )
+  }
   renderContainer () {
     const artwork = this.props.artwork || this.props.currentArtwork
     const {image_url, color} = artwork
     return (
-      <div className='artwork col-xs-12'>
+      <div className='artwork'>
         <div>
           <img className='large' src={image_url} />
+          {this.renderNav()}
         </div>
         <div className='info'>
           <div className={'meta ' + color}>

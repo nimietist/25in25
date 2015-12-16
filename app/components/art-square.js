@@ -20,8 +20,7 @@ class ArtSquare extends React.Component {
   render () {
     const {title, username, image_url, slug} = this.props.artwork
     return (
-      <div className='artwork col-md-5ths col-sm-4 col-xs-6'>
-        <div className='dummy' />
+      <div className='artwork col-lg-2 col-md-5ths col-sm-4 col-xs-6'>
         <div className='info'>
           <Link to={`/artwork/${slug}`}
             state={{modal: true}}

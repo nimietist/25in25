@@ -48,7 +48,7 @@ export default class Forgot extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className='modal-padding'>
         <h2>Forgot your password?</h2>
         {this.props.forgotSent ? this.completeMessage() : this.renderForm()}
       </div>

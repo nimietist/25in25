@@ -75,16 +75,18 @@ export default class Account extends React.Component {
         show={this.state.isModalOpen}
       >
         <Modal.Body>
-          <h2>Deactive account</h2>
-          <p>
-            Deactivating your account removes your profile information and any content associated with it. We’re sad to see you go, but you can always reactivate your account by logging back in.
-          </p>
-          <p>
-            Are you sure you want to deactivate your account?
-          </p>
-          <div>
-            <Button onClick={this.closeModal}>Cancel</Button>
-            <Button onClick={this.deactivateAccount}>Yes</Button>
+          <div className='modal-padding'>
+            <h2>Deactive account</h2>
+            <p>
+              Deactivating your account removes your profile information and any content associated with it. We’re sad to see you go, but you can always reactivate your account by logging back in.
+            </p>
+            <p>
+              Are you sure you want to deactivate your account?
+            </p>
+            <div>
+              <Button onClick={this.closeModal}>Cancel</Button>
+              <Button onClick={this.deactivateAccount}>Yes</Button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
@@ -93,31 +95,33 @@ export default class Account extends React.Component {
   render () {
     const {fields: {email, passwordOld, passwordNew, passwordConfirm, image}, submitting} = this.props
     return (
-      <div className='account'>
-        <h2>Account Settings</h2>
-        Hello {get(this, 'props.user.username')}
-        <div>
-          <form onSubmit={this.props.handleSubmit(this.savePreferences)}>
-            <div className='row'>
-              <div className='col-sm-8'>
-                <Input label='Change Email' type='email' {...email} placeholder='Email' />
-                <Input label='Change Password' type='password' {...passwordOld} placeholder='Old Password' />
-                <Input type='password' {...passwordNew} placeholder='New Password' />
-                <Input type='password' {...passwordConfirm} placeholder='Confirm Password' />
+      <div className='account container'>
+        <div className='col-md-8 col-md-offset-2'>
+          <h2>Account Settings</h2>
+          Hello {get(this, 'props.user.username')}
+          <div>
+            <form onSubmit={this.props.handleSubmit(this.savePreferences)}>
+              <div className='row'>
+                <div className='col-sm-8'>
+                  <Input label='Change Email' type='email' {...email} placeholder='Email' />
+                  <Input label='Change Password' type='password' {...passwordOld} placeholder='Old Password' />
+                  <Input type='password' {...passwordNew} placeholder='New Password' />
+                  <Input type='password' {...passwordConfirm} placeholder='Confirm Password' />
+                </div>
+                <div className='col-sm-4'>
+                  <Input label='Change Profile Pic' />
+                  <ImageUploader field={image}/>
+                </div>
               </div>
-              <div className='col-sm-4'>
-                <Input label='Change Profile Pic' />
-                <ImageUploader field={image}/>
-              </div>
-            </div>
-            <Input label='Email Notifications' />
-            <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox'/>
-            {this.renderProfileImageUpload}
-            <Button bsStyle='primary' block disabled={submitting} type='submit'>Save</Button>
-          </form>
+              <Input label='Email Notifications' />
+              <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox'/>
+              {this.renderProfileImageUpload}
+              <Button bsStyle='primary' block disabled={submitting} type='submit'>Save</Button>
+            </form>
+          </div>
+          <a href='#' onClick={this.onDeactivateClicked}>I want to deactivate my account</a>
+          {this.renderDeactivateModal()}
         </div>
-        <a href='#' onClick={this.onDeactivateClicked}>I want to deactivate my account</a>
-        {this.renderDeactivateModal()}
       </div>
     )
   }

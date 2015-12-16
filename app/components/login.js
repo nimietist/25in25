@@ -47,7 +47,7 @@ export default class Login extends React.Component {
   render () {
     const {fields: {username, password}, submitting} = this.props
     return (
-      <div>
+      <div className='modal-padding'>
         <h2 className='row'>Start creating today! Sign up below.</h2>
         <div className='row'>
           <SocialButtons />

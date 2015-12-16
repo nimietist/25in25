@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Jumbotron } from 'react-bootstrap'
-// import ReactTimeout from 'react-timeout'
 
-// @ReactTimeout
 @connect(state => ({eventDate: state.eventDate}))
 export default class Count extends React.Component {
   static propTypes = {
@@ -14,8 +12,10 @@ export default class Count extends React.Component {
     this.state = {timeLeft: ''}
   }
   componentDidMount () {
-    // const { setInterval } = this.props.reactTimeout
-    setInterval(this.updateTimeLeft, 1000)
+    this.interval = setInterval(this.updateTimeLeft, 1000)
+  }
+  componentWillUnmount () {
+    clearInterval(this.interval)
   }
   getTimeRemaining (endtime) {
     var t = Date.parse(endtime) - Date.now()
@@ -40,7 +40,7 @@ export default class Count extends React.Component {
     return (
       <Jumbotron className='text-center'>
         <h3>Lorem Ipsum</h3>
-        <h2>{t.days} days, {t.hours}:{t.minutes}:{t.seconds}</h2>
+        <h2>{t.days} days {t.hours}:{t.minutes}:{t.seconds}</h2>
       </Jumbotron>
     )
   }

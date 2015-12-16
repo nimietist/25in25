@@ -72,7 +72,7 @@ export default class NavBar extends React.Component {
   }
   render () {
     return (
-      <Navbar navbar-fixed-top expanded={this.state.expanded} onToggle={this.onToggle}>
+      <Navbar navbar-fixed-top fluid expanded={this.state.expanded} onToggle={this.onToggle}>
         <Navbar.Header>
           <Navbar.Brand><Link to='/'>25in25</Link></Navbar.Brand>
           <Navbar.Toggle>

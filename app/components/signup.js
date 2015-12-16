@@ -44,7 +44,7 @@ export default class Signup extends React.Component {
   render () {
     const {fields: {username, email, password}, submitting} = this.props
     return (
-      <div>
+      <div className='modal-padding'>
         <h2 className='row'>Start creating today! Sign up below.</h2>
         <div className='row'>
           <SocialButtons />

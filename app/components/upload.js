@@ -5,14 +5,15 @@ import { reduxForm } from 'redux-form'
 import ImageUploader from './image-uploader'
 import { uploadArtwork } from '../actions'
 
+const MAX_DESCRIPTION_LENGTH = 200
 const fields = ['title', 'description', 'image']
 
 const validate = (values) => {
   const errors = {}
 
-  // if (!values.title) {
-  //   errors.title = 'Title required'
-  // }
+  if ((values.description || '').length > MAX_DESCRIPTION_LENGTH) {
+    errors.description = 'Title required'
+  }
   return errors
 }
 
@@ -34,6 +35,9 @@ export default class Upload extends React.Component {
       description: description.value
     }))
   }
+  maxDescriptionCheck = () => {
+    return this.props.description.value.length > MAX_DESCRIPTION_LENGTH
+  }
   render () {
     const {fields: {title, description, image}, submitting} = this.props
 
@@ -45,8 +49,9 @@ export default class Upload extends React.Component {
           </div>
           <div className='col-sm-8'>
             <Input label='Title (optional)' type='text' {...title} />
-            <Input label='Description (optional)' type='textarea' {...description} />
+            <Input onKeyDown={this.maxDescriptionCheck} label='Description (optional)' type='textarea' maxlength={MAX_DESCRIPTION_LENGTH} {...description} />
           </div>
+          <div>{MAX_DESCRIPTION_LENGTH - (description.value || '').length}</div>
         <Button bsStyle='primary' block disabled={submitting} block={true} type='submit'>Upload!</Button>
         </form>
       </div>
