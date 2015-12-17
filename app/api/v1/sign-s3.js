@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
   let { file_type } = req.query
   let key = uuid.v4()
   let s3 = new AWS.S3({computeChecksums: false})
-  console.error('asdf', file_type);
   let s3_params = {
     Bucket: process.env.AWS_BUCKET,
     Key: `images/${key}`,

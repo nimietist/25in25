@@ -204,21 +204,16 @@ export function getArtwork (slug) {
 }
 
 export function uploadArtwork (params) {
-  console.error('uploadparams', params);
   return dispatch => {
     return getSignedS3Url(params.file)
     .then(signed => {
-      console.error('signed', signed);
-      let data = new FormData()
-      data.append('file', params.file)
-      console.error('form', data);
       getit(signed.url, {
         headers: {
           'x-amz-acl': 'public-read',
           'content-type': params.file.type
         },
         method: 'put',
-        body: data,
+        body: params.file,
         empty: true
       }).then((res) => {
         getit(`/api/v1/artworks`, {

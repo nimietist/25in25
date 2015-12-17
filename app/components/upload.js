@@ -27,8 +27,6 @@ export default class Upload extends React.Component {
   }
   uploadForm = () => {
     const {fields: {image, title, description}} = this.props
-    console.error('upload', image);
-    // return;
     return this.props.dispatch(uploadArtwork({
       file: image.value[0],
       title: title.value,
