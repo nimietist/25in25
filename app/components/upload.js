@@ -10,7 +10,6 @@ const fields = ['title', 'description', 'image']
 
 const validate = (values) => {
   const errors = {}
-
   if ((values.description || '').length > MAX_DESCRIPTION_LENGTH) {
     errors.description = 'Title required'
   }
@@ -27,10 +26,11 @@ export default class Upload extends React.Component {
     submitting: PropTypes.bool.isRequired
   }
   uploadForm = () => {
-    // TODO: Upload title, desc, and image
     const {fields: {image, title, description}} = this.props
+    console.error('upload', image);
+    // return;
     return this.props.dispatch(uploadArtwork({
-      image: image.value,
+      file: image.value[0],
       title: title.value,
       description: description.value
     }))
@@ -46,10 +46,24 @@ export default class Upload extends React.Component {
           </div>
           <div className='col-sm-8'>
             <Input label='Title (optional)' type='text' {...title} />
-            <Input label='Description (optional)' type='textarea' maxLength={MAX_DESCRIPTION_LENGTH} {...description} />
+            <Input
+              className='description'
+              label='Description (optional)'
+              type='textarea'
+              maxLength={MAX_DESCRIPTION_LENGTH}
+              {...description}
+            />
+            <div className='pull-right'>
+              {MAX_DESCRIPTION_LENGTH - (description.value || '').length}
+            </div>
           </div>
-          <div>{MAX_DESCRIPTION_LENGTH - (description.value || '').length}</div>
-        <Button bsStyle='primary' block disabled={submitting} block={true} type='submit'>Upload!</Button>
+          <Button
+            block
+            disabled={submitting}
+            bsStyle='primary'
+            type='submit'>
+            Upload!
+          </Button>
         </form>
       </div>
     )

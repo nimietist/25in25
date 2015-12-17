@@ -48,8 +48,8 @@ export default class Login extends React.Component {
     const {fields: {username, password}, submitting} = this.props
     return (
       <div className='modal-padding'>
-        <h2 className='row'>Start creating today! Sign up below.</h2>
-        <div className='row'>
+        <h2 className='col-sm-12'>Start creating today! Sign up below.</h2>
+        <div>
           <SocialButtons />
           <div className='col-sm-7'>
             <form ref='loginForm' onSubmit={this.props.handleSubmit(this.logIn)}>

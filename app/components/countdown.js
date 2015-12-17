@@ -26,10 +26,13 @@ export default class Count extends React.Component {
     return {
       'total': t,
       'days': days,
-      'hours': hours,
-      'minutes': minutes,
-      'seconds': seconds
+      'hours': this.s(hours),
+      'minutes': this.s(minutes),
+      'seconds': this.s(seconds)
     }
+  }
+  s (i) {
+    return `0${i}`.slice(-2)
   }
   updateTimeLeft = () => {
     let timeLeft = this.getTimeRemaining(this.props.eventDate || '2016-01-05T00:00:00')

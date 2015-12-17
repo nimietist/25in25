@@ -20,8 +20,8 @@ const Artwork = Model.extend({
     return this.hasMany(Comment)
   },
   imageUrl () {
-    let url = this.get('cloudinary_image_url')
-    return url ? cloudinary.url(url) : ''
+    let key = this.get('s3_key')
+    return key ? `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/images/${key}` : ''
   },
   const: ['image', 'music', 'words', 'video']
 })

@@ -24,23 +24,24 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  if (!req.user) {
-    res.status(401, 'Unauthorized')
-  }
+  if (!req.user) { return res.status(401).send('Unauthorized') }
+
   // validation here: public_image_id|soundcloud_track_id|vimeo_id
-  const type = req.body.cloudinary_image_id ? 'image' : req.body.soundcloud_track_id ? 'music' : req.body.vimeo_id ? 'video' : 'words'
+  // const type = req.body.cloudinary_image_id ? 'image' : req.body.soundcloud_track_id ? 'music' : req.body.vimeo_id ? 'video' : 'words'
   let slug = slugger(req.body.title)
   getUniqueSlug(slug).then(slug => {
     Artwork.forge({
       user_id: req.user.id,
-      cloudinary_image_id: req.body.cloudinary_image_id,
-      soundcloud_track_id: req.body.soundcloud_track_id,
-      vimeo_id: req.body.vimeo_id,
+      s3_key: req.body.s3_key,
+      // cloudinary_image_id: req.body.cloudinary_image_id,
+      // soundcloud_track_id: req.body.soundcloud_track_id,
+      // vimeo_id: req.body.vimeo_id,
       words: req.body.words,
       title: req.body.title,
       description: req.body.description,
-      slug: slug,
-      type
+      type: 'image',
+      slug,
+      // type
     }).save().then(artwork => {
       res.status(201).send(artwork.info())
     })

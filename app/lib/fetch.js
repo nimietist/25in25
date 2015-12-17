@@ -10,5 +10,8 @@ export default function (url, options) {
     const HOST = __SERVER__ ? `http://localhost:${process.env.PORT}` : ''
     url = `${HOST}${url}`
   }
-  return fetch(url, options).then(res => res.json())
+  return fetch(url, options).then(res => {
+    if (options.empty) return ''
+    return res.json()
+  })
 }

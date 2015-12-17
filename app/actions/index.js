@@ -204,30 +204,59 @@ export function getArtwork (slug) {
 }
 
 export function uploadArtwork (params) {
-  // return dispatch => {
-  //   return getit(`/api/v1/artwork`, {
-  //     method: 'post',
-  //     data: params
-  //   }).then(artwork => {
-  //     dispatch({
-  //       type: 'COMPLETE_UPLOAD_ARTWORK',
-  //       artwork
-  //     })
-  //   })
-  // }
+  console.error('uploadparams', params);
   return dispatch => {
-    dispatch({
-      type: 'COMPLETE_UPLOAD_ARTWORK',
-      artwork: {
-        id: 1234556,
-        title: params.title,
-        description: params.description,
-        username: 'username',
-        slug: 'asdfasdfupload',
-        image_url: '/img/chris.jpg'
-      }
+    return getSignedS3Url(params.file)
+    .then(signed => {
+      console.error('signed', signed);
+      let data = new FormData()
+      data.append('file', params.file)
+      console.error('form', data);
+      getit(signed.url, {
+        headers: {
+          'x-amz-acl': 'public-read',
+          'content-type': params.file.type
+        },
+        method: 'put',
+        body: data,
+        empty: true
+      }).then((res) => {
+        getit(`/api/v1/artworks`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'post',
+          body: JSON.stringify({
+            title: params.title,
+            description: params.description,
+            s3_key: signed.key
+          })
+        }).then(artwork => {
+          dispatch({
+            type: 'COMPLETE_UPLOAD_ARTWORK',
+            artwork
+          })
+        })
+        // .catch(err => {
+        //   console.error(err)
+        //   dispatch({ type: 'FAILED_UPLOAD_ARTWORK' })
+        // })
+      })
+      // .catch(err => {
+      //   console.error(err)
+      //   dispatch({ type: 'FAILED_UPLOAD_ARTWORK' })
+      // })
     })
+    // .catch(err => {
+    //   console.error(err)
+    //   dispatch({ type: 'FAILED_UPLOAD_ARTWORK' })
+    // })
   }
+}
+
+export function getSignedS3Url (file) {
+  return getit(`/api/v1/signS3?file_type=${file.type}`)
 }
 
 export function deactivateAccount (csrf) {
