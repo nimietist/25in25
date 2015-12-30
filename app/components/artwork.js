@@ -18,6 +18,7 @@ const validate = values => {
 @reduxForm({form: 'artwork', fields, validate}, state => ({
   artworks: state.artworks.artworks,
   currentArtwork: state.artwork,
+  user: state.user,
   router: state.router
 }), dispatch => ({
   actions: bindActionCreators(actions, dispatch),
@@ -29,6 +30,7 @@ export default class Artwork extends React.Component {
     artwork: PropTypes.object,
     artworks: PropTypes.array,
     currentArtwork: PropTypes.object,
+    user: PropTypes.object,
     fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     modal: PropTypes.bool,
@@ -75,8 +77,8 @@ export default class Artwork extends React.Component {
     let artwork = artworks[swipeIndex] || currentArtwork
     if (!artwork) { return null }
 
-    let prev = artworks[(swipeIndex + artworks.length - 1) % artworks.length]
-    let next = artworks[(swipeIndex + 1) % artworks.length]
+    // let prev = artworks[(swipeIndex + artworks.length - 1) % artworks.length]
+    // let next = artworks[(swipeIndex + 1) % artworks.length]
     return (
       <HotKeys handlers={this.handlers}>
         <div ref='swiper'>
@@ -130,14 +132,15 @@ export default class Artwork extends React.Component {
     let next = artworks[(swipeIndex + 1) % artworks.length]
     return (
       <div className='art-nav-container'>
-        <Link className='art-nav art-nav-left' ref='prev' to={`/artwork/${prev.slug}`} state={{modal: true}}></Link>
-        <Link className='art-nav art-nav-right' ref='next' to={`/artwork/${next.slug}`} state={{modal: true}}></Link>
+        <Link className='art-nav art-nav-left' ref='prev' to={`/artwork/${prev.slug}`} state={{modal: true}} />
+        <Link className='art-nav art-nav-right' ref='next' to={`/artwork/${next.slug}`} state={{modal: true}} />
       </div>
     )
   }
   renderContainer () {
     const artwork = this.props.artwork || this.props.currentArtwork
     const {image_url, color} = artwork
+    const {user} = this.props
     return (
       <div className='artwork'>
         <div>
@@ -145,8 +148,8 @@ export default class Artwork extends React.Component {
           {this.renderNav()}
         </div>
         <div className='info'>
-          <div className={'meta ' + color}>
-            {this.state.editing ? this.renderForm() : this.renderView()}
+          <div className={'meta ' + (color || 'red')}>
+            {this.state.editing && artwork.user_id === user.id ? this.renderForm() : this.renderView()}
           </div>
         </div>
       </div>

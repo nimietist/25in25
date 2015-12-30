@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
   }
   const { limit = 50, page = 1 } = req.query
   const query = {
+    orderBy: ['created_at', 'DESC'],
     limit: Number(limit),
     offset: (Number(page) - 1) * limit
   }
@@ -17,9 +18,16 @@ router.get('/', (req, res) => {
   if (req.params.username) {
     query.username = req.params.username
   }
-  Artwork.collection().query(query).fetch().then(artworks => {
+  Artwork.collection().query(query).fetch({withRelated: ['user']}).then(artworks => {
     if (!artworks) { return res.send(401, 'Not found') }
     res.send(artworks.map(a => a.info()))
+  })
+})
+
+router.get('/:id', (req, res) => {
+  Artwork.where({slug: req.params.id}).fetch({withRelated: ['user']}).then(artwork => {
+    if (!artwork) { return res.status(404).send('Not Found') }
+    res.send(artwork.info())
   })
 })
 
@@ -40,7 +48,7 @@ router.post('/', (req, res) => {
       title: req.body.title,
       description: req.body.description,
       type: 'image',
-      slug,
+      slug
       // type
     }).save().then(artwork => {
       res.status(201).send(artwork.info())
@@ -49,7 +57,7 @@ router.post('/', (req, res) => {
 })
 
 function getUniqueSlug (slug, count) {
-  return new Artwork({ slug }).fetch().then(artwork => {
+  return new Artwork({ slug }).fetch({withRelated: ['user']}).then(artwork => {
     if (!artwork) {
       return slug
     } else {
@@ -59,5 +67,13 @@ function getUniqueSlug (slug, count) {
     }
   })
 }
+
+router.put('/:id', (req, res) => {
+  Artwork.where({slug: req.params.id}).fetch().then(artwork => {
+    if (!artwork) { return res.status(404).send('Not Found') }
+    if (artwork.user_id !== req.user.id) { return res.status(403).send('Forbidden') }
+    res.send(artwork.info())
+  })
+})
 
 export default router

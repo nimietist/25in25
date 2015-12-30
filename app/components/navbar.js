@@ -36,7 +36,7 @@ export default class NavBar extends React.Component {
         <NavDropdown
           className='hidden-xs'
           title={this.avatar()}
-          noCaret={true}
+          noCaret='true'
           id='navbar'
         >
           <LinkContainer to='/account'><MenuItem eventKey='1'>Account</MenuItem></LinkContainer>
@@ -84,7 +84,7 @@ export default class NavBar extends React.Component {
             <LinkContainer activeClassName='active' to='/browse'><NavItem>Browse</NavItem></LinkContainer>
             <LinkContainer activeClassName='active' to='/about'><NavItem>About</NavItem></LinkContainer>
             {
-              this.props.user &&
+              this.props.user.id &&
               <LinkContainer activeClassName='active' to='/dashboard'>
                 <NavItem>Dashboard</NavItem>
               </LinkContainer>

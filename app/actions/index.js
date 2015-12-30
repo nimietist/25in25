@@ -192,7 +192,7 @@ export function getArtworks (params) {
 
 export function getArtwork (slug) {
   return dispatch => {
-    return getit(`/api/v1/artwork/${slug}`, {
+    return getit(`/api/v1/artworks/${slug}`, {
       method: 'get'
     }).then(artwork => {
       dispatch({

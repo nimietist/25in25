@@ -14,6 +14,13 @@ import Artwork from './components/artwork'
 
 // TODO: Add Unauthorized wrapper
 // TODO: Add incomplete profile wrapper
+
+function requireAuth (nextState, replaceState) {
+  // if (!auth.loggedIn()) {
+  //   replaceState({ nextPathname: nextState.location.pathname }, '/login')
+  // }
+}
+
 export default (
   <Route component={App} >
     <Route activeHref='/about' path='/about' component={About} />
@@ -26,7 +33,7 @@ export default (
     <Route path='/user/:username' component={UserPage} />
     <Route path='/browse' component={Home} />
     <Route path='/' component={Home}>
-      <Route path='/dashboard' component={Upload} />
+      <Route path='/dashboard' component={Upload} onEnter={requireAuth}/>
       <Route path='' component={Upload} />
     </Route>
   </Route>

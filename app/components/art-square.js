@@ -28,7 +28,7 @@ class ArtSquare extends React.Component {
           >
             <img className='thumb wow animated fadeIn' src={image_url} />
           </Link>
-          <div className={'meta ' + this.props.artwork.color}>
+          <div className={'meta ' + (this.props.artwork.color || 'red')}>
             <div className='title'>{title}</div>
             <div className='username'>
               <Link to={`/user/${username}`}>

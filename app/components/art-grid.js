@@ -32,7 +32,7 @@ class ArtGrid extends React.Component {
     let grouped = groupBy(this.props.artworks || [], art => {
       let date = new Date(art.created_at)
       let month = `0${date.getMonth()}`.slice(-2)
-      return `${date.getFullYear()}-${date.getMonth()}`
+      return `${date.getFullYear()}-${month}`
     })
     let sortedKeys = Object.keys(grouped).sort().reverse()
     return (
@@ -64,7 +64,7 @@ class ArtGrid extends React.Component {
         hasMore={this.props.hasMore}
         loader={<div className='loader'>Loading ...</div>}
       >
-        {this.props.group ? this.renderGroupedSquares(): this.renderSquares(this.props.artworks)}
+        {this.props.group ? this.renderGroupedSquares() : this.renderSquares(this.props.artworks)}
       </InfiniteScroll>
     )
   }

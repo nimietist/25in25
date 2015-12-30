@@ -8,3 +8,4 @@ npm_debug.log
 dump.rdb
 static
 webpack-assets.json
+*.log

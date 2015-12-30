@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Jumbotron } from 'react-bootstrap'
 
 @connect(state => ({eventDate: state.eventDate}))
 export default class Count extends React.Component {
   static propTypes = {
-
+    eventDate: PropTypes.string
   }
   constructor (props) {
     super(props)
@@ -19,10 +19,10 @@ export default class Count extends React.Component {
   }
   getTimeRemaining (endtime) {
     var t = Date.parse(endtime) - Date.now()
-    var seconds = Math.floor( (t / 1000) % 60 )
-    var minutes = Math.floor( (t / 1000 / 60) % 60 )
-    var hours = Math.floor( (t / (1000*60*60)) % 24 )
-    var days = Math.floor( t / (1000*60*60*24) )
+    var seconds = Math.floor((t / 1000) % 60)
+    var minutes = Math.floor((t / 1000 / 60) % 60)
+    var hours = Math.floor((t / (1000 * 60 * 60)) % 24)
+    var days = Math.floor(t / (1000 * 60 * 60 * 24))
     return {
       'total': t,
       'days': days,

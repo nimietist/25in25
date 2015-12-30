@@ -1,10 +1,9 @@
 import { Router } from 'express'
-import { default as debugScope } from 'debug'
-import { Artwork } from 'app/models'
+// import { default as debugScope } from 'debug'
 import AWS from 'aws-sdk'
 import uuid from 'uuid'
 
-const debug = debugScope('25in25:cloudinary')
+// const debug = debugScope('25in25:cloudinary')
 const router = new Router()
 
 AWS.config.update({
@@ -13,6 +12,7 @@ AWS.config.update({
 })
 
 router.get('/', (req, res) => {
+  if (!req.user) { return res.status(401).send('Unauthorized') }
   let { file_type } = req.query
   let key = uuid.v4()
   let s3 = new AWS.S3({computeChecksums: false})

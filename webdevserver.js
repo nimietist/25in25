@@ -72,7 +72,7 @@ app.get('/api/v1/artworks', function (req, res) {
   res.send(works)
 })
 
-app.get('/api/v1/artwork/:slug', function (req, res) {
+app.get('/api/v1/artworks/:slug', function (req, res) {
   var id = parseInt(req.params.slug.replace('some-special-slug', ''), 10) || 1
   res.send({
     id: id,
@@ -121,5 +121,5 @@ app.get('*', function (req, res) {
 
 app.listen(process.env.PORT || 3000, function (err) {
   if (err) { return console.log(err) }
-  console.log('Assets listening at http://localhost:'+(process.env.PORT||3000))
+  console.log('Assets listening at http://localhost:' + (process.env.PORT || 3000))
 })
