@@ -1,9 +1,11 @@
+require('envc')()
 var path = require('path')
 var webpack = require('webpack')
 var IsoToolsPlugin = require('webpack-isomorphic-tools/plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var isoConfig = require('./webpack-isomorphic-config')
 var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
+var bourbonPath = require('bourbon').includePaths
 
 module.exports = {
   port: process.env.PORT || 3000,
@@ -15,7 +17,7 @@ module.exports = {
   output: {
     path: './static',
     filename: 'main.js',
-    publicPath: '/static/'
+    publicPath: '/static'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(true),
@@ -47,8 +49,14 @@ module.exports = {
         'less?sourceMap'
       )
     }, {
+      test: /\.(sass|scss)$/,
+      loader: ExtractTextPlugin.extract(
+        'css?sourceMap!' +
+        'sass?sourceMap'
+      )
+    }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('css-loader!less-loader')
+      loader: ExtractTextPlugin.extract('css-loader')
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url?limit=100000'
@@ -57,6 +65,9 @@ module.exports = {
       loader: 'url?limit=100000'
     }
   ]},
+  sassLoader: {
+    includePaths: [bourbonPath]
+  },
   resolve: {
     root: path.resolve('.'),
     extensions: ['', '.js', '.json', '.coffee']

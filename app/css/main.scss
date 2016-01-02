@@ -1,3 +1,4 @@
+@import 'bourbon';
 @import './variables';
 
 body, html {
@@ -42,7 +43,7 @@ h5 { font-size: 18px; line-height: 24px }
 }
 
 .footer {
-  background-color: @gray;
+  background-color: $gray;
   text-align: right;
   padding: 20px;
   height: 60px;
@@ -90,30 +91,30 @@ h5 { font-size: 18px; line-height: 24px }
 
 .example-enter {
   position: absolute;
-  transition-duration: 200ms;
-  transition-property: transform, opacity;
-  transition-timing-function: ease-out;
-  // transform: translate3d(20%,0,0);
+  @include transition-duration(200ms);
+  @include transition-property(transform, opacity);
+  @include transition-timing-function(ease-out);
+  // @include transform(translate3d(20%,0,0));
   opacity: 0;
   z-index: 10;
 }
 
 .example-enter.example-enter-active {
-  // transform: translate3d(0,0,0);
+  // @include transform(translate3d(0,0,0));
   opacity: 1;
 }
 
 .example-leave {
   // position: absolute;
-  transition-duration: 1ms;
-  transition-property: transform, opacity;
-  transition-timing-function: ease-out;
-  // transform: translate3d(0,0,0);
+  @include transition-duration(1ms);
+  @include transition-property(transform, opacity);
+  @include transition-timing-function(ease-out);
+  // @include transform(translate3d(0,0,0));
   opacity: 0;
 }
 
 .example-leave.example-leave-active {
-  // transform: translate3d(-15%,0,0);
+  // @include transform(translate3d(-15%,0,0));
   opacity: 0.3;
 }
 
@@ -157,13 +158,13 @@ h5 { font-size: 18px; line-height: 24px }
       width: 100%;
     }
     .red {
-      background: @red;
+      background: $red;
     }
     .yellow {
-      background: @yellow;
+      background: $yellow;
     }
     .blue {
-      background: @blue;
+      background: $blue;
     }
     .meta {
       position: relative;

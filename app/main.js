@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import Root from './containers/root'
 import configureStore from './store/configureStore'
 
-require('./css/main.less')
+require('./css/main.scss')
 
 /**
  * This bootstraps the client side router

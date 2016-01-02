@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var IsoToolsPlugin = require('webpack-isomorphic-tools/plugin')
 var isoConfig = require('./webpack-isomorphic-config')
 var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
+var bourbonPath = require('bourbon').includePaths
 
 var PORT = process.env.PORT || 3000
 module.exports = {
@@ -53,7 +54,7 @@ module.exports = {
       }
     }, {
       test: /\.(css|less|scss)$/,
-      loader: 'style!css!less'
+      loader: 'style!css?sourceMap!less!sass?sourceMap'
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url?limit=100000'
@@ -62,6 +63,9 @@ module.exports = {
       loader: 'url?limit=100000'
     }
   ]},
+  sassLoader: {
+    includePaths: [bourbonPath]
+  },
   resolve: {
     root: path.resolve('.'),
     extensions: ['', '.js', '.json', '.coffee']

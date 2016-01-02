@@ -55,7 +55,7 @@ if (app.get('env') === 'development') {
 global.webpackIsoTools = new IsoTools(isoConfig)
   .development(process.env.NODE_ENV === 'development')
   .server(require('path').resolve('.'), e => {
-    console.log('WebpackIso initialized')
+    console.log('webpack iso initialized')
   })
 
 app.serve = () => {
