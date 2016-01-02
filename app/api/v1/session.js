@@ -18,7 +18,7 @@ session.get('/session', (req, res) => {
   res.send(req.session || {})
 })
 
-session.post('/forgot', function (req, res) {
+session.post('/api/v1/forgot', function (req, res) {
   User.where({email: req.body.email}).fetch().then(user => {
     if (!user) { return res.status(404).send('Not Found') }
     PasswordRequest.forge().save(passwordRequest => {
@@ -33,7 +33,7 @@ session.post('/forgot', function (req, res) {
   })
 })
 
-session.post('/reset-password', function (req, res) {
+session.post('/api/v1/reset-password', function (req, res) {
   // TODO: verify passwords, save to user queried by unique id
   res.send({success: true})
 })
