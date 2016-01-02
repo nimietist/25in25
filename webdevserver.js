@@ -65,7 +65,7 @@ app.get('/api/v1/artworks', function (req, res) {
       image_url: 'http://lorempixel.com/400/400?q=' + i,
       color: colorz(i),
       slug: `some-special-slug${i}`,
-      created_at: '2015-12-01T00:00:00',
+      created_at: '2015-12-11T00:00:00',
       description: lorem({count: 1, units: 'paragraphs'})
     })
   }

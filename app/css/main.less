@@ -1,16 +1,26 @@
-@gray: #cfdddb;
+@import './variables';
 
 body, html {
   height: 100%;
   margin: 0;
   padding: 0;
   min-height: 100%;
+  font-family: 'Open Sans', sans-serif;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Francois One', sans-serif;
+}
+h1 { font-size: 54px; line-height: 58px }
+h2 { font-size: 36px; line-height: 42px }
+h3 { font-size: 30px; line-height: 36px }
+h4 { font-size: 24px; line-height: 30px }
+h5 { font-size: 18px; line-height: 24px }
+
 .container-fluid {
   max-width: 1920px;
-  @media (max-width: 768px) {
-    padding: 0;
-  }
+  // @media (max-width: 768px) {
+  //   padding: 0;
+  // }
 }
 .tall {
   min-height: 100%;
@@ -147,13 +157,13 @@ body, html {
       width: 100%;
     }
     .red {
-      background: #E9405A;
+      background: @red;
     }
     .yellow {
-      background: #FABA2D;
+      background: @yellow;
     }
     .blue {
-      background: #3EC3D5;
+      background: @blue;
     }
     .meta {
       position: relative;

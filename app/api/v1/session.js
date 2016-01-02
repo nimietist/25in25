@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { auth } from '../middleware'
+import {User, PasswordRequest} from 'app/models'
+import { queue } from 'app/lib/kue'
 
 const session = Router()
 
@@ -17,8 +19,18 @@ session.get('/session', (req, res) => {
 })
 
 session.post('/forgot', function (req, res) {
-  // TODO: verify email, save email record, send email confirmation with unique id
-  res.send({success: true})
+  User.where({email: req.body.email}).fetch().then(user => {
+    if (!user) { return res.status(404).send('Not Found') }
+    PasswordRequest.forge().save(passwordRequest => {
+      queue.createJob('email', {
+        user_id: user.id,
+        request_hash: passwordRequest.uuid,
+        to: user.email,
+        template: 'forgot'
+      })
+      res.send({success: true})
+    })
+  })
 })
 
 session.post('/reset-password', function (req, res) {
