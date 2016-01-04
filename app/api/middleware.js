@@ -20,6 +20,7 @@ passport.deserializeUser(function (id, done) {
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
+    username = username.trim()
     new User({ username }).fetch().then(function (user) {
       if (!user) { return done(null, false) }
       if (!user.verifyPassword(password)) { return done(null, false) }

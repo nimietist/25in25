@@ -57,6 +57,7 @@ router.post('/', (req, res) => {
 })
 
 function getUniqueSlug (slug, count) {
+  slug = slug.trim().toLowerCase()
   return new Artwork({ slug }).fetch({withRelated: ['user']}).then(artwork => {
     if (!artwork) {
       return slug

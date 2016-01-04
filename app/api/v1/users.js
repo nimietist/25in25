@@ -29,7 +29,7 @@ users.post('/', (req, res) => {
       return res.send(401, 'Already exists')
     }
     User.forge({
-      username: req.body.username,
+      username: req.body.username.trim(),
       password: req.body.password
     }).save().then(user => {
       res.status(201).send(user.info())
