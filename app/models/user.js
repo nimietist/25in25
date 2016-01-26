@@ -11,7 +11,7 @@ const User = Model.extend({
     this.on('creating', this.initPassword, this)
   },
   whitelist: [
-    'id', 'username', 'email', 'created_at', 'uuid'
+    'id', 'username', 'email', 'created_at', 'uuid', 'email_setting'
   ],
   info () {
     return pick(this.toJSON(), this.whitelist)

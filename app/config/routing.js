@@ -30,6 +30,7 @@ app.use((req, res, next) => {
 
   const action = match(req.originalUrl, (error, redirectLocation, state) => {
     // console.error(error, redirectLocation, state)
+    return res.render('index', { root: '', initialState: {} })
     const promises = state ? state.components.reduce((p, e) => {
       if (e.fetchData) {
         p.push(e.fetchData(store.dispatch, store.getState))

@@ -25,7 +25,7 @@ module.exports = {
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
-      __DEVTOOLS__: false,
+      __DEVTOOLS__: true,
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }
@@ -53,8 +53,8 @@ module.exports = {
         }
       }
     }, {
-      test: /\.(css|less|scss)$/,
-      loader: 'style!css?sourceMap!less!sass?sourceMap'
+      test: /\.(css|scss)$/,
+      loader: 'style!css?sourceMap!sass?sourceMap'
     }, {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url?limit=100000'

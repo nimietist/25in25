@@ -6,7 +6,7 @@ import { get } from 'lodash'
 import {Input, Button, Modal} from 'react-bootstrap'
 import ImageUploader from './image-uploader'
 
-const fields = ['username', 'email', 'passwordOld', 'passwordNew', 'passwordConfirm', 'image']
+const fields = ['username', 'email', 'passwordOld', 'passwordNew', 'passwordConfirm', 'image', 'email_setting']
 
 const validate = values => {
   const errors = {}
@@ -55,10 +55,11 @@ export default class Account extends React.Component {
     this.closeModal()
   }
   savePreferences = () => {
-    const {fields: {email, image, passwordOld, passwordNew}} = this.props
+    const {fields: {email, image, passwordOld, passwordNew, email_setting}} = this.props
 
     return this.props.dispatch(actions.updateUser(this.props.user.id, {
       email: email.value,
+      email_setting: email_setting.value,
       image: image.value,
       password: passwordOld.value,
       passwordNew: passwordNew.value
@@ -93,7 +94,7 @@ export default class Account extends React.Component {
     )
   }
   render () {
-    const {fields: {email, passwordOld, passwordNew, passwordConfirm, image}, submitting} = this.props
+    const {fields: {email, passwordOld, passwordNew, passwordConfirm, image, email_setting}, submitting} = this.props
     return (
       <div className='account container'>
         <div className='col-md-8 col-md-offset-2'>
@@ -114,7 +115,7 @@ export default class Account extends React.Component {
                 </div>
               </div>
               <Input label='Email Notifications' />
-              <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox'/>
+              <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox' {...email_setting}/>
               {this.renderProfileImageUpload}
               <Button bsStyle='primary' block disabled={submitting} type='submit'>Save</Button>
             </form>

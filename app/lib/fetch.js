@@ -6,6 +6,19 @@ export default function (url, options) {
   options = extend({
     credentials: 'same-origin'
   }, options)
+
+  options.headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    ...options.headers
+  }
+  if (options.data) {
+    if (options.method && options.method.toLowerCase() === 'post') {
+      options.body = JSON.stringify(options.data)
+    } else if (!options.method || options.method.toLowerCase() === 'get') {
+      url += '?' + Object.keys(options.data).map((key, value) => `${key}=${options.data[key]}`).join('&')
+    }
+  }
   if (url.indexOf('http') !== 0) {
     const HOST = __SERVER__ ? `http://localhost:${process.env.PORT}` : ''
     url = `${HOST}${url}`

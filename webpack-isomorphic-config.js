@@ -7,7 +7,7 @@ module.exports = {
       parser: IsoToolsPlugin.url_loader_parser
     },
     styles: {
-      extensions: ['less', 'scss'],
+      extensions: ['scss'],
       filter: function (module, regular_expression, options, log) {
         if (options.development) {
           return IsoToolsPlugin.style_loader_filter(module, regular_expression, options, log)

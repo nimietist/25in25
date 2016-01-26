@@ -12,7 +12,7 @@ const Comment = Model.extend({
     return this.belongsTo(User)
   },
   artwork () {
-    this.belongsTo(Artwork)
+    return this.belongsTo(Artwork)
   }
 })
 

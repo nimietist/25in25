@@ -56,6 +56,9 @@ users.put('/:id', (req, res) => {
       email_setting: req.body.email_setting
     }).then(user => {
       res.status(200).send(user.info())
+    }).catch(err => {
+      console.error(err)
+      res.status(401).send({error: 'That email exists already'})
     })
   })
 })

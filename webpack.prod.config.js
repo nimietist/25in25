@@ -43,12 +43,6 @@ module.exports = {
         stage: 0
       }
     }, {
-      test: /\.less$/,
-      loader: ExtractTextPlugin.extract(
-        'css?sourceMap!' +
-        'less?sourceMap'
-      )
-    }, {
       test: /\.(sass|scss)$/,
       loader: ExtractTextPlugin.extract(
         'css?sourceMap!' +

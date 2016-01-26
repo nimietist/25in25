@@ -1,6 +1,6 @@
 
 exports.up = function (knex, Promise) {
-  return Promise.all(
+  return Promise.all([
     knex.schema.createTable('emails', function (t) {
       t.increments()
       t.timestamps()
@@ -20,9 +20,12 @@ exports.up = function (knex, Promise) {
       t.uuid('uuid').unique()
       t.integer('user_id').index().references('id').inTable('users')
     })
-  )
+  ])
 }
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTable('emails')
+  return Promise.all([
+    knex.schema.dropTable('emails'),
+    knex.schema.dropTable('password_requests')
+  ])
 }

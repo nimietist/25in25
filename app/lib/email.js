@@ -4,6 +4,10 @@ import {extend} from 'lodash'
 import {EmailTemplate} from 'email-templates'
 import {User, Email} from '../models'
 
+const defaults = {
+  host: process.env.HOST
+}
+
 const transport = nodemailer.createTransport({
   service: 'sendgrid',
   auth: {
@@ -17,7 +21,7 @@ const transport = nodemailer.createTransport({
 export default function email (job_id, opt, done) {
   let template = new EmailTemplate(path.join(__dirname, '..', 'views', 'email', opt.template || ''))
   User.where({id: opt.user_id}).fetch().then(user => {
-    template.render(user || {}, (err, result) => {
+    template.render({...defaults, ...user, ...opt}, (err, result) => {
       if (err) { return console.error('Bad Email Options', err) }
       let mail = extend(opt, result)
       transport.sendMail(mail, (err, info) => {
@@ -31,7 +35,9 @@ export default function email (job_id, opt, done) {
           subject: opt.subject,
           template: opt.template,
           status, reason
-        }).save().then(done)
+        }).save().then(e => {
+          done()
+        })
       })
     })
   })

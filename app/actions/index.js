@@ -16,12 +16,8 @@ export function completeLogout () {
 export function logIn (form) {
   return dispatch => {
     return getit('/api/v1/login', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
       method: 'post',
-      body: JSON.stringify(form)
+      data: form
     }).then(function (user) {
       dispatch(completeLogin(user))
       Promise.resolve()
@@ -73,12 +69,8 @@ export function getUser (username) {
 export function updateUser (id, body) {
   return dispatch => {
     return getit(`/api/v1/users/${id}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
       method: 'put',
-      body: JSON.stringify(body)
+      data: body
     }).then(function (user) {
       dispatch(completeGetUser(user))
       return user
@@ -89,12 +81,8 @@ export function updateUser (id, body) {
 export function signUp (form) {
   return dispatch => {
     return getit('/api/v1/users', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
       method: 'post',
-      body: JSON.stringify(form)
+      data: form
     }).then(function (user) {
       dispatch(completeSignup(user))
       Promise.resolve()
@@ -162,11 +150,11 @@ export function resetForgotSent () {
   }
 }
 
-export function updatePassword (password) {
+export function updatePassword (options) {
   return dispatch => {
     return getit('/api/v1/reset-password', {
       method: 'post',
-      data: {password}
+      data: options
     }).then(data => {
       dispatch({
         type: 'FORGOT_SENT'
@@ -176,10 +164,9 @@ export function updatePassword (password) {
 }
 
 export function getArtworks (params) {
-  let query = Object.keys(params).map((key, value) => `${key}=${params[key]}`).join('&')
   return dispatch => {
-    return getit(`/api/v1/artworks?${query}`, {
-      method: 'get'
+    return getit(`/api/v1/artworks`, {
+      data: params
     }).then(artworks => {
       dispatch({
         type: 'COMPLETE_GET_ARTWORKS',
@@ -192,9 +179,7 @@ export function getArtworks (params) {
 
 export function getArtwork (slug) {
   return dispatch => {
-    return getit(`/api/v1/artworks/${slug}`, {
-      method: 'get'
-    }).then(artwork => {
+    return getit(`/api/v1/artworks/${slug}`).then(artwork => {
       dispatch({
         type: 'COMPLETE_GET_ARTWORK',
         artwork
@@ -217,16 +202,12 @@ export function uploadArtwork (params) {
         empty: true
       }).then((res) => {
         getit(`/api/v1/artworks`, {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
           method: 'post',
-          body: JSON.stringify({
+          data: {
             title: params.title,
             description: params.description,
             s3_key: signed.key
-          })
+          }
         }).then(artwork => {
           dispatch({
             type: 'COMPLETE_UPLOAD_ARTWORK',

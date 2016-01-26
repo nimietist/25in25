@@ -23,7 +23,7 @@ export default class Forgot extends React.Component {
     this.props.actions.resetForgotSent()
   }
   sendEmail = (e) => {
-    return this.props.actions.sendForgotPassword(this.props.fields.email)
+    return this.props.actions.sendForgotPassword(this.props.fields.email.value)
   }
   renderForm () {
     const {fields: {email}, submitting} = this.props

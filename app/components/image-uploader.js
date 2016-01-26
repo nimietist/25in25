@@ -19,11 +19,11 @@ export default class ImageUploader extends React.Component {
   render () {
     return (
       <Dropzone className='dropzone' multiple={false} onDrop={this.onDrop}>
-        {
+        <div>{
           this.state.files.map((file) =>
-            <img className='upload-preview' key={file.name} src={file.preview} />
+          <img className='upload-preview' key={file.name} src={file.preview} />
           )
-        }
+        }</div>
       </Dropzone>
     )
   }

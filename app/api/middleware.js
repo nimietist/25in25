@@ -82,7 +82,7 @@ function findUser (args, profile, done) {
       user.save(profile).then(() => {
         done(null, user)
       }).catch((err) => {
-        console.error(err)
+        // console.error(err)
         done(null, false)
       })
     }

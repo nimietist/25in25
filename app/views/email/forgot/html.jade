@@ -1,6 +1,7 @@
 extends ../shared/html
 
 block content
+  -  function requestLink () { return host+'/reset/?request_hash='+request_hash }
   h2 Hi #{username}!
   div Forgot your password? Press the following link
-    a(href=request_hash) Forgot Link (#{request_hash})
+    a(href=requestLink()) Forgot Link (#{requestLink()})
