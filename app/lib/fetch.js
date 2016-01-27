@@ -4,14 +4,13 @@ import fetch from 'isomorphic-fetch'
 export default function (url, options) {
   options = options || {}
   options = extend({
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
     credentials: 'same-origin'
   }, options)
 
-  options.headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    ...options.headers
-  }
   if (options.data) {
     if (options.method && options.method.toLowerCase() === 'post') {
       options.body = JSON.stringify(options.data)
