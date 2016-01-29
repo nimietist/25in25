@@ -1,0 +1,30 @@
+$name: 'route-css-transition';
+
+.#{$name}-enter {
+  position: absolute;
+  @include transition-duration(200ms);
+  @include transition-property(transform, opacity);
+  @include transition-timing-function(ease-out);
+  // @include transform(translate3d(20%,0,0));
+  opacity: 0;
+  z-index: 10;
+}
+
+.#{$name}-enter.#{$name}-enter-active {
+  // @include transform(translate3d(0,0,0));
+  opacity: 1;
+}
+
+.#{$name}-leave {
+  // position: absolute;
+  @include transition-duration(1ms);
+  @include transition-property(transform, opacity);
+  @include transition-timing-function(ease-out);
+  // @include transform(translate3d(0,0,0));
+  opacity: 0;
+}
+
+.#{$name}-leave.#{$name}-leave-active {
+  // @include transform(translate3d(-15%,0,0));
+  opacity: 0.3;
+}

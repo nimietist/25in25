@@ -1,8 +1,0 @@
-extends layout
-
-block head
-  script.
-    window.INITIAL_STATE = !{JSON.stringify(initialState)};
-    
-block content
-  div(id='app' class='tall')!= root

@@ -18,7 +18,7 @@ class ArtSquare extends React.Component {
     )
   }
   render () {
-    const {title, username, image_url, slug} = this.props.artwork
+    const {title, username, image_url, slug, color} = this.props.artwork
     return (
       <div className='artwork col-lg-2 col-md-5ths col-sm-4 col-xs-6'>
         <div className='info'>
@@ -28,7 +28,7 @@ class ArtSquare extends React.Component {
           >
             <img className='thumb wow animated fadeIn' src={image_url} />
           </Link>
-          <div className={'meta ' + (this.props.artwork.color || 'red')}>
+          <div className={`meta bg-${color || 'red'}`}>
             <div className='title'>{title}</div>
             <div className='username'>
               <Link to={`/user/${username}`}>

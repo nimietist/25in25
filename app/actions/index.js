@@ -214,20 +214,8 @@ export function uploadArtwork (params) {
             artwork
           })
         })
-        // .catch(err => {
-        //   console.error(err)
-        //   dispatch({ type: 'FAILED_UPLOAD_ARTWORK' })
-        // })
       })
-      // .catch(err => {
-      //   console.error(err)
-      //   dispatch({ type: 'FAILED_UPLOAD_ARTWORK' })
-      // })
     })
-    // .catch(err => {
-    //   console.error(err)
-    //   dispatch({ type: 'FAILED_UPLOAD_ARTWORK' })
-    // })
   }
 }
 

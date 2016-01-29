@@ -1,0 +1,67 @@
+//artworks
+
+.artwork {
+  a, i {
+    color: white;
+  }
+  &[class*="col-sm"] {
+    padding: 0;
+  }
+  .large {
+    position: relative;
+    width: 100%;
+  }
+  .art-nav-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    .art-nav {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      display: block;
+      width: 20%;
+      &:hover {
+        background-color: black;
+        opacity: 0.3;
+      }
+    }
+    .art-nav-left {
+      left: 0
+    }
+    .art-nav-right {
+      right: 0
+    }
+  }
+  .info {
+    position: relative;
+    .thumb {
+      width: 100%;
+      min-height: 100px;
+      transition-duration: 200ms;
+    }
+    .meta {
+      position: relative;
+      color: white;
+      padding: 2px 5px;
+      .title {
+        font-style: italic;
+      }
+      .username {
+        font-weight: bold;
+      }
+      .share-button {
+        position: absolute;
+        right: 0;
+        top: 10px;
+      }
+      .edit {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
@@ -70,7 +71,9 @@ export default class Artwork extends React.Component {
   updateArtwork () {
     // TODO: updateartwork action
   }
-
+  createdAt (date) {
+    return moment(date).format('D MMM YYYY')
+  }
   renderSwiper () {
     let {artworks, params, currentArtwork} = this.props
     let swipeIndex = findIndex(artworks, artwork => artwork.slug === params.artworkSlug)
@@ -89,19 +92,20 @@ export default class Artwork extends React.Component {
   }
   renderView () {
     const artwork = this.props.artwork || this.props.currentArtwork
-    const {title, username, description} = artwork
+    const {title, username, description, created_at} = artwork
     return (
       <div>
         <span className='title'>{title}</span> by <span className='username'>
           <Link to={`/user/${username}/`}>
-            {username}
+          {username}
           </Link>
-        </span>:
+        </span>
+        <div>Created: {this.createdAt(created_at)}</div>
         <div className='description'>
           {description}
         </div>
-        <Button bsStyle='link' onClick={this.toggleEditing}>
-          <i className='fa fa-ellipsis-v' />
+        <Button className='edit' bsStyle='link' onClick={this.toggleEditing}>
+          <i className='fa fa-ellipsis-h' />
         </Button>
       </div>
     )
@@ -148,7 +152,7 @@ export default class Artwork extends React.Component {
           {this.renderNav()}
         </div>
         <div className='info'>
-          <div className={'meta ' + (color || 'red')}>
+          <div className={`meta bg-${color || 'red'}`}>
             {this.state.editing && artwork.user_id === user.id ? this.renderForm() : this.renderView()}
           </div>
         </div>

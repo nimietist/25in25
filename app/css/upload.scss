@@ -1,0 +1,23 @@
+// Uploads
+
+.dropzone {
+  border: none;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  background: lighten(gray, 40%);;
+  overflow: hidden;
+  margin: 0 auto;
+
+  .upload-preview {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.upload {
+  margin-bottom: 50px;
+  .description {
+    min-height: 100px
+  }
+}

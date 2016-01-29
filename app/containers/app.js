@@ -68,7 +68,7 @@ export default class App extends React.Component {
         <RouteCSSTransitionGroup
           className='app'
           component='div'
-          transitionName='example'
+          transitionName='route-css-transition'
           transitionEnterTimeout={200}
           transitionLeaveTimeout={1}
           pushState={this.props.pushState}

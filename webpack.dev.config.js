@@ -5,7 +5,7 @@ var isoConfig = require('./webpack-isomorphic-config')
 var isoToolsPlugin = new IsoToolsPlugin(isoConfig).development()
 var bourbonPath = require('bourbon').includePaths
 
-var PORT = process.env.PORT || 3000
+var PORT = 3000
 module.exports = {
   port: PORT,
   devtool: 'eval-source-map',

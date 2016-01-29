@@ -35,15 +35,15 @@ export default class Count extends React.Component {
     return `0${i}`.slice(-2)
   }
   updateTimeLeft = () => {
-    let timeLeft = this.getTimeRemaining(this.props.eventDate || '2016-01-05T00:00:00')
+    let timeLeft = this.getTimeRemaining(this.props.eventDate || '2016-02-05T00:00:00')
     this.setState({ timeLeft })
   }
   render () {
     let t = this.state.timeLeft
     return (
       <Jumbotron className='text-center'>
-        <h3>Lorem Ipsum</h3>
-        <h2>{t.days} days {t.hours}:{t.minutes}:{t.seconds}</h2>
+        <h2>Lorem Ipsum</h2>
+        <h1>{t.days} days {t.hours}:{t.minutes}:{t.seconds}</h1>
       </Jumbotron>
     )
   }

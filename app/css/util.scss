@@ -1,0 +1,19 @@
+// BG
+
+.bg-red { background: $red; }
+.bg-yellow { background: $yellow; }
+.bg-blue { background: $blue; }
+
+// Avatars profile images
+
+.avatar {
+  border-radius: 50%;
+
+  &.avatar-sm {
+    width: 50px
+  }
+
+  &.avatar-lg {
+    width: 200px
+  }
+}

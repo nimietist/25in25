@@ -1,3 +1,4 @@
+require('envc')()
 require('babel/register')()
 var path = require('path')
 var express = require('express')
@@ -7,6 +8,9 @@ var lorem = require('lorem-ipsum')
 
 var app = express()
 
+app.locals.assets_host = process.env.ASSETS_HOST || ''
+app.set('views', path.join(__dirname, 'app', 'views'))
+app.set('view engine', 'ejs')
 app.use(bodyParser.json())
 
 if (process.env.NODE_ENV !== 'production') {
@@ -116,10 +120,10 @@ app.post('/api/v1/forgot', function (req, res) {
 })
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'))
+  res.render('index', { root: '', initialState: JSON.stringify({}) })
 })
 
-app.listen(process.env.PORT || 3000, function (err) {
+app.listen(3000, function (err) {
   if (err) { return console.log(err) }
-  console.log('Assets listening at http://localhost:' + (process.env.PORT || 3000))
+  console.log('Assets listening at http://localhost:' + (3000))
 })

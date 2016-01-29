@@ -7,21 +7,21 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans|Francois+One' rel='stylesheet' type='text/css'>
-    <!-- <link rel='stylesheet' href='/static/main.css'> -->
+    <link rel='stylesheet' href='<%= assets_host %>/static/main.css'>
     <link rel='icon' href='data:;base64,iVBORw0KGgo='>
 
     <script>
-      window.INITIAL_STATE = {
-        alerts: []
-      }
+      window.INITIAL_STATE = <%= initialState %>;
     </script>
   </head>
   <body>
-    <div id='app' class='tall'></div>
+    <div id='app' class='tall'>
+      <%- root %>
+    </div>
     <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
     <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'></script>
     <script> new WOW().init(); </script>
-    <script src='/static/main.js'></script>
+    <script src='<%= assets_host %>/static/main.js'></script>
   </body>
 </html>

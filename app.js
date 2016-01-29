@@ -14,6 +14,7 @@ import IsoTools from 'webpack-isomorphic-tools'
 import isoConfig from 'webpack-isomorphic-config'
 import session from 'express-session'
 import connectRedis from 'connect-redis'
+import engines from 'consolidate'
 
 const RedisStore = connectRedis(session)
 
@@ -24,6 +25,8 @@ socket(app)
 app.port = process.env.PORT
 app.locals.assets_host = process.env.ASSETS_HOST || ''
 
+app.engine('jade', engines.jade)
+app.engine('ejs', engines.ejs)
 app.set('views', path.join(__dirname, 'app', 'views'))
 app.set('view engine', 'jade')
 app.use(favicon(path.join(__dirname, 'app', 'img', 'favicon.ico')))
@@ -45,7 +48,7 @@ app.use(routing)
 if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {
     res.status(err.status || 500)
-    res.render('error', {
+    res.send({
       message: err.message,
       error: err
     })
