@@ -3,9 +3,9 @@
 // import Root from '../containers/root'
 import express from 'express'
 
-import { match } from 'redux-router/server'
-
-import configureStore from 'src/store/configureStore'
+// import { match } from 'redux-router/server'
+//
+// import configureStore from 'src/store/configureStore'
 import apiRoutes from '../api'
 import authRoutes from '../api/auth'
 
@@ -17,19 +17,20 @@ app.use('/', authRoutes)
 
 // Default React Rendering
 app.use((req, res, next) => {
+  return res.render('index.ejs', { root: '', initialState: JSON.stringify({}) })
   // if (process.env.NODE_ENV === 'development') {
   //   global.webpackIsoTools.refresh()
   // }
 
-  const initialData = {
-    user: req.user || {}
-  } // Load initial fetch data here
+  // const initialData = {
+  //   user: req.user || {}
+  // } // Load initial fetch data here
 
-  const store = configureStore(initialData)
+  // const store = configureStore(initialData)
 
-  const action = match(req.originalUrl, (_error, redirectLocation, state) => {
-    return res.render('index.ejs', { root: '', initialState: JSON.stringify({}) })
-  })
+  // const action = match(req.originalUrl, (_error, redirectLocation, state) => {
+  //   return res.render('index.ejs', { root: '', initialState: JSON.stringify({}) })
+  // })
     // console.error(error, redirectLocation, state)
     // const promises = state ? state.components.reduce((p, e) => {
     //   if (e.fetchData) {
@@ -50,7 +51,7 @@ app.use((req, res, next) => {
     //   }
     // })
 
-  store.dispatch(action)
+  // store.dispatch(action)
 })
 
 export default app
