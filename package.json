@@ -11,7 +11,7 @@
     "prestart": "npm run migrate",
     "publish": "NODE_ENV=production gulp publish",
     "start": "node entry",
-    "test": "NODE_ENV=test mocha -r test/mocha.js --compilers js:babel/register --recursive"
+    "test": "NODE_ENV=test mocha test/**/*.test.js"
   },
   "author": "John Nguyen",
   "license": "ISC",

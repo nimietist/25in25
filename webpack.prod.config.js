@@ -12,7 +12,7 @@ module.exports = {
   context: path.resolve('.'),
   devtool: 'source-map',
   entry: [
-    './app/main.js'
+    './src/main.js'
   ],
   output: {
     path: './static',

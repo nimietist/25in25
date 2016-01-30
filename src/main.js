@@ -10,3 +10,8 @@ require('./css/main.scss')
  */
 const store = configureStore(window.INITIAL_STATE)
 render(<Root store={store}/>, document.getElementById('app'))
+
+// $('#container').imagesLoaded(function () {
+//   // images have loaded
+//   console.log('asdfasdfsa');
+// })

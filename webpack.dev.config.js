@@ -11,7 +11,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     `webpack-hot-middleware/client?path=http://localhost:${PORT}/__webpack_hmr`,
-    './app/main.js'
+    './src/main.js'
   ],
   output: {
     path: '/',

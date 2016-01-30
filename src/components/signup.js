@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { validateEmail } from 'app/lib/utils'
+import { validateEmail } from '../helpers/utils'
 import { reduxForm } from 'redux-form'
 import {Input, Button} from 'react-bootstrap'
 import SocialButtons from './social-buttons'

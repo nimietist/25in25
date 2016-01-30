@@ -1,17 +1,16 @@
 require('envc')()
-require('rootpath')()
 
 import express from 'express'
-import socket from 'app/lib/socket'
+import socket from './lib/socket'
 import path from 'path'
 import favicon from 'serve-favicon'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import passport from 'passport'
-import routing from 'app/config/routing'
-import IsoTools from 'webpack-isomorphic-tools'
-import isoConfig from 'webpack-isomorphic-config'
+import routing from './config/routing'
+// import IsoTools from 'webpack-isomorphic-tools'
+// import isoConfig from 'webpack-isomorphic-config'
 import session from 'express-session'
 import connectRedis from 'connect-redis'
 import engines from 'consolidate'
@@ -27,9 +26,9 @@ app.locals.assets_host = process.env.ASSETS_HOST || ''
 
 app.engine('jade', engines.jade)
 app.engine('ejs', engines.ejs)
-app.set('views', path.join(__dirname, 'app', 'views'))
+app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
-app.use(favicon(path.join(__dirname, 'app', 'img', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, '../src/img', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -55,11 +54,11 @@ if (app.get('env') === 'development') {
   })
 }
 
-global.webpackIsoTools = new IsoTools(isoConfig)
-  .development(process.env.NODE_ENV === 'development')
-  .server(require('path').resolve('.'), e => {
-    console.log('webpack iso initialized')
-  })
+// global.webpackIsoTools = new IsoTools(isoConfig)
+//   .development(process.env.NODE_ENV === 'development')
+//   .server(require('path').resolve('.'), e => {
+//     console.log('webpack iso initialized')
+//   })
 
 app.serve = () => {
   app.listen(app.port, () => console.log(`Listening on port ${app.port}`))

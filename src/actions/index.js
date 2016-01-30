@@ -1,4 +1,4 @@
-import getit from 'app/lib/fetch'
+import getit from '../helpers/fetch'
 
 export function completeLogin (user) {
   return {

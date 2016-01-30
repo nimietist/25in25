@@ -5,7 +5,7 @@ import express from 'express'
 
 import { match } from 'redux-router/server'
 
-import configureStore from '../store/configureStore'
+import configureStore from 'src/store/configureStore'
 import apiRoutes from '../api'
 import authRoutes from '../api/auth'
 
@@ -17,9 +17,9 @@ app.use('/', authRoutes)
 
 // Default React Rendering
 app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'development') {
-    global.webpackIsoTools.refresh()
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   global.webpackIsoTools.refresh()
+  // }
 
   const initialData = {
     user: req.user || {}
