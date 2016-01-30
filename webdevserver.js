@@ -29,8 +29,8 @@ if (process.env.NODE_ENV !== 'production') {
   app.use('/static', express.static(path.join(__dirname, 'static')))
 }
 
-app.use('/img', express.static(path.join(__dirname, 'app', 'img')))
-app.use('/fonts', express.static(path.join(__dirname, 'app', 'fonts')))
+app.use('/img', express.static(path.join(__dirname, 'src', 'img')))
+app.use('/fonts', express.static(path.join(__dirname, 'src', 'fonts')))
 
 app.post('/api/v1/login', function (req, res) {
   if (req.body.username) {
