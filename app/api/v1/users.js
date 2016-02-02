@@ -52,8 +52,9 @@ users.put('/:id', (req, res) => {
       }
     }
     user.save({
-      email: req.body.email,
-      email_setting: req.body.email_setting
+      email: req.body.email || user.get('email'),
+      s3_key: req.body.s3_key || user.get('s3_key'),
+      email_setting: req.body.email_setting || user.get('email_setting')
     }).then(user => {
       res.status(200).send(user.info())
     }).catch(err => {

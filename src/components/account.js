@@ -55,19 +55,17 @@ export default class Account extends React.Component {
     this.closeModal()
   }
   savePreferences = () => {
-    const {fields: {email, image, passwordOld, passwordNew, email_setting}} = this.props
+    const {dispatch, fields: {email, image, passwordOld, passwordNew, email_setting}} = this.props
+    const updateImage = this.props.fields.image.value !== this.props.user.image
 
-    return this.props.dispatch(actions.updateUser(this.props.user.id, {
+    return dispatch(actions.updateUserWithImage(this.props.user.id, {
+      updateImage,
       email: email.value,
       email_setting: email_setting.value,
-      image: image.value,
+      file: image.value && image.value[0],
       password: passwordOld.value,
       passwordNew: passwordNew.value
     }))
-  }
-  renderProfileImageUpload () {
-    // TODO: add image upload feature
-    return null
   }
   renderDeactivateModal () {
     return (
@@ -116,7 +114,6 @@ export default class Account extends React.Component {
               </div>
               <Input label='Email Notifications' />
               <Input label='Opt-in to receive email notifications and other spammy bullshit' type='checkbox' {...email_setting}/>
-              {this.renderProfileImageUpload}
               <Button bsStyle='primary' block disabled={submitting} type='submit'>Save</Button>
             </form>
           </div>

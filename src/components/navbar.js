@@ -81,8 +81,8 @@ export default class NavBar extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav onSelect={this.handleSelect}>
-            <LinkContainer activeClassName='active' to='/browse'><NavItem>Browse</NavItem></LinkContainer>
-            <LinkContainer activeClassName='active' to='/about'><NavItem>About</NavItem></LinkContainer>
+            <LinkContainer className='bold' activeClassName='active' to='/browse'><NavItem>Browse</NavItem></LinkContainer>
+            <LinkContainer className='bold' activeClassName='active' to='/about'><NavItem>About</NavItem></LinkContainer>
             {
               this.props.user.id &&
               <LinkContainer activeClassName='active' to='/dashboard'>

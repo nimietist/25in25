@@ -12,7 +12,7 @@ export default function (url, options) {
   }, options)
 
   if (options.data) {
-    if (options.method && options.method.toLowerCase() === 'post') {
+    if (options.method && ['put', 'post'].includes(options.method.toLowerCase())) {
       options.body = JSON.stringify(options.data)
     } else if (!options.method || options.method.toLowerCase() === 'get') {
       url += '?' + Object.keys(options.data).map((key, value) => `${key}=${options.data[key]}`).join('&')

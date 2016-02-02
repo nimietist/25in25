@@ -4,6 +4,12 @@
   a, i {
     color: white;
   }
+  .link {
+    @include transition-duration(200ms);
+    &:hover {
+      opacity: 0.8
+    }
+  }
   &[class*="col-sm"] {
     padding: 0;
   }
@@ -40,7 +46,7 @@
     .thumb {
       width: 100%;
       min-height: 100px;
-      transition-duration: 200ms;
+      @include transition-duration(200ms);
     }
     .meta {
       position: relative;

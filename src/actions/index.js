@@ -66,6 +66,15 @@ export function getUser (username) {
   }
 }
 
+export function updateUserWithImage (id, body) {
+  return dispatch => {
+    if (body.updateImage) {
+      return dispatch(uploadProfileImage(id, body))
+    } else {
+      return dispatch(updateUser(id, body))
+    }
+  }
+}
 export function updateUser (id, body) {
   return dispatch => {
     return getit(`/api/v1/users/${id}`, {
@@ -190,7 +199,36 @@ export function getArtwork (slug) {
 
 export function uploadArtwork (params) {
   return dispatch => {
-    return getSignedS3Url(params.file)
+    return uploadImage(params, (signed) => {
+      getit(`/api/v1/artworks`, {
+        method: 'post',
+        data: {
+          title: params.title,
+          description: params.description,
+          s3_key: signed.key
+        }
+      }).then(artwork => {
+        dispatch({
+          type: 'COMPLETE_UPLOAD_ARTWORK',
+          artwork
+        })
+      })
+    })
+  }
+}
+
+export function uploadProfileImage (id, params) {
+  return dispatch => {
+    return uploadImage({file: params.file}, (signed) => {
+      params.s3_key = signed.key
+      console.error('uploadProfileImage', signed, params)
+      dispatch(updateUser(id, params))
+    })
+  }
+}
+
+export function uploadImage (params, callback) {
+  return getSignedS3Url(params.file)
     .then(signed => {
       getit(signed.url, {
         headers: {
@@ -201,22 +239,9 @@ export function uploadArtwork (params) {
         body: params.file,
         empty: true
       }).then((res) => {
-        getit(`/api/v1/artworks`, {
-          method: 'post',
-          data: {
-            title: params.title,
-            description: params.description,
-            s3_key: signed.key
-          }
-        }).then(artwork => {
-          dispatch({
-            type: 'COMPLETE_UPLOAD_ARTWORK',
-            artwork
-          })
-        })
+        callback(signed)
       })
     })
-  }
 }
 
 export function getSignedS3Url (file) {

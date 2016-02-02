@@ -23,6 +23,7 @@ class ArtSquare extends React.Component {
       <div className='artwork col-lg-2 col-md-5ths col-sm-4 col-xs-6'>
         <div className='info'>
           <Link to={`/artwork/${slug}`}
+            className='link'
             state={{modal: true}}
             params={{artwork: this.props.artwork}}
           >

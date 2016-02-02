@@ -20,7 +20,7 @@ export default (props) => (
       7. Duis aute irure dolor in reprehenderit in voluptate
     </p>
     <h4>
-      Now go create something! If you ever have any questions or concerns, please feel free to email us at help@25in25.org.
+      Now go create something! If you ever have any questions or concerns, please feel free to email us at <a href='mailto:help@25in25.org'>help@25in25.org</a>.
     </h4>
     {props.children}
   </div>

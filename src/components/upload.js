@@ -38,6 +38,12 @@ export default class Upload extends React.Component {
 
     return (
       <div className='upload col-md-offset-2 col-md-8 col-xs-12'>
+        <div>
+          <h2>Good to see you again!</h2>
+          <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Get started by uploading your first art piece.
+          </p>
+        </div>
         <form onSubmit={this.props.handleSubmit(this.uploadForm)}>
           <div className='col-sm-4'>
             <ImageUploader field={image} />

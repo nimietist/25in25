@@ -14,8 +14,15 @@ const User = Model.extend({
     'id', 'username', 'email', 'created_at', 'uuid', 'email_setting'
   ],
   info () {
-    return pick(this.toJSON(), this.whitelist)
+    let lot = pick(this.toJSON(), this.whitelist)
+    lot.image_url = this.imageUrl()
+    return lot
   },
+  imageUrl () {
+    let key = this.get('s3_key')
+    return key ? `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/images/${key}` : ''
+  },
+
   initPassword (model, attrs, options) {
     model.set('uuid', uuid.v4())
     if (model.get('password')) {

@@ -1,4 +1,25 @@
+Style Guide
+- description on modal
+- Banner event state / words
+- standard padding/margin (20px)
+- color palette
+- font active/hover link states
+- logo
+- standard transition styles
+- upload page blurb
+- footer info ()
+
+bugs
+- modal transition shows last image
+- infinite scroller loads multiple times
+- min height / default images
+- hover state
+
 TODOS:
+
+- static bio in account
+- show user's works only on upload page
+
 react router initial data loading
 passport login and authentication
 
