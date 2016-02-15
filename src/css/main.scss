@@ -1,11 +1,14 @@
-// @import 'bootstrap';
-@import 'bourbon';
 @import './variables';
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import 'bourbon';
 @import './base';
 @import './bootstrap';
 @import './layout';
 @import './route-transition';
 @import './util';
+
+// Globals
+@import './button';
 
 // Components
 @import './navbar';

@@ -85,7 +85,7 @@ export default class NavBar extends React.Component {
             <LinkContainer className='bold' activeClassName='active' to='/about'><NavItem>About</NavItem></LinkContainer>
             {
               this.props.user.id &&
-              <LinkContainer activeClassName='active' to='/dashboard'>
+              <LinkContainer className='bold' activeClassName='active' to='/dashboard'>
                 <NavItem>Dashboard</NavItem>
               </LinkContainer>
             }

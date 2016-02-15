@@ -1,0 +1,5 @@
+.btn {
+  @include transition-duration(200ms);
+  font-family: 'Francois One', sans-serif;
+  border-radius: 0;
+}
